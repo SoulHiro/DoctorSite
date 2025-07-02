@@ -15,7 +15,7 @@ Esta versão substituirá o antigo site feito em WordPress.
 
 ## 🚧 Status do Projeto
 
-> 🛠️ Em desenvolvimento – setup inicial do projeto.
+> 🛠️ Em desenvolvimento – Authenticação
 
 ## 🔄 Planejamento Inicial
 

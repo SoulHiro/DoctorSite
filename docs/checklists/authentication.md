@@ -3,7 +3,7 @@
 ## 🔐 Funcionalidade Base
 
 - [x] Tela de Login
-- [ ] Login com E-mail e Senha (Credentials)
+- [x] Login com E-mail e Senha (Credentials)
 - [ ] Login com o Google (OAuth)
 - [ ] Logout
 - [ ] Redirecionamento pós-login

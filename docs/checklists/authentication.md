@@ -2,8 +2,7 @@
 
 ## 🔐 Funcionalidade Base
 
-- [ ] Tela de Login
-- [ ] Tela de Registro
+- [x] Tela de Login
 - [ ] Login com E-mail e Senha (Credentials)
 - [ ] Login com o Google (OAuth)
 - [ ] Logout
@@ -11,7 +10,7 @@
 
 ## 🧠 Validação e UX
 
-- [ ] Validação com Zod (formulário e backend)
+- [x] Validação com Zod
 - [ ] Feedback visual de erro e sucesso
 - [ ] Desabilitar botão/enviar loading
 
@@ -20,4 +19,3 @@
 - [ ] Hash de senhas com bcrypt
 - [ ] CORS configurado para API
 - [ ] Proteção contra brute-force (rate limit)
-- [ ] Helmet (via middleware)

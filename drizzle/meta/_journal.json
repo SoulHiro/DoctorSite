@@ -8,6 +8,41 @@
       "when": 1751498986232,
       "tag": "0000_black_blade",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1751506715804,
+      "tag": "0001_loose_warbound",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751508410329,
+      "tag": "0002_unusual_zarda",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1751509692211,
+      "tag": "0003_past_smiling_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1751513521708,
+      "tag": "0004_complex_slipstream",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1751514318447,
+      "tag": "0005_spooky_jocasta",
+      "breakpoints": true
     }
   ]
 }

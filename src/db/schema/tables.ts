@@ -1,13 +1,11 @@
 import {
   boolean,
-  foreignKey,
   integer,
   numeric,
   pgEnum,
   pgTable,
   text,
   timestamp,
-  unique,
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core'
@@ -47,155 +45,135 @@ export const settingsTable = pgTable('settings', {
     .default('DD/MM/YYYY')
     .notNull(),
   timeFormat: varchar('time_format', { length: 50 }).default('HH:mm').notNull(),
+  createdAt: timestamp('created_at').$defaultFn(() => new Date()),
+  updatedAt: timestamp('updated_at').$defaultFn(() => new Date()),
+})
+
+// Tabela de usuários - compatível com Better Auth
+export const usersTable = pgTable('users', {
+  // Campos obrigatórios do Better Auth
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('email_verified').notNull().default(false),
+  image: text('image'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+
+  // Campos customizados adicionais
+  role: rolesEnum('role').default('user'),
+  avatarImage: text('avatar_image'),
+  phone: varchar('phone', { length: 20 }),
+  bio: text('bio'),
+  lastLoginAt: timestamp('last_login_at', { mode: 'string' }),
+})
+
+export const sessionsTable = pgTable('sessions', {
+  id: text('id').primaryKey(),
+  expiresAt: timestamp('expires_at').notNull(),
+  token: text('token').notNull().unique(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  ipAddress: text('ip_address'),
+  userAgent: text('user_agent'),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+})
+
+export const accountsTable = pgTable('accounts', {
+  id: text('id').primaryKey(),
+  accountId: text('account_id').notNull(),
+  providerId: text('provider_id').notNull(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  accessToken: text('access_token'),
+  refreshToken: text('refresh_token'),
+  idToken: text('id_token'),
+  accessTokenExpiresAt: timestamp('access_token_expires_at'),
+  refreshTokenExpiresAt: timestamp('refresh_token_expires_at'),
+  scope: text('scope'),
+  password: text('password'),
+  createdAt: timestamp('created_at').notNull(),
+  updatedAt: timestamp('updated_at').notNull(),
+})
+
+export const verificationsTable = pgTable('verifications', {
+  id: text('id').primaryKey(),
+  identifier: text('identifier').notNull(),
+  value: text('value').notNull(),
+  expiresAt: timestamp('expires_at').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+export const blogPostsTable = pgTable('blog_posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: varchar('title').notNull(),
+  slug: varchar('slug').notNull(),
+  content: text('content').notNull(),
+  excerpt: text('excerpt'),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  status: statusBlogEnum('status').notNull().default('rascunho'),
+  tags: tagsEnum('tags').array().notNull().default(['noticia']),
+  featured: boolean('featured').default(false),
+  viewCount: integer('view_count').default(0),
+  coverId: uuid('cover_id'),
+  coverUrl: varchar('cover_url', { length: 500 }),
+  publishedAt: timestamp('published_at', { mode: 'string' }),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
 })
 
-export const usersTable = pgTable(
-  'users',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    name: varchar('name').notNull(),
-    email: varchar('email').notNull(),
-    password: varchar('password').notNull(),
-    role: rolesEnum('role').notNull().default('user'),
-    avatarImage: text('avatar_image'),
-    phone: varchar('phone', { length: 20 }),
-    bio: text('bio'),
-    position: varchar('position', { length: 100 }),
-    isActive: boolean('is_active').default(true),
-    emailVerified: boolean('email_verified').default(false),
-    lastLoginAt: timestamp('last_login_at', { mode: 'string' }),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-  },
-  (table) => [unique('users_email_unique').on(table.email)]
-)
+export const mediaTable = pgTable('medias', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  url: varchar('url', { length: 500 }).notNull(),
+  filename: varchar('filename').notNull(),
+  type: mediaTypeEnum('type').notNull(),
+  size: integer('size').notNull(),
+  width: integer('width'),
+  height: integer('height'),
+  duration: integer('duration').default(0),
+  location: varchar('location', { length: 500 }).default('').notNull(),
+  alt: varchar('alt', { length: 500 }).default(''),
+  caption: text('caption'),
+  isPublic: boolean('is_public').default(true),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
+})
 
-export const blogPostsTable = pgTable(
-  'blog_post',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    title: varchar('title').notNull(),
-    slug: varchar('slug').notNull(),
-    content: text('content').notNull(),
-    excerpt: text('excerpt'),
-    userId: uuid('user_id').notNull(),
-    status: statusBlogEnum('status').notNull().default('rascunho'),
-    tags: tagsEnum('tags').array().notNull().default(['noticia']),
-    featured: boolean('featured').default(false),
-    viewCount: integer('view_count').default(0),
-    coverId: uuid('cover_id'),
-    coverUrl: varchar('cover_url', { length: 500 }),
-    publishedAt: timestamp('published_at', { mode: 'string' }),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-  },
-  (table) => [
-    foreignKey({
-      columns: [table.userId],
-      foreignColumns: [usersTable.id],
-      name: 'blog_post_user_id_users_id_fk',
-    }),
-    foreignKey({
-      columns: [table.coverId],
-      foreignColumns: [mediaTable.id],
-      name: 'blog_post_cover_id_media_id_fk',
-    }),
-    unique('blog_post_slug_unique').on(table.slug),
-  ]
-)
+export const paymentsTable = pgTable('payments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  amount: numeric('amount', { precision: 10, scale: 2 }).notNull(),
+  status: statusPaymentEnum('status').notNull().default('pendente'),
+  method: methodPaymentEnum('method').notNull(),
+  donorName: varchar('donor_name', { length: 255 }),
+  donorEmail: varchar('donor_email', { length: 255 }),
+  isRecurring: boolean('is_recurring').default(false),
+  transactionId: varchar('transaction_id', { length: 255 }),
+  description: text('description'),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
+})
 
-export const mediaTable = pgTable(
-  'media',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    url: varchar('url', { length: 500 }).notNull(),
-    filename: varchar('filename').notNull(),
-    type: mediaTypeEnum('type').notNull(),
-    size: integer('size').notNull(),
-    width: integer('width'),
-    height: integer('height'),
-    duration: integer('duration').default(0),
-    location: varchar('location', { length: 500 }).default('').notNull(),
-    alt: varchar('alt', { length: 500 }).default(''),
-    caption: text('caption'),
-    isPublic: boolean('is_public').default(true),
-    userId: uuid('user_id').notNull(),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-  },
-  (table) => [
-    foreignKey({
-      columns: [table.userId],
-      foreignColumns: [usersTable.id],
-      name: 'media_user_id_users_id_fk',
-    }),
-  ]
-)
-
-export const paymentsTable = pgTable(
-  'payment',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id'),
-    amount: numeric('amount', { precision: 10, scale: 2 }).notNull(),
-    status: statusPaymentEnum('status').notNull().default('pendente'),
-    method: methodPaymentEnum('method').notNull(),
-    donorName: varchar('donor_name', { length: 255 }),
-    donorEmail: varchar('donor_email', { length: 255 }),
-    isRecurring: boolean('is_recurring').default(false),
-    transactionId: varchar('transaction_id', { length: 255 }),
-    description: text('description'),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-  },
-  (table) => [
-    foreignKey({
-      columns: [table.userId],
-      foreignColumns: [usersTable.id],
-      name: 'payment_user_id_users_id_fk',
-    }),
-  ]
-)
-
-export const notificationsTable = pgTable(
-  'notification',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id'),
-    title: varchar('title', { length: 500 }).notNull(),
-    message: text('message').notNull(),
-    read: boolean('read').notNull().default(false),
-    type: notificationTypeEnum('type').notNull(),
-    createdAt: timestamp('created_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-    updatedAt: timestamp('updated_at', { mode: 'string' })
-      .defaultNow()
-      .notNull(),
-  },
-  (table) => [
-    foreignKey({
-      columns: [table.userId],
-      foreignColumns: [usersTable.id],
-      name: 'notification_user_id_users_id_fk',
-    }),
-  ]
-)
+export const notificationsTable = pgTable('notifications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  title: varchar('title', { length: 500 }).notNull(),
+  message: text('message').notNull(),
+  read: boolean('read').notNull().default(false),
+  type: notificationTypeEnum('type').notNull(),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
+})

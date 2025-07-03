@@ -20,6 +20,7 @@ import { FormControl, FormMessage } from '@/components/ui/form'
 import { FormItem, FormLabel } from '@/components/ui/form'
 import { Form, FormField } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { getAuthErrorMessage } from '@/error/auth/codes'
 import { authClient } from '@/lib/auth-client'
 
 const loginSchema = z.object({
@@ -54,8 +55,9 @@ const LoginForm = () => {
         onSuccess: () => {
           router.push('/')
         },
-        onError: () => {
-          toast.error('E-mail ou senha inválidos.')
+        onError: (ctx) => {
+          toast.error(getAuthErrorMessage(ctx.error.code))
+          console.log(ctx.error.code)
         },
       }
     )

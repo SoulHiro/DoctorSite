@@ -20,10 +20,11 @@ import { FormControl, FormMessage } from '@/components/ui/form'
 import { FormItem, FormLabel } from '@/components/ui/form'
 import { Form, FormField } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { getAuthErrorMessage } from '@/error/auth/codes'
 import { authClient } from '@/lib/auth-client'
 
 const registerSchema = z.object({
-  name: z.string().trim().min(1, { message: 'Nome é obrigatório' }),
+  name: z.string().trim().min(3, { message: 'Nome é obrigatório' }),
   email: z
     .string()
     .trim()
@@ -58,11 +59,7 @@ const SignUpForm = () => {
           router.push('/')
         },
         onError: (ctx) => {
-          if (ctx.error.code === 'USER_ALREADY_EXISTS') {
-            toast.error('E-mail já cadastrado.')
-            return
-          }
-          toast.error('Erro ao criar conta.')
+          toast.error(getAuthErrorMessage(ctx.error.code))
         },
       }
     )
@@ -82,9 +79,9 @@ const SignUpForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Nome completo</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite seu nome" {...field} />
+                    <Input placeholder="Digite seu nome completo" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

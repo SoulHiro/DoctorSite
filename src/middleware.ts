@@ -7,8 +7,7 @@ const allowedOrigins = ['http://localhost:3000', 'https://doutorespalhacos.com']
 export async function middleware(request: NextRequest) {
   const origin = request.headers.get('origin') ?? ''
 
-  if (!allowedOrigins.includes(origin)) {
-    // Opcional: bloquear no backend
+  if (origin && !allowedOrigins.includes(origin)) {
     return new NextResponse('Origin not allowed', { status: 403 })
   }
 

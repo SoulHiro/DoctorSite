@@ -31,4 +31,8 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  rateLimit: {
+    window: 60,
+    max: 5,
+  },
 })

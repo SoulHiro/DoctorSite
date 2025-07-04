@@ -18,4 +18,4 @@
 
 - [x] Hash de senhas com bcrypt
 - [x] CORS configurado para API
-- [ ] Proteção contra brute-force (rate limit)
+- [x] Proteção contra brute-force (rate limit)

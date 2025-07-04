@@ -53,7 +53,7 @@ const LoginForm = () => {
       },
       {
         onSuccess: () => {
-          router.push('/')
+          router.push('/admin/dashboard')
         },
         onError: (ctx) => {
           toast.error(getAuthErrorMessage(ctx.error.code))
@@ -127,6 +127,7 @@ const LoginForm = () => {
                 onClick={() => {
                   authClient.signIn.social({
                     provider: 'google',
+                    callbackURL: '/admin/dashboard',
                   })
                 }}
               >

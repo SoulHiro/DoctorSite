@@ -56,7 +56,7 @@ const SignUpForm = () => {
       },
       {
         onSuccess: () => {
-          router.push('/')
+          router.push('/admin/dashboard')
         },
         onError: (ctx) => {
           toast.error(getAuthErrorMessage(ctx.error.code))

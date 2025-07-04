@@ -24,7 +24,7 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: '/dashboard',
+      url: '/admin/dashboard',
       icon: Home,
       isActive: true,
     },
@@ -36,11 +36,11 @@ const data = {
       items: [
         {
           title: 'Gerenciar Post',
-          url: '/blog/gerenciar',
+          url: '/admin/blog/gerenciar',
         },
         {
           title: 'Criar Post',
-          url: '/blog/criar',
+          url: '/admin/blog/criar',
         },
       ],
     },
@@ -52,11 +52,11 @@ const data = {
       items: [
         {
           title: 'Gerenciar Galeria',
-          url: '/galeria/gerenciar',
+          url: '/admin/galeria/gerenciar',
         },
         {
           title: 'Adicionar Mídia',
-          url: '/galeria/adicionar',
+          url: '/admin/galeria/adicionar',
         },
       ],
     },
@@ -68,13 +68,13 @@ const data = {
       items: [
         {
           title: 'Doações',
-          url: '/financeiro/doacoes',
+          url: '/admin/financeiro/doacoes',
         },
       ],
     },
     {
       title: 'Configurações',
-      url: '/configuracoes',
+      url: '/admin/configuracoes',
       icon: Settings,
     },
   ],

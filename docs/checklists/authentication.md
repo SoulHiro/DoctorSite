@@ -17,5 +17,5 @@
 ## 🔒 Segurança
 
 - [x] Hash de senhas com bcrypt
-- [ ] CORS configurado para API
+- [x] CORS configurado para API
 - [ ] Proteção contra brute-force (rate limit)

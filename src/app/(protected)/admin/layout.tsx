@@ -5,8 +5,8 @@ import { AdminSidebar } from './_components/Sidebar/app-sidebar'
 const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
-      <div className="flex">
-        <AdminSidebar />
+      <AdminSidebar />
+      <div className="flex w-full">
         <div className="flex-1">{children}</div>
       </div>
     </SidebarProvider>

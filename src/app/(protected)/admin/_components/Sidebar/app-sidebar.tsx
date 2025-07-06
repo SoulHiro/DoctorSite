@@ -7,6 +7,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar'
@@ -16,11 +17,6 @@ import { NavUser } from './nav-user'
 
 // This is sample data.
 const data = {
-  user: {
-    name: 'Admin',
-    email: 'admin@sosbomhumor.org',
-    avatar: '/placeholder.svg?height=32&width=32',
-  },
   navMain: [
     {
       title: 'Dashboard',
@@ -86,18 +82,18 @@ export function AdminSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <div className="flex flex-col items-center justify-center p-4 text-center">
+        <SidebarGroupLabel className="flex flex-col items-center justify-center p-4 py-8 text-center">
           <h1 className="text-lg font-bold text-red-500">SOS Bom Humor</h1>
           <p className="text-sidebar-foreground/70 text-sm">
             Doutores Palhaços
           </p>
-        </div>
+        </SidebarGroupLabel>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

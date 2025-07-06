@@ -10,17 +10,19 @@
 
 ## 🧩 Estrutura e Conteúdo
 
-- [ ] Campo: Título
-- [ ] Campo: Conteúdo (rich text ou textarea)
-- [ ] Campo: Status (rascunho, publicado, arquivado)
-- [ ] Campo: Tags (notícia, evento, artigo, outro)
-- [ ] Campo: Capa do post (via galeria ou URL)
+- [x] Campo: Título
+- [x] Campo: Conteúdo (rich text ou textarea)
+- [x] Campo: Status (rascunho, publicado, arquivado)
+- [x] Campo: Tags (notícia, evento, artigo, outro)
+- [x] Campo: Capa do post (via galeria ou URL)
+- [x] Campo: Agendamento de publicação
 
 ## 🧠 Validação e UX
 
-- [ ] Validação com Zod no formulário
-- [ ] Upload de imagem com preview
-- [ ] Feedback visual de sucesso e erro
+- [x] Validação com Zod no formulário
+- [x] Upload de imagem com preview
+- [x] Feedback visual de sucesso e erro
+- [x] Preview em tempo real do post
 - [ ] Slug automático e único baseado no título
 - [ ] Loading e desabilitar botão durante envio
 

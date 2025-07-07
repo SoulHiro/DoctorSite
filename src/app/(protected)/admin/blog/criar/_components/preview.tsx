@@ -9,9 +9,6 @@ const BlogPreview = () => {
 
   const formData = useWatch({ control })
 
-  console.log('FormData completo:', formData)
-  console.log('Imagem no formData:', formData.image)
-
   const getTagLabel = (tagValue: string) => {
     return tagsEnum.enumValues.find((tag) => tag === tagValue) || tagValue
   }

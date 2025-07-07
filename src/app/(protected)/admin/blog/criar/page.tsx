@@ -32,19 +32,9 @@ const BlogCriar = () => {
     },
   })
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const postData = {
-      ...data,
-      status: status,
-      publishedAt: status === 'published' ? new Date() : undefined,
-      scheduledFor: status === 'scheduled' ? data.shedule : undefined,
-    }
-
-    if (status === 'scheduled') {
-      console.log('📅 Agendado para:', data.shedule, postData)
-    } else if (status === 'published') {
-      console.log('🚀 Publicado imediatamente:', postData)
-    }
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    console.log(data)
   }
 
   return (

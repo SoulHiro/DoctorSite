@@ -1,4 +1,5 @@
 'use client'
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
@@ -141,12 +142,21 @@ const BlogForm = ({
           )}
 
           <div className="mt-auto flex gap-2 pt-4">
-            <Button type="submit" className="flex-1">
-              {status === 'published'
-                ? '🚀 Publicar'
-                : status === 'scheduled'
-                  ? '⏰ Agendar'
-                  : '📝 Rascunho'}
+            <Button
+              disabled={form.formState.isSubmitting}
+              type="submit"
+              onClick={() => console.log(form.formState)}
+              className="flex-1"
+            >
+              {form.formState.isSubmitting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : status === 'published' ? (
+                '🚀 Publicar'
+              ) : status === 'scheduled' ? (
+                '⏰ Agendar'
+              ) : (
+                '📝 Rascunho'
+              )}
             </Button>
             <Button
               type="button"

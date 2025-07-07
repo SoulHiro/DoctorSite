@@ -1,3 +1,5 @@
+import { eq } from 'drizzle-orm'
+
 import {
   Card,
   CardContent,
@@ -5,10 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { db } from '@/db'
+import { blogPostsTable, db } from '@/db'
 
 const BlogGerenciar = async () => {
-  const posts = await db.query.blogPostsTable.findMany()
+  const posts = await db.query.blogPostsTable.findMany({
+    where: eq(blogPostsTable.status, 'publicado'),
+  })
 
   return (
     <div>

@@ -64,7 +64,7 @@ export function ChooseFile({
       'image/jpeg': ['.jpg', '.jpeg'],
       'image/webp': ['.webp'],
     },
-    maxSize: fileSize.MB(10), // Coloque a quantidade de MB que você deseja
+    maxSize: fileSize.MB(10),
     onDropAccepted: () => {
       toast.success('Imagem carregada com sucesso')
     },

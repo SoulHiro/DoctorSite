@@ -26,7 +26,7 @@ export const rolesEnum = pgEnum('roles', ['admin', 'user'])
 export const statusBlogEnum = pgEnum('statusBlog', [
   'rascunho',
   'publicado',
-  'arquivado',
+  'agendado',
 ])
 export const statusPaymentEnum = pgEnum('statusPayment', [
   'pendente',
@@ -34,6 +34,11 @@ export const statusPaymentEnum = pgEnum('statusPayment', [
   'cancelado',
 ])
 export const tagsEnum = pgEnum('tags', ['noticia', 'evento', 'artigo', 'outro'])
+export const newsletterStatusEnum = pgEnum('newsletterStatus', [
+  'ativo',
+  'inativo',
+  'cancelado',
+])
 
 // Tabelas
 export const settingsTable = pgTable('settings', {
@@ -118,12 +123,28 @@ export const blogPostsTable = pgTable('blog_posts', {
     .notNull()
     .references(() => usersTable.id, { onDelete: 'cascade' }),
   status: statusBlogEnum('status').notNull().default('rascunho'),
-  tags: tagsEnum('tags').array().notNull().default(['noticia']),
+  tags: tagsEnum('tags').array().notNull(),
   featured: boolean('featured').default(false),
   viewCount: integer('view_count').default(0),
   coverId: uuid('cover_id'),
   coverUrl: varchar('cover_url', { length: 500 }),
   publishedAt: timestamp('published_at', { mode: 'string' }),
+  scheduledAt: timestamp('scheduled_at', { mode: 'string' }),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
+})
+
+export const newsletterSubscribersTable = pgTable('newsletter_subscribers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  name: varchar('name', { length: 255 }),
+  status: newsletterStatusEnum('status').default('ativo').notNull(),
+  subscribedAt: timestamp('subscribed_at', { mode: 'string' })
+    .defaultNow()
+    .notNull(),
+  unsubscribedAt: timestamp('unsubscribed_at', { mode: 'string' }),
+  unsubscribeToken: varchar('unsubscribe_token', { length: 255 }),
+  tags: tagsEnum('tags').array(),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
 })

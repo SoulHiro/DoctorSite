@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { createPost } from '@/actions/create-post'
+import { formatDate } from '@/lib/post-utils'
 
 import BlogForm from './_components/blog-form'
 import BlogPreview from './_components/preview'
@@ -39,20 +40,44 @@ const BlogCriar = () => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      // Validação específica para agendamento
       if (status === 'scheduled') {
-        // TODO: Implementar agendamento
-      } else if (status === 'published') {
-        const result = await createPost(data)
+        if (!data.shedule) {
+          toast.error('Selecione uma data e hora para agendamento')
+          return
+        }
 
-        if (result.error) {
-          toast.error(result.error)
-        } else {
-          toast.success('Post criado com sucesso')
-          form.reset()
+        const now = new Date()
+        if (data.shedule <= now) {
+          toast.error('A data de agendamento deve ser no futuro')
+          return
         }
       }
+
+      const result = await createPost(data, status)
+
+      if (result.error) {
+        toast.error(result.error)
+      } else if (result.success && result.post) {
+        // Mensagem de sucesso personalizada baseada no status
+        let successMessage = 'Post criado com sucesso!'
+
+        if (result.post.status === 'agendado' && result.post.scheduledAt) {
+          const scheduledDate = new Date(result.post.scheduledAt)
+          successMessage = `Post agendado para ${formatDate(scheduledDate, true)}`
+        } else if (result.post.status === 'publicado') {
+          successMessage = 'Post publicado com sucesso!'
+        }
+
+        toast.success(successMessage)
+
+        // Reset do formulário
+        form.reset()
+        setStatus('published')
+      }
     } catch (error) {
-      toast.error(error as string)
+      console.error('Erro ao criar post:', error)
+      toast.error('Erro inesperado ao criar post')
     }
   }
 

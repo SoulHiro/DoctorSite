@@ -145,7 +145,6 @@ const BlogForm = ({
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"
-              onClick={() => console.log(form.formState)}
               className="flex-1"
             >
               {form.formState.isSubmitting ? (

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": [
       "dom",
       "dom.iterable",
@@ -28,7 +28,7 @@
         "./src/*"
       ]
     },
-    "allowJs": false,
+    "allowJs": false
   },
   "include": [
     "next-env.d.ts",
@@ -37,6 +37,12 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".cz-config.cjs",
+    "*.config.js",
+    "*.config.cjs",
+    "*.config.mjs",
+    "drizzle",
+    "docs"
   ]
 }

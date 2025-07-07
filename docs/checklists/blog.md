@@ -2,10 +2,10 @@
 
 ## 📝 Funcionalidade Base
 
-- [ ] Criar post (formulário)
+- [x] Criar post (formulário)
 - [ ] Editar post existente
 - [ ] Deletar post
-- [ ] Listagem de posts no painel
+- [x] Listagem de posts no painel
 - [ ] Visualização pública de posts
 
 ## 🧩 Estrutura e Conteúdo
@@ -23,12 +23,12 @@
 - [x] Upload de imagem com preview
 - [x] Feedback visual de sucesso e erro
 - [x] Preview em tempo real do post
-- [ ] Slug automático e único baseado no título
-- [ ] Loading e desabilitar botão durante envio
+- [x] Loading e desabilitar botão durante envio
 
 ## 📣 Exibição Pública
 
 - [ ] Página de listagem dos posts em ordem cronológica
+- [ ] Slug automático e único baseado no título
 - [ ] Página de visualização individual do post
 - [ ] SEO dinâmico por post (Next SEO)
 - [ ] Filtro por tag (opcional)

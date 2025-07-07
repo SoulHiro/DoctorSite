@@ -117,15 +117,14 @@ const BlogPreview = () => {
               })
             ) : (
               <>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-                  {tagsEnum.enumValues[0]}
-                </span>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-                  {tagsEnum.enumValues[1]}
-                </span>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-                  {tagsEnum.enumValues[2]}
-                </span>
+                {tagsEnum.enumValues.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </>
             )}
           </div>

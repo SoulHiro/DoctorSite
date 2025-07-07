@@ -57,7 +57,6 @@ const LoginForm = () => {
         },
         onError: (ctx) => {
           toast.error(getAuthErrorMessage(ctx.error.code))
-          console.log(ctx.error.code)
         },
       }
     )

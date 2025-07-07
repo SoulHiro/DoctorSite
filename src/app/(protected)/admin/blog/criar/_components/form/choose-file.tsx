@@ -135,7 +135,7 @@ export function ChooseFile({
         </>
       )}
 
-      <Button onClick={open} variant="outline" className="mt-4">
+      <Button type="button" onClick={open} variant="outline" className="mt-4">
         {selectedFile ? 'Alterar Imagem' : 'Selecionar Imagem'}
       </Button>
     </Card>

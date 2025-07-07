@@ -3,7 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { createPost } from '@/actions/create-post'
 
 import BlogForm from './_components/blog-form'
 import BlogPreview from './_components/preview'
@@ -11,7 +14,9 @@ import BlogPreview from './_components/preview'
 const formSchema = z.object({
   title: z.string().min(1, { message: 'Título é obrigatório' }),
   content: z.string().min(1, { message: 'Conteúdo é obrigatório' }),
-  tags: z.array(z.string()).min(1, { message: 'Selecione pelo menos uma tag' }),
+  tags: z
+    .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
+    .min(1, { message: 'Selecione pelo menos uma tag' }),
   image: z.instanceof(File).optional(),
   shedule: z.date().optional(),
 })
@@ -26,15 +31,29 @@ const BlogCriar = () => {
     defaultValues: {
       title: '',
       content: '',
-      tags: [],
+      tags: ['noticia'],
       image: undefined,
       shedule: undefined,
     },
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log(data)
+    try {
+      if (status === 'scheduled') {
+        // TODO: Implementar agendamento
+      } else if (status === 'published') {
+        const result = await createPost(data)
+
+        if (result.error) {
+          toast.error(result.error)
+        } else {
+          toast.success('Post criado com sucesso')
+          form.reset()
+        }
+      }
+    } catch (error) {
+      toast.error(error as string)
+    }
   }
 
   return (

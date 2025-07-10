@@ -47,7 +47,7 @@ const footerLinks = [
 const Footer = () => {
   return (
     <footer className="border-ty-8 w-full text-gray-700">
-      <div className="mx-auto max-w-7xl space-y-8 px-4">
+      <div className="mx-auto space-y-8">
         {/* Bloco de destaque para doação */}
         <div className="flex flex-col items-center justify-between gap-8 rounded-3xl border border-gray-300 bg-gray-100 p-8 shadow-sm md:flex-row">
           <div className="flex flex-1 flex-col gap-2 md:pr-8">

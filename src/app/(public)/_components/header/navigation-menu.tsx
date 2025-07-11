@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
@@ -25,17 +26,27 @@ export function HeaderNavigationMenu() {
           <NavigationMenuContent>
             <div className="grid gap-2 md:w-[600px] lg:w-[700px] lg:grid-cols-[.75fr_1fr_1fr]">
               {/* Primeira parte: foto/descrição */}
-              <div className="row-span-3 flex flex-col justify-end">
-                <NavigationMenuLink asChild>
-                  <Link
-                    className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mt-4 mb-2 text-lg font-medium">
-                      Venha nos conhecer
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
+              <div className="relative row-span-3 flex flex-col justify-end overflow-hidden rounded-md">
+                {/* Imagem de fundo estática, sem interação */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="/images/hero-section.webp"
+                    width={200}
+                    height={200}
+                    alt="Equipe Doutores Palhaços"
+                    className="h-full w-full object-cover opacity-100"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
+                </div>
+                <div
+                  className="pointer-events-none relative z-10 flex h-full w-full flex-col justify-end p-6 select-none"
+                  aria-hidden="true"
+                >
+                  <div className="text-lg font-medium text-white drop-shadow">
+                    Venha nos conhecer
+                  </div>
+                </div>
               </div>
               {/* Segunda parte: até 3 itens */}
               <ul className="flex flex-col gap-2">
@@ -63,7 +74,7 @@ export function HeaderNavigationMenu() {
           <NavigationMenuContent>
             <div className="grid gap-2 md:w-[600px] lg:w-[650px] lg:grid-rows-[1fr_auto]">
               {/* Primeira parte: indicadores de impacto */}
-              <div className="bg-muted/40 flex flex-row justify-between gap-2 rounded-lg px-4 py-2 shadow-sm">
+              <div className="bg-muted/40 flex flex-row justify-between gap-2 rounded-sm px-4 py-2 shadow-sm">
                 <div className="flex flex-col items-center">
                   <span className="text-muted-foreground text-sm font-semibold tracking-wide uppercase">
                     Hospitais Visitados

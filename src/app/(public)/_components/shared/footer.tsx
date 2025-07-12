@@ -49,7 +49,7 @@ const Footer = () => {
     <footer className="border-ty-8 w-full text-gray-700">
       <div className="mx-auto space-y-8">
         {/* Bloco de destaque para doação */}
-        <div className="flex flex-col items-center justify-between gap-8 rounded-3xl border border-gray-300 bg-gray-100 p-8 shadow-sm md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-8 rounded-3xl border border-gray-300 bg-white p-8 shadow-sm md:flex-row">
           <div className="flex flex-1 flex-col gap-2 md:pr-8">
             <h2 className="mb-1 text-xl font-bold text-gray-900">
               Faça a Diferença!
@@ -67,7 +67,7 @@ const Footer = () => {
         </div>
 
         {/* Bloco de links e informações institucionais */}
-        <div className="rounded-3xl border border-gray-300 bg-gray-100 p-8">
+        <div className="rounded-3xl border border-gray-300 bg-white p-8">
           <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
             {/* Colunas de links */}
             <div className="grid w-full grid-cols-2 gap-8 md:w-full md:grid-cols-6">

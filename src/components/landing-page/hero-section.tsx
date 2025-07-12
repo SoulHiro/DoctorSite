@@ -22,16 +22,22 @@ const HeroSection = () => {
         <h1 className="text-center text-4xl font-bold text-white drop-shadow-lg md:text-5xl">
           Um Sorriso que <span className="text-red-500">Cura</span>
         </h1>
-        <p className="max-w-2xl text-center text-lg text-white drop-shadow-md md:text-xl">
+        <p className="text-md md:text-md max-w-2xl text-center text-white drop-shadow-md">
           <b>Levando alegria a quem precisa com um gesto simples. </b>
           Nossos Doutores Palhaços transformam o ambiente hospitalar em um lugar
           de esperança e sorrisos.
         </p>
         <div className="flex flex-row gap-4">
-          <Button className="rounded-full bg-red-500 px-6 py-3 text-lg font-semibold text-white shadow-lg transition hover:bg-red-600">
+          <Button
+            size="default"
+            className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
+          >
             Doe agora e Transforme Vidas
           </Button>
-          <Button className="text-foreground rounded-full bg-white px-6 py-3 text-lg font-semibold shadow-lg transition hover:bg-white/80">
+          <Button
+            size="default"
+            className="w-fit rounded-full bg-white font-semibold text-black shadow transition duration-300 hover:scale-105 hover:bg-gray-200"
+          >
             Conheça nosso Trabalho
           </Button>
         </div>

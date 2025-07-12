@@ -1,11 +1,26 @@
+import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import { useRef } from 'react'
+
+import { Button } from '@/components/ui/button'
 
 const AboutSection = () => {
+  const imagesRef = useRef(null)
+  const isInView = useInView(imagesRef, { once: true })
+  const textRef = useRef(null)
+  const isInViewText = useInView(textRef, { once: true })
+
   return (
     <section className="h-fit w-full py-32">
       <div className="container mx-auto flex max-w-6xl flex-col items-center justify-center space-x-8 md:flex-row md:items-stretch">
         {/* Coluna das imagens à esquerda */}
-        <div className="flex w-full flex-row gap-4">
+        <motion.div
+          ref={imagesRef}
+          initial={{ opacity: 0, y: -100 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: 'easeInOut' }}
+          className="flex w-full flex-row gap-4"
+        >
           {/* Grid de imagens: duas em cima, uma embaixo */}
           <div className="flex w-full flex-col gap-4">
             {/* Imagem 1 */}
@@ -44,11 +59,17 @@ const AboutSection = () => {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
         {/* Coluna do texto à direita */}
-        <div className="flex w-full flex-col justify-center space-y-4">
+        <motion.div
+          ref={textRef}
+          initial={{ opacity: 0, y: -100 }}
+          animate={isInViewText ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: 'easeInOut' }}
+          className="flex w-full flex-col justify-center space-y-4"
+        >
           <h2 className="text-4xl font-bold text-gray-900">Sobre Nós</h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-md text-gray-600">
             A SOS Bom Humor Doutores Palhaços é uma ONG voluntária brasileira
             que, por meio da arte da palhaçaria hospitalar, leva alegria,
             acolhimento e descontração a pacientes, acompanhantes e equipes em
@@ -59,10 +80,13 @@ const AboutSection = () => {
             ferramenta de humanização, conforto emocional e bem-estar em
             momentos de fragilidade
           </p>
-          <button className="rounded-full bg-red-500 px-8 py-2 font-semibold text-white shadow transition hover:bg-blue-700">
+          <Button
+            size="default"
+            className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
+          >
             Saiba mais
-          </button>
-        </div>
+          </Button>
+        </motion.div>
       </div>
     </section>
   )

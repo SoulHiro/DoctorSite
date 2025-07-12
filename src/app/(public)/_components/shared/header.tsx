@@ -1,8 +1,10 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { Button } from '@/components/ui/button'
 import { useScrollHeader } from '@/hooks/use-scroll-header'
 
 import { HeaderNavigationMenu } from '../header/navigation-menu'
@@ -12,10 +14,18 @@ const HeaderPublic = () => {
 
   return (
     <header className="fixed top-2 z-100 flex w-full items-start justify-center text-white">
-      <div
-        className={`flex w-full max-w-6xl items-center justify-between rounded-3xl px-8 py-6 shadow-md backdrop-blur-[2px] transition-all duration-300 ${
-          isScrolled ? 'bg-white text-gray-900' : 'bg-white/30 text-white'
+      <motion.div
+        className={`flex max-w-6xl items-center justify-between rounded-3xl px-8 shadow-md backdrop-blur-[2px] transition-all duration-300 ${
+          isScrolled
+            ? 'w-200 bg-white py-2 text-gray-900'
+            : 'w-full bg-white/30 py-6 text-white'
         }`}
+        animate={{
+          width: isScrolled ? '800px' : '100%',
+          backgroundColor: isScrolled ? '#fff' : 'rgba(255,255,255,0.3)',
+          color: isScrolled ? '#111' : '#fff',
+        }}
+        transition={{ duration: 0.3 }}
       >
         {/* Logo - oculto quando scrolled */}
         <div
@@ -54,12 +64,15 @@ const HeaderPublic = () => {
           }`}
         >
           <Link href="/doar">
-            <button className="w-fit rounded-3xl bg-green-600 px-6 py-2 text-base font-semibold text-white transition hover:bg-green-700 focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:outline-none">
+            <Button
+              size="default"
+              className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
+            >
               Entrar
-            </button>
+            </Button>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </header>
   )
 }

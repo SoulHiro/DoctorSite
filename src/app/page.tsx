@@ -11,7 +11,7 @@ import TestimonialsSection from '@/components/landing-page/testimonals'
 export default function Home() {
   const containerClassName = 'relative mx-auto w-full max-w-6xl space-y-16'
   return (
-    <div className="w-screen space-y-16 bg-transparent pb-8">
+    <div className="w-screen space-y-16 bg-transparent">
       <HeroSection />
       <div className={containerClassName}>
         <AboutSection />

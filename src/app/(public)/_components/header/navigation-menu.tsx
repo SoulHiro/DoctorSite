@@ -164,7 +164,7 @@ export function HeaderNavigationMenu() {
                 {/* Coluna 2 */}
                 <ul className="flex flex-col gap-4">
                   <ListItem
-                    href="#"
+                    href="/gallery"
                     title="📸 Galeria de Fotos"
                     className="border-muted border-b pb-3"
                   >

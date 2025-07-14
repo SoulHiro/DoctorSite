@@ -7,13 +7,13 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { useScrollHeader } from '@/hooks/use-scroll-header'
 
-import { HeaderNavigationMenu } from '../header/navigation-menu'
+import { HeaderNavigationMenu } from '../../app/(public)/_components/header/navigation-menu'
 
 const HeaderPublic = () => {
   const { isScrolled } = useScrollHeader()
 
   return (
-    <header className="fixed top-2 z-100 flex w-full items-start justify-center text-white">
+    <header className="fixed z-100 flex w-full items-start justify-center pt-2 text-white">
       <motion.div
         className={`flex max-w-6xl items-center justify-between rounded-3xl px-8 shadow-md backdrop-blur-[2px] transition-all duration-300 ${
           isScrolled

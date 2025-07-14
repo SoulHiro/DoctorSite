@@ -25,36 +25,24 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    text: 'Quando minha filha estava internada na pediatria, os Doutores Palhaços transformaram nossa experiência. Ver ela sorrindo em um momento tão difícil foi um presente.',
-    name: 'Carolina Silva',
-    role: 'Mãe de paciente',
+    text: 'Conhecer o trabalho dos Doutores Palhaços foi uma experiência marcante. A forma como eles integram empatia, leveza e profissionalismo em cada visita demonstra o poder real que a alegria tem como ferramenta de cuidado humano. É uma honra poder colaborar com uma causa tão genuína e transformadora.',
+    name: 'Victor M.',
+    role: 'Desenvolvedor do Site',
   },
   {
     id: 2,
-    text: 'Como enfermeira pediátrica, afirmo que o trabalho dos Doutores Palhaços é transformador. As crianças ficam mais receptivas e o ambiente, mais humanizado.',
-    name: 'Enfermeira Maria',
-    role: 'Hospital Universitário',
+    text: 'A palhaçaria terapêutica é um recurso essencial para a saúde mental e emocional dos pacientes. Obrigada pela dedicação e alegria que trazem.',
+    name: 'Clínica de Saúde Mental',
+    role: 'Equipe Médica',
   },
   {
     id: 3,
-    text: 'O projeto de humanização com os Doutores Palhaços mudou a dinâmica da nossa ala pediátrica. O riso realmente é o melhor remédio.',
-    name: 'Dr. Roberto Lima',
-    role: 'Diretor Médico',
+    text: 'Eu acredito que ao levar nosso trabalho ao ambiente hospitalar somos capazes de transformar o ambiente e, de alguma forma, contagiar os pacientes, funcionários e acompanhantes com a linguagem do palhaço. Nossas crenças ficam cada vez maiores quando recebemos respostas como estas ao lado.',
+    name: 'Dr. Alegria',
+    role: 'Palhaço',
   },
   {
     id: 4,
-    text: 'Ser voluntária nos Doutores Palhaços me ensinou que a medicina vai além dos procedimentos. A humanização é essencial para a recuperação.',
-    name: 'Ana Santos',
-    role: 'Voluntária',
-  },
-  {
-    id: 5,
-    text: 'Vocês são anjos disfarçados de palhaços. Obrigada por levarem alegria nos momentos mais difíceis e mostrarem que o cuidado vai além da medicina.',
-    name: 'Família Oliveira',
-    role: 'Acompanhantes',
-  },
-  {
-    id: 6,
     text: 'A palhaçaria terapêutica é um recurso essencial para a saúde mental e emocional dos pacientes. Obrigada pela dedicação e alegria que trazem.',
     name: 'Clínica de Saúde Mental',
     role: 'Equipe Médica',
@@ -77,7 +65,9 @@ const TestimonialCard = memo(
     >
       <div className="flex flex-col items-center text-center">
         <FaQuoteLeft className="mb-4 text-3xl text-red-400" />
-        <p className="mb-6 text-base text-gray-600">&ldquo;{text}&rdquo;</p>
+        <p className="mb-6 text-justify text-base text-gray-600">
+          &ldquo;{text}&rdquo;
+        </p>
       </div>
       <div className="flex items-center justify-center gap-4 border-t pt-4">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-red-400 to-red-600 font-bold text-white">

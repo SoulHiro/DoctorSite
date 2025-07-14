@@ -1,12 +1,21 @@
 import './globals.css'
 
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Luckiest_Guy } from 'next/font/google'
 import { Toaster } from 'sonner'
+
+import Footer from '../components/shared/footer'
+import HeaderPublic from '../components/shared/header'
 
 const regularInter = Inter({
   variable: '--font-regular-inter',
   subsets: ['latin'],
+})
+
+const luckiestRegular = Luckiest_Guy({
+  variable: '--font-luckiest-regular',
+  subsets: ['latin'],
+  weight: '400',
 })
 
 export const viewport: Viewport = {
@@ -26,9 +35,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${regularInter.variable} antialiased`}>
+      <body
+        className={`${regularInter.variable} ${luckiestRegular.variable} antialiased`}
+      >
+        <HeaderPublic />
         {children}
         <Toaster position="bottom-right" richColors />
+        <Footer />
       </body>
     </html>
   )

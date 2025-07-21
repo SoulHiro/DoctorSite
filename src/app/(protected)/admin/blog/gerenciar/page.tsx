@@ -1,4 +1,5 @@
 import { eq } from 'drizzle-orm'
+import Image from 'next/image'
 
 import {
   Card,
@@ -22,6 +23,14 @@ const BlogGerenciar = async () => {
             <CardTitle>{post.title}</CardTitle>
             <CardDescription>{post.excerpt}</CardDescription>
             <CardContent>
+              <div>
+                <Image
+                  width={400}
+                  height={400}
+                  alt="Testando"
+                  src={post.imageUrl || ''}
+                ></Image>
+              </div>
               <p>{post.content}</p>
             </CardContent>
           </CardHeader>

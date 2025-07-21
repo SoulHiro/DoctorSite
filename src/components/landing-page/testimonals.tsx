@@ -1,6 +1,7 @@
 'use client'
 
 import Autoplay from 'embla-carousel-autoplay'
+import Link from 'next/link'
 import { memo, useEffect, useState } from 'react'
 import { FaQuoteLeft } from 'react-icons/fa'
 
@@ -31,21 +32,21 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    text: 'A palhaçaria terapêutica é um recurso essencial para a saúde mental e emocional dos pacientes. Obrigada pela dedicação e alegria que trazem.',
-    name: 'Clínica de Saúde Mental',
-    role: 'Equipe Médica',
+    text: 'A esperança não é a última que morre — é a primeira que nasce quando tudo parece perdido e sem solução. Quem tem esperança sabe que a tempestade, um dia, há de passar, e que o choro dá lugar ao sorriso e à alegria. Porque quem tem esperança, confia. Quem confia, tem fé. Quem tem fé, tem Deus. E quem tem Deus... tem tudo.',
+    name: 'Dra. Esperança',
+    role: 'Palhaça',
   },
   {
     id: 3,
-    text: 'Eu acredito que ao levar nosso trabalho ao ambiente hospitalar somos capazes de transformar o ambiente e, de alguma forma, contagiar os pacientes, funcionários e acompanhantes com a linguagem do palhaço. Nossas crenças ficam cada vez maiores quando recebemos respostas como estas ao lado.',
+    text: 'Eu vejo a atuação dos Doutores Palhaços como uma ferramenta de transformação e humanização, utilizando a arte do palhaço para levar alegria, leveza e um olhar mais positivo para as pessoas em situações de vulnerabilidade, estando estas hospitalizadas.',
     name: 'Dr. Alegria',
     role: 'Palhaço',
   },
   {
     id: 4,
-    text: 'A palhaçaria terapêutica é um recurso essencial para a saúde mental e emocional dos pacientes. Obrigada pela dedicação e alegria que trazem.',
-    name: 'Clínica de Saúde Mental',
-    role: 'Equipe Médica',
+    text: 'O Sorriso é contagiante e com grandes benefícios para a saúde. Então levá-lo ao um ambiente hospital é altamente benéfico e com grandes resultados para a saúde dos pacientes.',
+    name: 'Dra. Sorriso',
+    role: 'Palhaça',
   },
 ]
 
@@ -167,12 +168,18 @@ export default function TestimonialsSection() {
           ))}
         </div>
         <div className="text-center">
-          <Button
-            size="lg"
-            className="rounded-full bg-red-500 px-8 py-3 font-semibold text-white shadow-md transition-transform hover:scale-105 hover:bg-red-600"
+          <Link
+            href="mailto:doutorespalhacos.of@gmail.com?subject=💬%20Depoimento%20-%20Doutores%20Palhaços"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Envie seu Depoimento
-          </Button>
+            <Button
+              size="lg"
+              className="rounded-full bg-red-500 px-8 py-3 font-semibold text-white shadow-md transition-transform hover:scale-105 hover:bg-red-600"
+            >
+              Envie seu Depoimento
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

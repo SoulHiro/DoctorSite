@@ -25,7 +25,7 @@ const BlogPreview = () => {
       </div>
 
       <div className="flex-1 space-y-6">
-        {formData.image ? (
+        {formData.image && formData.image instanceof File ? (
           <div className="space-y-3">
             <div className="relative w-full overflow-hidden rounded-lg border">
               <Image

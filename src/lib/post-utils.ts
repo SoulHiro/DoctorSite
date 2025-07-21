@@ -179,7 +179,7 @@ export interface PostData {
   content: string
   tags: PostTag[]
   scheduledAt?: Date
-  image?: File
+  imageUrl?: string
 }
 
 export interface PostValidationResult {

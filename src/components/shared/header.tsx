@@ -14,13 +14,9 @@ const HeaderPublic = () => {
 
   return (
     <>
-      {/* Header original que permanece no lugar (invisível quando scrolled) */}
-      <header
-        className={`flex w-full items-start justify-center pt-0 transition-opacity duration-300 ${
-          isScrolled ? 'pointer-events-none opacity-0' : 'opacity-100'
-        }`}
-      >
-        <div className="text-text-gray-900 flex w-full items-center justify-between overflow-visible bg-white px-8 py-4 shadow-md backdrop-blur-[2px]">
+      {/* Header original que ocupa espaço fixo */}
+      <header className="relative z-50 w-full bg-white shadow-md">
+        <div className="text-text-gray-900 flex w-full items-center justify-between overflow-visible bg-white px-8 py-4">
           {/* Logo */}
           <div className="flex flex-row gap-2">
             <Image
@@ -39,27 +35,32 @@ const HeaderPublic = () => {
           </div>
 
           {/* Menu centralizado - escondido em mobile */}
-          <nav className="hidden justify-center md:flex">
+          <nav className="hidden justify-center md:flex md:gap-8">
             <HeaderNavigationMenu />
+            <div>
+              <Link href="/auth">
+                <Button
+                  size="default"
+                  className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
+                >
+                  Entrar
+                </Button>
+              </Link>
+            </div>
           </nav>
 
-          {/* Botão à direita */}
-          <div>
-            <Link href="/doar">
-              <Button
-                size="default"
-                className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
-              >
-                Entrar
-              </Button>
-            </Link>
-          </div>
+          {/* Menu mobile - hamburger (placeholder) */}
+          <nav className="flex md:hidden">
+            <Button variant="outline" size="sm">
+              Menu
+            </Button>
+          </nav>
         </div>
       </header>
 
-      {/* Header fixed animado - CORRIGIDO */}
+      {/* Header fixed animado - aparece no scroll */}
       <motion.header
-        className="fixed top-4 z-100 flex w-full items-start justify-center px-4"
+        className="fixed top-4 z-50 flex w-full items-start justify-center px-4"
         initial={{ y: -100, opacity: 0 }}
         animate={{
           y: isScrolled ? 0 : -100,
@@ -70,12 +71,11 @@ const HeaderPublic = () => {
           ease: [0.25, 0.1, 0.25, 1.0],
         }}
         style={{
-          // Garante que o header fixed não interfira com o menu
           pointerEvents: isScrolled ? 'auto' : 'none',
         }}
       >
         <motion.div
-          className="text-text-gray-900 flex max-w-full items-center justify-between overflow-visible rounded-3xl bg-white px-8 py-2 shadow-md backdrop-blur-[2px]"
+          className="text-text-gray-900 flex max-w-full items-center justify-between overflow-visible rounded-3xl bg-white px-8 py-2 shadow-lg backdrop-blur-md"
           initial={{ width: '800px' }}
           animate={{ width: isScrolled ? '800px' : '800px' }}
           transition={{ duration: 0.3 }}
@@ -85,9 +85,8 @@ const HeaderPublic = () => {
             <HeaderNavigationMenu />
           </nav>
 
-          {/* Menu mobile - hamburger ou menu simplificado */}
+          {/* Menu mobile simplificado */}
           <nav className="flex w-full justify-center md:hidden">
-            {/* Aqui você pode adicionar um menu hamburger ou uma versão simplificada */}
             <div className="text-sm font-medium">Menu</div>
           </nav>
         </motion.div>

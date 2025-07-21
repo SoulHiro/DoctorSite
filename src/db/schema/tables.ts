@@ -113,6 +113,16 @@ export const verificationsTable = pgTable('verifications', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
+export const DeppoimnetsTable = pgTable('deppoiments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  comment: text('comment').notNull(),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
+})
+
 export const blogPostsTable = pgTable('blog_posts', {
   id: uuid('id').primaryKey().defaultRandom(),
   title: varchar('title').notNull(),
@@ -126,8 +136,7 @@ export const blogPostsTable = pgTable('blog_posts', {
   tags: tagsEnum('tags').array().notNull(),
   featured: boolean('featured').default(false),
   viewCount: integer('view_count').default(0),
-  coverId: uuid('cover_id'),
-  coverUrl: varchar('cover_url', { length: 500 }),
+  imageUrl: text('image_url'),
   publishedAt: timestamp('published_at', { mode: 'string' }),
   scheduledAt: timestamp('scheduled_at', { mode: 'string' }),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
@@ -154,13 +163,8 @@ export const mediaTable = pgTable('medias', {
   url: varchar('url', { length: 500 }).notNull(),
   filename: varchar('filename').notNull(),
   type: mediaTypeEnum('type').notNull(),
-  size: integer('size').notNull(),
-  width: integer('width'),
-  height: integer('height'),
-  duration: integer('duration').default(0),
-  location: varchar('location', { length: 500 }).default('').notNull(),
-  alt: varchar('alt', { length: 500 }).default(''),
-  caption: text('caption'),
+  municipality: varchar('municipality', { length: 255 }).notNull(), // novo campo
+  takenAt: timestamp('taken_at', { mode: 'string' }).notNull(), // novo campo
   isPublic: boolean('is_public').default(true),
   userId: text('user_id')
     .notNull()

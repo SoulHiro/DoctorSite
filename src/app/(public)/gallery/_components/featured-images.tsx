@@ -57,7 +57,7 @@ const GalleryFeaturedImages = () => {
   return (
     <section
       id="featured-images"
-      className="flex min-h-screen w-full flex-col items-center justify-center px-4 py-16"
+      className="flex w-full flex-col items-center justify-center px-4 py-16"
     >
       <div className="mb-12 text-center">
         <h2 className="mb-4 text-4xl font-bold">Em Destaque</h2>

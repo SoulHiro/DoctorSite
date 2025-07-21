@@ -1,3 +1,5 @@
+import { PageContainer } from '@/components/ui/page-container'
+
 import GalleryFeaturedImages from './_components/featured-images'
 import GalleryHeroSection from './_components/hero-section'
 import GalleryPortfolioSection from './_components/mini-portfolio'
@@ -5,22 +7,24 @@ import GalleryMunicipalities from './_components/municipalities-section'
 
 const GalleryPage = () => {
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center justify-start overflow-hidden">
-      <div className="flex w-full max-w-6xl flex-col justify-center space-y-8">
-        {/* Hero Section */}
+    <main className="flex min-h-screen w-full flex-col">
+      {/* Hero Section */}
+      <PageContainer>
         <GalleryHeroSection />
+      </PageContainer>
 
-        {/* Featured Images */}
+      {/* Featured Images */}
+      <PageContainer>
         <GalleryFeaturedImages />
-      </div>
+      </PageContainer>
 
-      {/* Mini-Portfolio - Width Full */}
+      {/* Mini-Portfolio - largura total com background */}
       <GalleryPortfolioSection />
 
-      <div className="flex w-full max-w-6xl flex-col justify-center space-y-8">
-        {/* Photos by Municipality */}
+      {/* Municipalities */}
+      <PageContainer>
         <GalleryMunicipalities />
-      </div>
+      </PageContainer>
     </main>
   )
 }

@@ -5,27 +5,59 @@ import { cn } from '@/lib/utils'
 
 const footerLinks = [
   {
-    title: 'Projeto',
+    title: 'Quem Somos',
     links: [
-      { label: 'Sobre', href: '/sobre', active: false },
-      { label: 'Equipe', href: '/equipe', active: false },
-      { label: 'Contato', href: '/contato', active: false },
+      {
+        label: 'Nossa História',
+        href: '/historia',
+        active: false,
+        isBlank: false,
+      },
+      {
+        label: 'Missão, Visão e Valores',
+        href: '/missao',
+        active: false,
+        isBlank: false,
+      },
+      { label: 'Nossa Equipe', href: '/equipe', active: false, isBlank: false },
+      {
+        label: 'Onde Atuamos',
+        href: '/atuacao',
+        active: false,
+        isBlank: false,
+      },
     ],
   },
   {
     title: 'Conteúdo',
     links: [
-      { label: 'Blog', href: '/blog', active: false },
-      { label: 'Galeria', href: '/galeria', active: false },
-      { label: 'Depoimentos', href: '/depoimentos', active: false },
+      { label: 'Blog', href: '/blog', active: false, isBlank: false },
+      { label: 'Galeria', href: '/gallery', active: true, isBlank: false },
+      {
+        label: 'Depoimentos',
+        href: '/depoimentos',
+        active: false,
+        isBlank: false,
+      },
+      { label: 'Eventos', href: '/eventos', active: false, isBlank: false },
     ],
   },
   {
-    title: 'Apoie',
+    title: 'Apoie o Projeto',
     links: [
-      { label: 'Doe Agora', href: '/doar', active: true },
-      { label: 'Empresas Parceiras', href: '/parceiros', active: false },
-      { label: 'Eventos', href: '/eventos', active: false },
+      { label: 'Doe Agora', href: '/doar', active: false, isBlank: false },
+      {
+        label: 'Seja um Parceiro',
+        href: '/parceiros',
+        active: false,
+        isBlank: false,
+      },
+      {
+        label: 'Seja Voluntário',
+        href: '/voluntario',
+        active: false,
+        isBlank: false,
+      },
     ],
   },
   {
@@ -34,12 +66,20 @@ const footerLinks = [
       {
         label: 'Instagram',
         href: 'https://www.instagram.com/sosbomhumordoutorespalhacos/',
+        isBlank: true,
         active: true,
       },
       {
-        label: 'Youtube',
+        label: 'YouTube',
         href: 'https://www.youtube.com/@SOSBomHumorDoutoresPalhacos',
+        isBlank: true,
         active: true,
+      },
+      {
+        label: 'Contato',
+        href: '/contato',
+        active: true,
+        isBlank: false,
       },
     ],
   },
@@ -74,10 +114,10 @@ const Footer = () => {
         <div className="rounded-3xl border border-gray-300 bg-white p-8">
           <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
             {/* Colunas de links */}
-            <div className="grid w-full grid-cols-2 gap-8 md:w-full md:grid-cols-6">
+            <div className="grid w-full grid-cols-2 gap-8 md:w-2/3 md:grid-cols-4">
               {footerLinks.map((col) => (
                 <div key={col.title}>
-                  <h3 className="mb-2 font-semibold text-gray-900">
+                  <h3 className="mb-3 font-semibold text-gray-900">
                     {col.title}
                   </h3>
                   <ul className="space-y-2">
@@ -86,9 +126,10 @@ const Footer = () => {
                         {link.active ? (
                           <Link
                             href={link.href}
+                            target={link.isBlank ? '_blank' : '_self'}
                             className={cn(
-                              'text-sm text-gray-600 transition-colors hover:text-green-700 hover:underline',
-                              link.active && 'text-green-700'
+                              'text-sm text-gray-600 transition-colors hover:text-red-600 hover:underline',
+                              link.active && 'text-gray-700'
                             )}
                           >
                             {link.label}
@@ -96,7 +137,7 @@ const Footer = () => {
                         ) : (
                           <span
                             className={cn(
-                              'cursor-not-allowed text-sm text-gray-600 opacity-80 select-none'
+                              'cursor-not-allowed text-sm text-gray-500 opacity-70 select-none'
                             )}
                             aria-disabled="true"
                             tabIndex={-1}
@@ -109,15 +150,18 @@ const Footer = () => {
                   </ul>
                 </div>
               ))}
-              <div className="col-span-2 flex flex-col gap-2">
-                <h3 className="mb-2 font-semibold text-gray-900">Newsletter</h3>
-                <p className="text-sm text-gray-600">
-                  Receba as últimas notícias e atualizações do projeto.
-                </p>
+            </div>
+            {/* Newsletter */}
+            <div className="flex w-full flex-col gap-3 md:w-1/3 md:pl-8">
+              <h3 className="mb-1 font-semibold text-gray-900">Newsletter</h3>
+              <p className="text-sm text-gray-600">
+                Receba as últimas notícias e atualizações do projeto.
+              </p>
+              <div className="space-y-3">
                 <input
                   type="email"
                   placeholder="Digite seu email"
-                  className="rounded-md border border-gray-300 p-2"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:outline-none"
                 />
                 <Button
                   size="default"

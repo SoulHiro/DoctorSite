@@ -2,6 +2,7 @@ import { relations } from 'drizzle-orm'
 
 import {
   blogPostsTable,
+  DeppoimnetsTable,
   mediaTable,
   notificationsTable,
   paymentsTable,
@@ -14,17 +15,25 @@ export const usersTableRelations = relations(usersTable, ({ many }) => ({
   media: many(mediaTable),
   payments: many(paymentsTable),
   notifications: many(notificationsTable),
+  deppoiments: many(DeppoimnetsTable),
 }))
+
+export const deppoimentsTableRelations = relations(
+  DeppoimnetsTable,
+  ({ one }) => ({
+    user: one(usersTable, {
+      fields: [DeppoimnetsTable.userId],
+      references: [usersTable.id],
+    }),
+  })
+)
 
 export const blogPostsTableRelations = relations(blogPostsTable, ({ one }) => ({
   user: one(usersTable, {
     fields: [blogPostsTable.userId],
     references: [usersTable.id],
   }),
-  cover: one(mediaTable, {
-    fields: [blogPostsTable.coverId],
-    references: [mediaTable.id],
-  }),
+  // cover removido pois não existe mais coverId nem relação direta com mediaTable
 }))
 
 export const mediaTableRelations = relations(mediaTable, ({ one }) => ({

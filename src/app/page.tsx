@@ -7,22 +7,22 @@ import HeroSection from '@/components/landing-page/hero-section'
 import ImpactSection from '@/components/landing-page/impact-section'
 import { Partners } from '@/components/landing-page/partners'
 import TestimonialsSection from '@/components/landing-page/testimonals'
+import { PageContainer } from '@/components/ui/page-container'
 
 export default function Home() {
-  const containerClassName = 'relative mx-auto w-full max-w-6xl space-y-16'
   return (
-    <div className="w-screen space-y-16 bg-transparent">
+    <div className="w-full space-y-16 bg-transparent">
       <HeroSection />
-      <div className={containerClassName}>
+      <PageContainer className="space-y-16">
         <AboutSection />
         <ImpactSection />
-      </div>
+      </PageContainer>
       <GallerySection />
       <TestimonialsSection />
-      <div className={containerClassName}>
+      <PageContainer className="space-y-16">
         <BlogSection />
         <Partners />
-      </div>
+      </PageContainer>
     </div>
   )
 }

@@ -54,7 +54,7 @@ const GalleryHeroSection = () => {
     setSelectedMonth(new Date(newYear, currentMonth, 1))
   }
 
-  const formatSelectedMonth = (date) => {
+  const formatSelectedMonth = (date: Date) => {
     return date.toLocaleDateString('pt-BR', {
       month: 'long',
       year: 'numeric',
@@ -62,23 +62,32 @@ const GalleryHeroSection = () => {
   }
   const [open, setOpen] = useState(false)
   return (
-    <section className="flex h-screen w-full flex-col items-center justify-center space-y-4 py-64">
-      <h1 className="text-center text-6xl font-bold tracking-widest">
-        Galeria
-      </h1>
-      <div className="flex flex-row gap-4">
+    <section className="flex w-full flex-col items-center justify-center space-y-6 py-20 pt-16">
+      <div className="space-y-4 text-center">
+        <h1 className="text-center text-5xl font-bold tracking-widest md:text-6xl">
+          Galeria
+        </h1>
+        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+          Explore momentos especiais capturados durante nossas visitas aos
+          hospitais
+        </p>
+      </div>
+
+      <div className="mt-8 flex flex-col gap-4 md:flex-row">
         <div className="relative w-full max-w-sm">
           <Select>
-            <SelectTrigger className="w-fit">
+            <SelectTrigger className="w-full md:w-fit">
               <SelectValue placeholder="Selecione a cidade" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Cidade</SelectLabel>
-                <SelectItem value="apple">Ibirubá</SelectItem>
-                <SelectItem value="apple">Tapera</SelectItem>
-                <SelectItem value="apple">Passo Fundo</SelectItem>
-                <SelectItem value="apple">Quinze De Novembro</SelectItem>
+                <SelectItem value="ibiruba">Ibirubá</SelectItem>
+                <SelectItem value="tapera">Tapera</SelectItem>
+                <SelectItem value="passo-fundo">Passo Fundo</SelectItem>
+                <SelectItem value="quinze-novembro">
+                  Quinze De Novembro
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -89,7 +98,7 @@ const GalleryHeroSection = () => {
               <Button
                 variant="outline"
                 id="month-picker"
-                className="w-fit justify-between font-normal"
+                className="w-full justify-between font-normal md:w-fit"
               >
                 {formatSelectedMonth(selectedMonth)}
                 <ChevronDownIcon className="h-4 w-4" />

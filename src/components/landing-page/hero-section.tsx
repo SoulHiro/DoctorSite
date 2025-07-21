@@ -4,22 +4,22 @@ import { Button } from '../ui/button'
 
 const HeroSection = () => {
   return (
-    <div className="flex h-screen w-screen">
-      <section className="relative -z-10 flex h-screen w-screen flex-col items-center justify-center overflow-hidden">
+    <div className="flex min-h-screen w-full">
+      <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden">
         <Image
           src="/images/hero-section.webp"
           alt="Seção principal - Doutores Palhaços"
           fill
           quality={100}
           priority
-          className="-z-100 object-cover"
+          className="-z-10 object-cover"
           sizes="100vw"
         />
         {/* Overlay escuro para contraste */}
-        <div className="absolute inset-0 -z-90 bg-black/60" />
+        <div className="absolute inset-0 -z-[5] bg-black/60" />
         <div
           id="hero-section"
-          className="relative z-0 flex h-full w-full flex-col items-center justify-center space-y-6"
+          className="relative z-10 flex h-full w-full flex-col items-center justify-center space-y-6"
         >
           <h1 className="text-center text-4xl font-bold text-white drop-shadow-lg md:text-5xl">
             Um Sorriso que <span className="text-red-500">Cura</span>

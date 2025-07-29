@@ -15,7 +15,7 @@ Esta versão substituirá o antigo site feito em WordPress.
 
 ## 🚧 Status do Projeto
 
-> 🛠️ Em desenvolvimento – Área Administrativa | Blog
+> 🛠️ Em desenvolvimento – Blog | Galeria
 
 ## 🔄 Planejamento Inicial
 

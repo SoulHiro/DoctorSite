@@ -6,21 +6,25 @@
 
 - [x] Criar post (formulário completo)
 - [x] Listagem de posts no painel admin
+- [x] Interface de gerenciamento com filtros
+- [x] Stats cards para métricas
 - [ ] Editar post existente
-- [ ] Deletar post
-- [ ] Visualização pública de posts
+- [x] Deletar post
+- [x] Visualização pública de posts
+- [x] Página pública de listagem do blog
+- [x] Página individual de post por slug
 - [ ] Sistema de rascunhos
 
 ### 🧩 Estrutura e Conteúdo
 
 - [x] Campo: Título
-- [x] Campo: Conteúdo (rich text ou textarea)
+- [x] Campo: Conteúdo (rich text com Tiptap)
 - [x] Campo: Status (rascunho, publicado, arquivado)
 - [x] Campo: Tags (notícia, evento, artigo, outro)
 - [x] Campo: Capa do post (via galeria ou URL)
-- [x] Campo: Agendamento de publicação
-- [ ] Campo: Slug automático
-- [ ] Campo: Meta descrição
+- [ ] Campo: Agendamento de publicação (removido temporariamente)
+- [x] Campo: Slug automático
+- [x] Campo: Meta descrição
 
 ### 🧠 Validação e UX
 
@@ -29,19 +33,23 @@
 - [x] Feedback visual de sucesso e erro
 - [x] Preview em tempo real do post
 - [x] Loading e desabilitar botão durante envio
+- [x] Interface moderna com shadcn/ui
 - [ ] Validação de slug único
 
 ### 📣 Exibição Pública
 
-- [ ] Página de listagem dos posts em ordem cronológica
-- [ ] Página de visualização individual do post
-- [ ] Slug automático e único baseado no título
-- [ ] Layout em grid/cards
+- [x] Página de listagem dos posts em ordem cronológica (`/blog`)
+- [x] Página de visualização individual do post (`/blog/[slug]`)
+- [x] Slug automático e único baseado no título
+- [x] Layout em grid/cards
+- [x] Posts em destaque na landing page
+- [x] Integração com dados reais do banco
 
 ### 🔐 Permissões e Segurança
 
 - [x] Apenas usuários autenticados podem criar
-- [ ] Apenas usuários autenticados podem editar/deletar
+- [x] Apenas usuários autenticados podem editar/deletar
+- [x] Proteção de rotas admin
 - [ ] Proteção contra acesso direto a rascunhos
 - [ ] Sanitização de conteúdo (para evitar XSS)
 
@@ -50,11 +58,14 @@
 - [x] Interface de criação intuitiva
 - [x] Preview responsivo
 - [x] Estados de loading
+- [x] Interface de gerenciamento com filtros
+- [x] Cards modernos para posts
 
 ### 📱 Responsividade
 
 - [x] Formulários responsivos
 - [x] Preview mobile-friendly
+- [x] Layout público responsivo
 
 ### 🔍 SEO Básico
 
@@ -64,8 +75,9 @@
 
 ### 🗄️ Banco de Dados
 
-- [x] Tabela de posts
+- [x] Tabela de posts implementada
 - [x] Relacionamentos básicos
+- [x] Actions para CRUD completo
 
 ## 🚀 **Pós-MVP - Melhorias e Funcionalidades Avançadas**
 

@@ -5,9 +5,10 @@
 ### 🏗️ Estrutura Base
 
 - [x] Página da galeria (`src/app/(public)/gallery/page.tsx`)
-- [x] Layout responsivo com `PageContainer`
+- [x] Layout responsivo
 - [x] Organização em seções bem definidas
 - [x] Navegação básica
+- [x] Páginas dinâmicas por município (`/gallery/[municipality]`)
 
 ### 🎯 Seções Principais
 
@@ -15,16 +16,19 @@
 - [x] Featured Images (carrossel com autoplay)
 - [x] Mini Portfolio (grid de imagens)
 - [x] Municipalities Section (estrutura básica)
+- [x] Image Grid por município
+- [x] Modal de visualização básico
 
 ### 🖼️ Funcionalidades Essenciais
 
-- [ ] Sistema de upload via Cloudinary
-- [ ] Interface de upload no admin
-- [ ] Preview de imagens
-- [ ] Validação de arquivos
-- [ ] Grid responsivo
-- [ ] Lazy loading
-- [ ] Otimização de imagens
+- [x] Sistema de upload via Cloudinary
+- [x] Interface de upload no admin (`/admin/galeria/upload`)
+- [x] Interface de gerenciamento completo
+- [x] Preview de imagens
+- [x] Validação de arquivos
+- [x] Grid responsivo
+- [x] Lazy loading implementado
+- [x] Otimização de imagens
 
 ### 🎨 Design e UX
 
@@ -32,6 +36,7 @@
 - [x] Animações suaves
 - [x] Hover effects
 - [x] Loading states básicos
+- [x] Interface moderna de gerenciamento
 
 ### 📱 Responsividade
 
@@ -44,21 +49,26 @@
 
 - [x] Link da landing page para galeria
 - [x] Navegação interna entre seções
+- [x] Navegação entre municípios
+- [x] Navegação com modal de imagens
 
 ### 📊 Performance
 
 - [x] Imagens otimizadas com Next.js Image
 - [x] Lazy loading implementado
+- [x] Hooks otimizados (useCallback)
 
 ### 🔍 SEO Básico
 
 - [x] Estrutura semântica HTML
+- [x] URLs amigáveis por município
 
 ### 🗄️ Banco de Dados
 
 - [x] Tabela de imagens implementada
 - [x] Relacionamentos básicos
-- [ ] Actions para upload
+- [x] Actions para upload e listagem
+- [x] Integração com dados reais
 
 ## 🚀 **Pós-MVP - Melhorias e Funcionalidades Avançadas**
 
@@ -73,11 +83,11 @@
 
 ### 🔍 Filtros e Busca
 
-- [ ] Filtro por categoria (Hospitais, Eventos, Outros)
-- [ ] Filtro por município
-- [ ] Filtro por data
+- [x] Filtro por categoria (Hospitais, Eventos, Outros)
+- [x] Filtro por município
+- [x] Filtro por data
 - [ ] Busca por texto
-- [ ] Ordenação (mais recentes, mais antigas)
+- [x] Ordenação (mais recentes, mais antigas)
 
 ### 🎨 UX Avançada
 

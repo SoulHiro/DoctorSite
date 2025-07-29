@@ -31,7 +31,7 @@ const footerLinks = [
   {
     title: 'Conteúdo',
     links: [
-      { label: 'Blog', href: '/blog', active: false, isBlank: false },
+      { label: 'Blog', href: '/blog', active: true, isBlank: false },
       { label: 'Galeria', href: '/gallery', active: true, isBlank: false },
       {
         label: 'Depoimentos',

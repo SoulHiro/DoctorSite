@@ -3,19 +3,19 @@ import { FaCalendarAlt, FaHospitalAlt, FaSmile } from 'react-icons/fa'
 const stats = [
   {
     icon: FaHospitalAlt,
-    value: '25+',
-    label: 'Hospitais e Postos de Saúde Visitados',
+    value: '20+',
+    label: 'Hospitais Visitados',
     description: 'Espalhados pelo Rio Grande do Sul',
   },
   {
     icon: FaSmile,
-    value: '15.000+',
+    value: '60.000+',
     label: 'Pacientes e Famílias Atendidas',
     description: 'Momentos de alegria compartilhados',
   },
   {
     icon: FaCalendarAlt,
-    value: '12',
+    value: '3',
     label: 'Anos de Atuação Contínua',
     description: 'Transformando vidas através do riso',
   },

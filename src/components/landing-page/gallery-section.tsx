@@ -2,82 +2,67 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
+import { getImages } from '@/actions/gallery'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-const columnsData = [
-  // Coluna 1
-  [
-    {
-      id: 1,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 1',
-      category: 'Hospitais',
-      className: 'h-64',
-    },
-    {
-      id: 2,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 2',
-      category: 'Eventos',
-      className: 'h-40',
-    },
-  ],
-  // Coluna 2
-  [
-    {
-      id: 3,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 3',
-      category: 'Outros',
-      className: 'h-48',
-    },
-    {
-      id: 4,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 4',
-      category: 'Hospitais',
-      className: 'h-56',
-    },
-  ],
-  // Coluna 3
-  [
-    {
-      id: 5,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 5',
-      category: 'Eventos',
-      className: 'h-40',
-    },
-    {
-      id: 6,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 6',
-      category: 'Outros',
-      className: 'h-64',
-    },
-  ],
-  // Coluna 4
-  [
-    {
-      id: 8,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 8',
-      category: 'Eventos',
-      className: 'h-56',
-    },
-    {
-      id: 9,
-      src: '/images/hero-section.webp',
-      alt: 'Galeria 9',
-      category: 'Outros',
-      className: 'h-48',
-    },
-  ],
-]
+interface ColumnItem {
+  id: string | number
+  src: string
+  alt: string
+  municipality: string
+  className: string
+}
 
 const GallerySection = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [columnsData, setColumnsData] = useState<ColumnItem[][]>([])
+
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        const images = await getImages()
+
+        // Se temos imagens reais, organizá-las em colunas
+        if (images.length > 0) {
+          const heights = [
+            'h-64',
+            'h-40',
+            'h-48',
+            'h-56',
+            'h-40',
+            'h-64',
+            'h-56',
+            'h-48',
+          ]
+          const realColumns: ColumnItem[][] = [[], [], [], []]
+
+          // Distribuir as primeiras 8 imagens nas 4 colunas (2 por coluna)
+          images.slice(0, 8).forEach((image, index) => {
+            const columnIndex = Math.floor(index / 2)
+            realColumns[columnIndex].push({
+              id: image.id,
+              src: image.url,
+              alt: `${image.municipality} - ${image.filename}`,
+              municipality: image.municipality,
+              className: heights[index],
+            })
+          })
+
+          setColumnsData(realColumns)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar imagens da galeria:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchGalleryImages()
+  }, [])
+
   return (
     <section className="w-full space-y-8">
       <div className="relative h-[350px] w-full border-y">
@@ -96,7 +81,7 @@ const GallerySection = () => {
               pode causar.
             </p>
           </div>
-          <Link href="/galeria">
+          <Link href="/gallery">
             <Button
               size="default"
               className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
@@ -107,29 +92,43 @@ const GallerySection = () => {
         </div>
       </div>
       <div className="relative -top-24 z-20 mx-auto mb-[-4rem] max-w-6xl px-4">
-        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
-          {columnsData.map((column, colIndex) => (
-            <div key={colIndex} className="flex flex-col gap-4">
-              {column.map(({ id, src, alt, className }) => (
-                <div
-                  key={id}
-                  className={cn(
-                    'overflow-hidden rounded-xl border-2 border-white bg-gray-300 shadow-lg transition-all duration-300',
-                    className
-                  )}
-                >
-                  <Image
-                    src={src}
-                    alt={alt}
-                    width={400}
-                    height={400}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-gray-600">Carregando galeria...</div>
+          </div>
+        ) : (
+          <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
+            {columnsData.map((column, colIndex) => (
+              <div key={colIndex} className="flex flex-col gap-4">
+                {column.map(({ id, src, alt, municipality, className }) => (
+                  <div
+                    key={id}
+                    className={cn(
+                      'group overflow-hidden rounded-xl border-2 border-white bg-gray-300 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl',
+                      className
+                    )}
+                  >
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={src}
+                        alt={alt}
+                        width={400}
+                        height={400}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      {/* Overlay com informação do município */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <p className="text-sm font-medium">{municipality}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

@@ -16,11 +16,11 @@ export const ToggleOptions = ({
       onValueChange={onChange}
     >
       <ToggleGroupItem
-        className="ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center rounded-md text-sm whitespace-nowrap transition-all hover:bg-blue-50 hover:text-blue-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-blue-100 data-[state=on]:text-blue-900 data-[state=on]:shadow-sm"
-        value="scheduled"
+        className="ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center rounded-md text-sm whitespace-nowrap transition-all hover:bg-gray-50 hover:text-gray-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-gray-100 data-[state=on]:text-gray-900 data-[state=on]:shadow-sm"
+        value="draft"
       >
-        <span>⏰</span>
-        Agendar
+        <span>📝</span>
+        Rascunho
       </ToggleGroupItem>
       <ToggleGroupItem
         className="ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center rounded-md text-sm whitespace-nowrap transition-all hover:bg-green-50 hover:text-green-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-green-100 data-[state=on]:text-green-900 data-[state=on]:shadow-sm"

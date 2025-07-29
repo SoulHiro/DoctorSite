@@ -50,19 +50,35 @@ export function HeaderNavigationMenu() {
               </div>
               {/* Segunda parte: até 3 itens */}
               <ul className="flex flex-col gap-2">
-                <ListItem href="/historia" title="📜 Nossa História">
+                <ListItem
+                  href="/historia"
+                  title="📜 Nossa História"
+                  disabled={true}
+                >
                   Conheça a trajetória dos Doutores Palhaços.
                 </ListItem>
-                <ListItem href="/equipe" title="🌟 Missão, Visão e Valores">
+                <ListItem
+                  href="/missao"
+                  title="🌟 Missão, Visão e Valores"
+                  disabled={true}
+                >
                   Os princípios que guiam nosso trabalho.
                 </ListItem>
               </ul>
               {/* Terceira parte: até 3 itens */}
               <ul className="flex flex-col gap-2">
-                <ListItem href="/parceiros" title="👩‍⚕️ Nossa Equipe">
+                <ListItem
+                  href="/equipe"
+                  title="👩‍⚕️ Nossa Equipe"
+                  disabled={true}
+                >
                   Conheça a equipe de voluntários que fazem a diferença.
                 </ListItem>
-                <ListItem href="/" title="🏥 Onde Atuamos">
+                <ListItem
+                  href="/atuacao"
+                  title="🏥 Onde Atuamos"
+                  disabled={true}
+                >
                   Fale conosco para dúvidas, sugestões ou parcerias.
                 </ListItem>
               </ul>
@@ -96,20 +112,28 @@ export function HeaderNavigationMenu() {
                     Anos de Atuação
                   </span>
                   <span className="mt-1 text-lg font-bold text-green-700 drop-shadow">
-                    10
+                    3
                   </span>
                 </div>
               </div>
 
               {/* Segunda parte: destaques */}
               <ul className="flex flex-row gap-2">
-                <ListItem href="/historia" title="🏅 Reconhecimentos">
+                <ListItem
+                  href="/reconhecimentos"
+                  title="🏅 Reconhecimentos"
+                  disabled={true}
+                >
                   Prêmios e homenagens recebidos ao longo da nossa jornada.
                 </ListItem>
-                <ListItem href="/historia" title="🔬 Impacto Científico">
+                <ListItem
+                  href="/impacto-cientifico"
+                  title="🔬 Impacto Científico"
+                  disabled={true}
+                >
                   Pesquisas e evidências sobre os benefícios do riso na saúde.
                 </ListItem>
-                <ListItem href="/equipe" title="📺 Na Mídia">
+                <ListItem href="/midia" title="📺 Na Mídia" disabled={true}>
                   Reportagens, entrevistas e participações na mídia.
                 </ListItem>
               </ul>
@@ -121,24 +145,24 @@ export function HeaderNavigationMenu() {
           <NavigationMenuContent>
             <ul className="grid w-[300px] gap-4">
               <li>
-                <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium">Doe Agora</div>
-                    <div className="text-muted-foreground">
+                <div className="space-y-4">
+                  <div className="cursor-not-allowed rounded-md p-3 opacity-50">
+                    <div className="font-medium text-gray-400">Doe Agora</div>
+                    <div className="text-sm text-gray-400">
                       Página com botão de doação e explicação clara de como o
-                      dinheiro é usado.
+                      dinheiro é usado. (Em breve)
                     </div>
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link href="#">
-                    <div className="font-medium">Seja um Parceiro</div>
-                    <div className="text-muted-foreground">
+                  </div>
+                  <div className="cursor-not-allowed rounded-md p-3 opacity-50">
+                    <div className="font-medium text-gray-400">
+                      Seja um Parceiro
+                    </div>
+                    <div className="text-sm text-gray-400">
                       Espaço para entender como pode-se apoiar financeiramente
-                      ou com serviços.
+                      ou com serviços. (Em breve)
                     </div>
-                  </Link>
-                </NavigationMenuLink>
+                  </div>
+                </div>
               </li>
             </ul>
           </NavigationMenuContent>
@@ -151,13 +175,17 @@ export function HeaderNavigationMenu() {
                 {/* Coluna 1 */}
                 <ul className="flex flex-col gap-4">
                   <ListItem
-                    href="#"
+                    href="/blog"
                     title="📝 Blog"
                     className="border-muted border-b pb-3"
                   >
                     Histórias inspiradoras e novidades do nosso dia a dia.
                   </ListItem>
-                  <ListItem href="#" title="📅 Agenda & Próximas Visitas">
+                  <ListItem
+                    href="/agenda"
+                    title="📅 Agenda & Próximas Visitas"
+                    disabled={true}
+                  >
                     Fique por dentro dos próximos encontros e eventos.
                   </ListItem>
                 </ul>
@@ -170,7 +198,11 @@ export function HeaderNavigationMenu() {
                   >
                     Momentos marcantes registrados em imagens cheias de alegria.
                   </ListItem>
-                  <ListItem href="#" title="🎬 Vídeos & Bastidores">
+                  <ListItem
+                    href="/videos"
+                    title="🎬 Vídeos & Bastidores"
+                    disabled={true}
+                  >
                     Bastidores, vídeos divertidos e registros especiais das
                     visitas.
                   </ListItem>

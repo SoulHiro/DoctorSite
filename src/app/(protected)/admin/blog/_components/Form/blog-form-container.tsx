@@ -6,8 +6,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { createPost } from '@/actions/posts/create'
-import { formatDate } from '@/lib/post-utils'
+import { createPost } from '@/actions/blog'
+import { BlogPost } from '@/types/blog-types'
 
 import BlogForm from './blog-form'
 import BlogPreview from './preview'
@@ -19,23 +19,16 @@ const formSchema = z.object({
     .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
     .min(1, { message: 'Selecione pelo menos uma tag' }),
   image: z.instanceof(File).optional(),
-  shedule: z.date().optional(),
 })
 
 interface BlogFormContainerProps {
   mode: 'create' | 'edit'
-  initialData?: Post
+  initialData?: BlogPost
   postId?: string
 }
 
-const BlogFormContainer = ({
-  mode,
-  initialData,
-  postId,
-}: BlogFormContainerProps) => {
-  const [status, setStatus] = useState<'draft' | 'scheduled' | 'published'>(
-    'published'
-  )
+const BlogFormContainer = ({}: BlogFormContainerProps) => {
+  const [status, setStatus] = useState<'draft' | 'published'>('published')
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,27 +37,52 @@ const BlogFormContainer = ({
       content: '',
       tags: ['noticia'],
       image: undefined,
-      shedule: undefined,
     },
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      // Validação específica para agendamento
-      if (status === 'scheduled') {
-        if (!data.shedule) {
-          toast.error('Selecione uma data e hora para agendamento')
-          return
+      let imageUrl: string | undefined
+
+      // Se há uma imagem, fazer upload primeiro
+      if (data.image) {
+        const uploadFormData = new FormData()
+        uploadFormData.append('file', data.image)
+        uploadFormData.append('folder', 'blog-posts')
+
+        const uploadResponse = await fetch('/api/upload-image', {
+          method: 'POST',
+          body: uploadFormData,
+        })
+
+        if (!uploadResponse.ok) {
+          const errorData = await uploadResponse.json()
+          throw new Error(errorData.error || 'Erro ao fazer upload da imagem')
         }
 
-        const now = new Date()
-        if (data.shedule <= now) {
-          toast.error('A data de agendamento deve ser no futuro')
-          return
-        }
+        const uploadResult = await uploadResponse.json()
+        imageUrl = uploadResult.secure_url
       }
 
-      const result = await createPost(data, status)
+      // Converter dados para FormData
+      const formData = new FormData()
+      formData.append('title', data.title)
+      formData.append('content', data.content)
+
+      // Adicionar tags como múltiplos valores
+      data.tags.forEach((tag) => {
+        formData.append('tags', tag)
+      })
+
+      // Adicionar URL da imagem se existir
+      if (imageUrl) {
+        formData.append('imageUrl', imageUrl)
+      }
+
+      // Converter status para o formato esperado pela action
+      const postStatus = status === 'published' ? 'publicado' : 'rascunho'
+
+      const result = await createPost(formData, postStatus)
 
       if (result.error) {
         toast.error(result.error)
@@ -72,10 +90,7 @@ const BlogFormContainer = ({
         // Mensagem de sucesso personalizada baseada no status
         let successMessage = 'Post criado com sucesso!'
 
-        if (result.post.status === 'agendado' && result.post.scheduledAt) {
-          const scheduledDate = new Date(result.post.scheduledAt)
-          successMessage = `Post agendado para ${formatDate(scheduledDate, true)}`
-        } else if (result.post.status === 'publicado') {
+        if (result.post.status === 'publicado') {
           successMessage = 'Post publicado com sucesso!'
         }
 
@@ -87,42 +102,26 @@ const BlogFormContainer = ({
       }
     } catch (error) {
       console.error('Erro ao criar post:', error)
-      toast.error('Erro inesperado ao criar post')
+      toast.error(
+        error instanceof Error ? error.message : 'Erro inesperado ao criar post'
+      )
     }
   }
 
-  if (mode === 'edit' && initialData && postId) {
-    return (
-      <div className="grid h-screen w-full grid-cols-2 gap-4 p-8">
-        <FormProvider {...form}>
-          <BlogForm
-            formSchema={formSchema}
-            form={form}
-            onSubmit={onSubmit}
-            status={status}
-            setStatus={setStatus}
-          />
-        </FormProvider>
-      </div>
-    )
-  }
-
-  if (mode === 'create') {
-    return (
-      <div className="grid h-screen w-full grid-cols-2 gap-4 p-8">
-        <FormProvider {...form}>
-          <BlogForm
-            formSchema={formSchema}
-            form={form}
-            onSubmit={onSubmit}
-            status={status}
-            setStatus={setStatus}
-          />
-          <BlogPreview />
-        </FormProvider>
-      </div>
-    )
-  }
+  return (
+    <div className="grid h-screen w-full grid-cols-2 gap-4 p-8">
+      <FormProvider {...form}>
+        <BlogForm
+          formSchema={formSchema}
+          form={form}
+          onSubmit={onSubmit}
+          status={status}
+          setStatus={setStatus}
+        />
+        <BlogPreview />
+      </FormProvider>
+    </div>
+  )
 }
 
 export default BlogFormContainer

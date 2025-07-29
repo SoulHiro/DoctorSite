@@ -4,8 +4,8 @@
 
 ### 🏠 Estrutura Base
 
-- [x] Página principal (`src/app/page.tsx`)
-- [x] Layout responsivo com `PageContainer`
+- [x] Página principal (`src/app/(public)/page.tsx`)
+- [x] Layout responsivo
 - [x] Organização em seções bem definidas
 - [x] Navegação entre seções
 
@@ -37,14 +37,17 @@
 ### 🔗 Navegação e Links
 
 - [x] Links internos funcionais
-- [x] Navegação para galeria
-- [ ] Links para blog individual
+- [x] Navegação para galeria funcional
+- [x] Links para blog funcional
+- [x] Links para contato funcional
+- [x] Links desabilitados para páginas inexistentes (cinza)
 - [ ] Links para páginas de doação
 
 ### 📊 Performance
 
 - [x] Imagens otimizadas com Next.js Image
 - [x] Lazy loading implementado
+- [x] Build limpo sem erros de ESLint
 
 ### 🔍 SEO Básico
 

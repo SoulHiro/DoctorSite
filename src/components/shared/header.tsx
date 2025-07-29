@@ -6,11 +6,13 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { useScrollHeader } from '@/hooks/use-scroll-header'
+import { authClient } from '@/lib/auth-client'
 
 import { HeaderNavigationMenu } from '../../app/(public)/_components/header/navigation-menu'
 
 const HeaderPublic = () => {
   const { isScrolled } = useScrollHeader()
+  const { data: session } = authClient.useSession()
 
   return (
     <>
@@ -38,12 +40,12 @@ const HeaderPublic = () => {
           <nav className="hidden justify-center md:flex md:gap-8">
             <HeaderNavigationMenu />
             <div>
-              <Link href="/auth">
+              <Link href={session ? '/admin/dashboard' : '/auth'}>
                 <Button
                   size="default"
                   className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
                 >
-                  Entrar
+                  {session ? 'Dashboard' : 'Entrar'}
                 </Button>
               </Link>
             </div>

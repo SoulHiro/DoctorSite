@@ -1,26 +1,27 @@
 'use server'
 
-import { v2 as cloudinary } from 'cloudinary'
 import { and, eq } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { z } from 'zod'
 
-import { db } from '@/db'
-import { blogPostsTable } from '@/db/schema'
+import { blogPostsTable, db } from '@/db'
 import { auth } from '@/lib/auth'
 import {
-  determinePostStatus,
   generateExcerpt,
   generateSlug,
-  toLocalISOString,
   validatePostData,
 } from '@/lib/post-utils'
 
-cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+// Função simples para formatar data sem segundos e milissegundos
+const formatDateForDB = (date: Date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:00.000Z`
+}
 
 const createPostSchema = z.object({
   title: z.string().min(1, { message: 'Título é obrigatório' }),
@@ -28,17 +29,14 @@ const createPostSchema = z.object({
   tags: z
     .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
     .min(1, { message: 'Selecione pelo menos uma tag' }),
-  imageUrl: z
-    .string()
-    .url({ message: 'URL da imagem é obrigatória e deve ser válida' }),
-  shedule: z.preprocess(
-    (val) => (val ? new Date(val as string) : undefined),
-    z.date().optional()
-  ),
-  status: z.enum(['draft', 'scheduled', 'published']),
+  imageUrl: z.string().optional(),
+  status: z.enum(['rascunho', 'publicado']),
 })
 
-export async function createPost(formData: FormData) {
+export async function createPost(
+  formData: FormData,
+  status: 'rascunho' | 'publicado'
+) {
   const headersList = await headers()
   const session = await auth.api.getSession({ headers: headersList })
   const userId = session?.user?.id
@@ -50,16 +48,13 @@ export async function createPost(formData: FormData) {
   // Extrair e converter os dados do FormData
   const rawTags = formData.getAll('tags')
   const tags = Array.isArray(rawTags) ? rawTags : [rawTags]
-  const sheduleRaw = formData.get('shedule')
-  const shedule = sheduleRaw ? new Date(sheduleRaw as string) : undefined
 
   const data = {
     title: formData.get('title') as string,
     content: formData.get('content') as string,
     tags: tags as string[],
     imageUrl: formData.get('imageUrl') as string,
-    shedule,
-    status: formData.get('status') as 'draft' | 'scheduled' | 'published',
+    status,
   }
 
   const validatedData = createPostSchema.safeParse(data)
@@ -75,8 +70,7 @@ export async function createPost(formData: FormData) {
     content,
     tags: validTags,
     imageUrl,
-    shedule: validShedule,
-    status,
+    status: formStatus,
   } = validatedData.data
 
   // Gerar slug e verificar unicidade
@@ -93,7 +87,6 @@ export async function createPost(formData: FormData) {
     title: title.trim(),
     content,
     tags: validTags,
-    scheduledAt: validShedule,
     imageUrl,
   }
 
@@ -104,18 +97,10 @@ export async function createPost(formData: FormData) {
   }
 
   // Determinar status final
-  const isScheduled = status === 'scheduled'
-  const finalStatus = determinePostStatus(isScheduled, postData.scheduledAt)
-
-  if (isScheduled && (!postData.scheduledAt || finalStatus !== 'agendado')) {
-    return { error: 'Data de agendamento inválida ou no passado' }
-  }
+  const finalStatus: 'rascunho' | 'publicado' =
+    formStatus === 'publicado' ? 'publicado' : 'rascunho'
 
   const excerpt = generateExcerpt(postData.content)
-  let scheduledAtISO: string | null = null
-  if (finalStatus === 'agendado' && postData.scheduledAt) {
-    scheduledAtISO = toLocalISOString(postData.scheduledAt)
-  }
 
   const insertData = {
     title: postData.title,
@@ -128,21 +113,15 @@ export async function createPost(formData: FormData) {
     featured: false,
     viewCount: 0,
     imageUrl: postData.imageUrl || null,
-    publishedAt: finalStatus === 'publicado' ? new Date().toISOString() : null,
-    scheduledAt: scheduledAtISO,
+    publishedAt:
+      finalStatus === 'publicado' ? formatDateForDB(new Date()) : null,
   }
 
   try {
     const [newPost] = await db
       .insert(blogPostsTable)
       .values(insertData)
-      .returning({
-        id: blogPostsTable.id,
-        title: blogPostsTable.title,
-        slug: blogPostsTable.slug,
-        status: blogPostsTable.status,
-        scheduledAt: blogPostsTable.scheduledAt,
-      })
+      .returning()
 
     return {
       success: true,
@@ -150,13 +129,55 @@ export async function createPost(formData: FormData) {
         id: newPost.id,
         title: newPost.title,
         slug: newPost.slug,
+        content: newPost.content,
+        excerpt: newPost.excerpt,
         status: newPost.status,
-        scheduledAt: newPost.scheduledAt || undefined,
+        tags: newPost.tags,
+        imageUrl: newPost.imageUrl,
+        publishedAt: newPost.publishedAt,
+        createdAt: newPost.createdAt,
       },
     }
   } catch (error) {
     console.error('Erro ao criar post:', error)
-    return { error: 'Erro interno do servidor ao criar post' }
+    return { error: 'Erro interno ao criar post' }
+  }
+}
+
+export async function getPosts() {
+  try {
+    const posts = await db.query.blogPostsTable.findMany({
+      with: {
+        user: {
+          columns: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+      orderBy: (posts, { desc }) => [desc(posts.createdAt)],
+    })
+
+    return posts.map((post) => ({
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      content: post.content,
+      excerpt: post.excerpt,
+      status: post.status,
+      author: post.user.name,
+      authorId: post.userId,
+      tags: post.tags,
+      imageUrl: post.imageUrl,
+      publishedAt: post.publishedAt
+        ? formatDateForDB(new Date(post.publishedAt))
+        : null,
+      createdAt: formatDateForDB(new Date(post.createdAt)),
+    }))
+  } catch (error) {
+    console.error('Erro ao buscar posts:', error)
+    return []
   }
 }
 
@@ -187,5 +208,46 @@ export async function deletePost(postId: string) {
   } catch (error) {
     console.error('Erro ao deletar post:', error)
     return { error: 'Erro ao deletar o post.' }
+  }
+}
+
+export async function getPostBySlug(slug: string) {
+  try {
+    const post = await db.query.blogPostsTable.findFirst({
+      where: (posts, { eq }) => eq(posts.slug, slug),
+      with: {
+        user: {
+          columns: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    })
+
+    if (!post) {
+      return null
+    }
+
+    return {
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      content: post.content,
+      excerpt: post.excerpt,
+      status: post.status,
+      author: post.user.name,
+      authorId: post.userId,
+      tags: post.tags,
+      imageUrl: post.imageUrl,
+      publishedAt: post.publishedAt
+        ? formatDateForDB(new Date(post.publishedAt))
+        : null,
+      createdAt: formatDateForDB(new Date(post.createdAt)),
+    }
+  } catch (error) {
+    console.error('Erro ao buscar post por slug:', error)
+    return null
   }
 }

@@ -1,8 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
+
+h1 {
+  font-family: var(--font-bebas-neue);
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+}
+
+h2,
+h3,
+h4 {
+  font-family: var(--font-bebas-neue);
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+}
 
 body {
   overflow-x: hidden;
@@ -30,7 +43,7 @@ img {
 }
 
 @theme inline {
-  --font-luckiest-regular: 'Luckiest Guy', sans-serif;
+  --font-bebas-neue: 'Bebas Neue', sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -144,4 +157,106 @@ img {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* TipTap Editor Styles */
+.tiptap-content .ProseMirror {
+  outline: none;
+}
+
+.tiptap-content .ProseMirror h1 {
+  @apply mt-6 mb-4 text-3xl font-bold;
+}
+
+.tiptap-content .ProseMirror h2 {
+  @apply mt-5 mb-3 text-2xl font-bold;
+}
+
+.tiptap-content .ProseMirror h3 {
+  @apply mt-4 mb-2 text-xl font-bold;
+}
+
+.tiptap-content .ProseMirror p {
+  @apply mb-3 leading-relaxed;
+}
+
+.tiptap-content .ProseMirror ul {
+  @apply mb-3 list-inside list-disc space-y-1;
+}
+
+.tiptap-content .ProseMirror ol {
+  @apply mb-3 list-inside list-decimal space-y-1;
+}
+
+.tiptap-content .ProseMirror blockquote {
+  @apply mb-3 border-l-4 border-gray-300 bg-gray-50 py-2 pl-4 italic;
+}
+
+.tiptap-content .ProseMirror code {
+  @apply rounded bg-gray-100 px-1 py-0.5 font-mono text-sm;
+}
+
+.tiptap-content .ProseMirror hr {
+  @apply my-6 border-0 border-t border-gray-300;
+}
+
+.tiptap-content .ProseMirror strong {
+  @apply font-bold;
+}
+
+.tiptap-content .ProseMirror em {
+  @apply italic;
+}
+
+/* TipTap Viewer Styles */
+.tiptap-viewer .ProseMirror {
+  outline: none;
+}
+
+.tiptap-viewer .ProseMirror h1 {
+  @apply mt-8 mb-6 text-4xl leading-tight font-bold text-gray-900;
+}
+
+.tiptap-viewer .ProseMirror h2 {
+  @apply mt-6 mb-4 text-3xl leading-tight font-bold text-gray-900;
+}
+
+.tiptap-viewer .ProseMirror h3 {
+  @apply mt-5 mb-3 text-2xl leading-snug font-bold text-gray-900;
+}
+
+.tiptap-viewer .ProseMirror p {
+  @apply mb-4 text-lg leading-relaxed text-gray-700;
+}
+
+.tiptap-viewer .ProseMirror ul {
+  @apply mb-4 ml-4 list-disc space-y-2;
+}
+
+.tiptap-viewer .ProseMirror ol {
+  @apply mb-4 ml-4 list-decimal space-y-2;
+}
+
+.tiptap-viewer .ProseMirror li {
+  @apply text-lg leading-relaxed text-gray-700;
+}
+
+.tiptap-viewer .ProseMirror blockquote {
+  @apply mb-4 border-l-4 border-red-500 bg-red-50 py-3 pl-6 text-lg text-gray-800 italic;
+}
+
+.tiptap-viewer .ProseMirror code {
+  @apply rounded bg-gray-100 px-2 py-1 font-mono text-base text-gray-800;
+}
+
+.tiptap-viewer .ProseMirror hr {
+  @apply my-8 border-0 border-t-2 border-gray-200;
+}
+
+.tiptap-viewer .ProseMirror strong {
+  @apply font-bold text-gray-900;
+}
+
+.tiptap-viewer .ProseMirror em {
+  @apply italic;
 }

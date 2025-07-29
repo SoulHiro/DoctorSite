@@ -11,36 +11,26 @@ export const generateSlug = (title: string): string => {
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
     .trim()
 }
 
-// Gera um excerpt a partir do conteúdo
+// Gera um excerpt do conteúdo
 export const generateExcerpt = (
   content: string,
   maxLength: number = 150
 ): string => {
-  const cleanContent = content.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim()
-
-  if (cleanContent.length <= maxLength) {
-    return cleanContent
+  if (content.length <= maxLength) {
+    return content
   }
 
-  // Corta no último espaço para não quebrar palavras
-  const truncated = cleanContent.substring(0, maxLength)
-  const lastSpaceIndex = truncated.lastIndexOf(' ')
+  const truncated = content.substring(0, maxLength)
+  const lastSpace = truncated.lastIndexOf(' ')
 
-  if (lastSpaceIndex > 0) {
-    return truncated.substring(0, lastSpaceIndex) + '...'
+  if (lastSpace === -1) {
+    return truncated + '...'
   }
 
-  return truncated + '...'
-}
-
-// Valida se uma data de agendamento é válida
-export const isValidScheduleDate = (scheduledDate: Date): boolean => {
-  const now = new Date()
-  return scheduledDate > now
+  return truncated.substring(0, lastSpace) + '...'
 }
 
 // Formata uma data para exibição
@@ -93,7 +83,6 @@ export const validatePostData = (postData: {
   title: string
   content: string
   tags: string[]
-  scheduledAt?: Date
 }) => {
   const errors: string[] = []
 
@@ -109,88 +98,37 @@ export const validatePostData = (postData: {
     errors.push('Pelo menos uma tag é obrigatória')
   }
 
-  if (postData.scheduledAt && !isValidScheduleDate(postData.scheduledAt)) {
-    errors.push('Data de agendamento deve ser no futuro')
-  }
-
   return {
     isValid: errors.length === 0,
     errors,
   }
 }
 
-// Determina o status do post baseado nos dados
-export const determinePostStatus = (
-  isScheduled: boolean,
-  scheduledAt?: Date
-): 'rascunho' | 'publicado' | 'agendado' => {
-  if (isScheduled && scheduledAt && isValidScheduleDate(scheduledAt)) {
-    return 'agendado'
-  }
-  return 'publicado'
-}
-
-// Cria uma data no fuso horário local
-export const createLocalDateTime = (
-  year: number,
-  month: number,
-  day: number,
-  hours: number = 0,
-  minutes: number = 0,
-  seconds: number = 0,
-  milliseconds: number = 0
-): Date => {
-  return new Date(year, month, day, hours, minutes, seconds, milliseconds)
-}
-
-// Combina uma data com um horário no fuso horário local
-export const combineDateTimeLocal = (date: Date, timeString: string): Date => {
-  const [hours, minutes] = timeString.split(':').map(Number)
-
-  return createLocalDateTime(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    hours,
-    minutes,
-    0,
-    0
-  )
-}
-
-// Converte uma data local para ISO string preservando o fuso horário
-export const toLocalISOString = (date: Date): string => {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-  const seconds = String(date.getSeconds()).padStart(2, '0')
-
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.000Z`
-}
-
-// Tipos para melhor tipagem
-export type PostStatus = 'rascunho' | 'publicado' | 'agendado'
-export type PostTag = 'noticia' | 'evento' | 'artigo' | 'outro'
-
-export interface PostData {
-  title: string
-  content: string
-  tags: PostTag[]
-  scheduledAt?: Date
-  imageUrl?: string
-}
-
-export interface PostValidationResult {
-  isValid: boolean
-  errors: string[]
-}
-
-// Schema Zod para validação de posts
+// Schema para validação de posts
 export const postSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório'),
   content: z.string().min(1, 'Conteúdo é obrigatório'),
-  tags: z.array(z.string()).min(1, 'Pelo menos uma tag é obrigatória'),
-  scheduledAt: z.date().optional(),
+  tags: z
+    .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
+    .min(1, 'Selecione pelo menos uma tag'),
+  imageUrl: z.string().url('URL da imagem deve ser válida').optional(),
 })
+
+// Tipos TypeScript
+export type PostStatus = 'rascunho' | 'publicado'
+
+export interface Post {
+  id: string
+  title: string
+  slug: string
+  content: string
+  excerpt: string | null
+  status: PostStatus
+  tags: string[]
+  imageUrl: string | null
+  publishedAt: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type CreatePostData = z.infer<typeof postSchema>

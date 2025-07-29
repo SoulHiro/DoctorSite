@@ -37,9 +37,9 @@
 
 ### 📱 Responsividade
 
-- [ ] Layout mobile-first
+- [x] Layout mobile-first
 - [x] Formulários adaptativos
-- [ ] Botões touch-friendly
+- [x] Botões touch-friendly
 
 ### 🔗 Integração
 

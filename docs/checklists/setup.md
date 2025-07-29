@@ -1,8 +1,11 @@
-# ✅ Checklist: Setup Inicial
+# ✅ Checklist: Setup
 
-- [x] Instalar bibliotecas essenciais do projeto (Next, Tailwind, Drizzle, etc.)
-- [x] Organizar a estrutura de pastas (app, lib, db, components, etc.)
-- [x] Criar o schema do banco de dados base (MVP)
-- [x] Criar arquivo `.env` e configurar variáveis padrão
-- [x] Configurar ESLint, Prettier e Husky
-- [x] Criar `.gitignore` adequado
+- [x] Estrutura inicial do projeto
+- [x] Configurações de dependências
+- [x] Banco de dados configurado
+- [x] Deploy inicial configurado
+- [x] Página de contato implementada (`/contato`)
+- [x] Componentes de contato (form, info, social-media)
+- [x] Navegação de contato funcionando
+- [x] Build limpo sem erros
+- [x] ESLint configurado e funcionando

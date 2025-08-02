@@ -138,7 +138,7 @@ const UploadGalleryPage = () => {
       const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
       const folderPath = `gallery/${municipality}/${yearMonth}`
 
-      console.log('Folder path calculado:', folderPath)
+      // Folder path calculado
 
       // Upload de todas as imagens para o Cloudinary com progress
       const uploadResults = []

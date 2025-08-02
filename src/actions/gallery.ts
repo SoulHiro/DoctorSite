@@ -115,12 +115,7 @@ export async function createImages(formData: FormData) {
     const municipality = formData.get('municipality') as string
     const takenAt = formData.get('takenAt') as string
 
-    console.log('Dados recebidos:', {
-      imageCount,
-      municipality,
-      takenAt,
-      userId,
-    })
+    // Dados recebidos: imageCount, municipality, takenAt, userId
 
     // Validação obrigatória - não permitir prosseguir sem esses campos
     if (!municipality || municipality.trim() === '') {
@@ -141,14 +136,14 @@ export async function createImages(formData: FormData) {
       const url = formData.get(`images[${i}].url`) as string
       const filename = formData.get(`images[${i}].filename`) as string
 
-      console.log(`Imagem ${i}:`, { url, filename })
+      // Processando imagem ${i}
 
       if (url && filename) {
         imagesData.push({ url, filename })
       }
     }
 
-    console.log('Imagens processadas:', imagesData)
+    // Imagens processadas
 
     // Verificar se temos imagens válidas
     if (imagesData.length === 0) {
@@ -180,7 +175,7 @@ export async function createImages(formData: FormData) {
       userId: userId,
     }))
 
-    console.log('Dados para inserir no banco:', imagesToInsert)
+    // Dados preparados para inserção no banco
 
     // Inserir no banco
     const insertedImages = await db
@@ -188,7 +183,7 @@ export async function createImages(formData: FormData) {
       .values(imagesToInsert)
       .returning()
 
-    console.log('Imagens inseridas:', insertedImages.length)
+    // Imagens inseridas com sucesso
 
     return {
       success: true,

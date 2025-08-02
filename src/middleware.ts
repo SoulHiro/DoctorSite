@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { corsHeaders } from './lib/cors'
 
-const allowedOrigins = ['http://localhost:3000', 'https://doutorespalhacos.com']
+const allowedOrigins = [
+  'http://localhost:3001',
+  'https://doutorespalhacos.com',
+  'https://doctor-site-9pmaeiv8n-soulhiros-projects.vercel.app',
+]
 
 export async function middleware(request: NextRequest) {
   const origin = request.headers.get('origin') ?? ''

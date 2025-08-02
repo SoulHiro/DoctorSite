@@ -45,18 +45,13 @@ function validateFileSignature(buffer: Buffer, mimeType: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('Iniciando upload de imagem...')
+    // Iniciando upload de imagem
 
     const formData = await request.formData()
     const file = formData.get('file') as File
     const folder = (formData.get('folder') as string) || 'blog-posts'
 
-    console.log('Arquivo recebido:', {
-      name: file?.name,
-      size: file?.size,
-      type: file?.type,
-      folder,
-    })
+    // Arquivo recebido para upload
 
     if (!file) {
       console.error('Nenhum arquivo foi enviado')
@@ -118,7 +113,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log('Convertendo arquivo para buffer...')
+    // Convertendo arquivo para buffer
 
     // Converter File para Buffer
     const bytes = await file.arrayBuffer()
@@ -133,8 +128,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log('Buffer criado, tamanho:', buffer.length)
-    console.log('Iniciando upload para Cloudinary...')
+    // Buffer criado, iniciando upload para Cloudinary
 
     // Fazer upload para o Cloudinary
     const result = await new Promise((resolve, reject) => {
@@ -156,10 +150,7 @@ export async function POST(request: NextRequest) {
               console.error('Erro do Cloudinary:', error)
               reject(error)
             } else {
-              console.log(
-                'Upload para Cloudinary bem-sucedido:',
-                result?.public_id
-              )
+              // Upload para Cloudinary bem-sucedido
               resolve(result)
             }
           }
@@ -167,7 +158,7 @@ export async function POST(request: NextRequest) {
         .end(buffer)
     })
 
-    console.log('Upload concluído:', result)
+    // Upload concluído com sucesso
     return NextResponse.json(result)
   } catch (error) {
     console.error('Erro no upload:', error)

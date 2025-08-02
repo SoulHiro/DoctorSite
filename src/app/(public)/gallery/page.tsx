@@ -116,10 +116,9 @@ const GalleryPage = () => {
           apiFilters.endDate = endDate
         }
 
-        console.log('Filtros aplicados:', apiFilters)
+        // Aplicando filtros
         const images = await getImagesByFilters(apiFilters)
-        console.log('Imagens encontradas:', images.length)
-        console.log('Primeira imagem:', images[0])
+        // Imagens carregadas
         setFilteredImages(images)
       } catch (error) {
         console.error('Erro ao buscar imagens filtradas:', error)

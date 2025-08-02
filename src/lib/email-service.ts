@@ -52,7 +52,6 @@ class EmailServiceImpl implements EmailService {
     }
 
     if (subscribers.length === 0) {
-      console.log('Nenhum assinante para enviar email')
       return {
         success: true,
         sent: 0,
@@ -71,15 +70,11 @@ class EmailServiceImpl implements EmailService {
     try {
       const batches = this.createBatches(subscribers, this.batchSize)
 
-      console.log(
-        `Enviando emails para ${subscribers.length} assinantes em ${batches.length} lotes`
-      )
+      // Enviando emails em lotes
 
       for (let i = 0; i < batches.length; i++) {
         const batch = batches[i]
-        console.log(
-          `Processando lote ${i + 1}/${batches.length} (${batch.length} emails)`
-        )
+        // Processando lote ${i + 1}/${batches.length}
 
         const batchResult = await this.sendBatch(postData, batch)
         result.sent += batchResult.sent
@@ -91,9 +86,7 @@ class EmailServiceImpl implements EmailService {
         }
       }
 
-      console.log(
-        `Emails enviados: ${result.sent} sucesso, ${result.failed} falhas`
-      )
+      // Emails enviados: ${result.sent} sucesso, ${result.failed} falhas
       return result
     } catch (error) {
       console.error('Erro geral ao enviar emails:', error)
@@ -154,9 +147,7 @@ class EmailServiceImpl implements EmailService {
       })
     } catch (error) {
       if (attempt < this.retryAttempts) {
-        console.log(
-          `Retry ${attempt}/${this.retryAttempts} para ${subscriber.email}`
-        )
+        // Retry ${attempt}/${this.retryAttempts} para ${subscriber.email}
         await this.sleep(this.retryDelay * attempt)
         return this.sendSingleEmail(postData, subscriber, attempt + 1)
       }
@@ -220,7 +211,8 @@ export const createPostEmailData = (post: {
   excerpt: string | null
   tags: string[]
 }): PostEmailData => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || 'https://doutorespalhacos.com'
   return {
     ...post,
     url: `${baseUrl}/blog/${post.slug}`,

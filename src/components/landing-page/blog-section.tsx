@@ -4,50 +4,56 @@ import Link from 'next/link'
 import { getPosts } from '@/actions/blog'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { stripHtmlAndMarkdown } from '@/lib/utils'
 import type { BlogPost } from '@/types/blog-types'
 
 // Componente reutilizável para card de post
-const PostCard = ({ post }: { post: BlogPost }) => (
-  <Link href={`/blog/${post.slug}`} className="group">
-    <article className="flex flex-col overflow-hidden rounded-2xl bg-white shadow transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-      <div className="relative h-48 w-full overflow-hidden bg-gray-200">
-        <Image
-          src={post.imageUrl || '/images/hero-section.webp'}
-          alt={post.title}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-      </div>
-      <div className="flex flex-1 flex-col space-y-3 p-6">
-        <div className="flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
-            <Badge
-              key={tag}
-              variant="secondary"
-              className="bg-red-50 text-xs font-semibold text-red-600 transition-colors hover:bg-red-100"
-            >
-              {tag}
-            </Badge>
-          ))}
+const PostCard = ({ post }: { post: BlogPost }) => {
+  // Limpar o excerpt de formatação HTML/markdown
+  const cleanExcerpt = stripHtmlAndMarkdown(post.excerpt || '')
+
+  return (
+    <Link href={`/blog/${post.slug}`} className="group">
+      <article className="flex flex-col overflow-hidden rounded-2xl bg-white shadow transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+        <div className="relative h-48 w-full overflow-hidden bg-gray-200">
+          <Image
+            src={post.imageUrl || '/images/hero-section.webp'}
+            alt={post.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
         </div>
-        <h3 className="line-clamp-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-red-600">
-          {post.title}
-        </h3>
-        <p className="line-clamp-3 flex-1 text-sm text-gray-600">
-          {post.excerpt || 'Clique para ler mais...'}
-        </p>
-        <div className="flex items-center justify-between pt-2 text-xs text-gray-500">
-          <span>Por {post.author}</span>
-          {post.publishedAt && (
-            <span>
-              {new Date(post.publishedAt).toLocaleDateString('pt-BR')}
-            </span>
-          )}
+        <div className="flex flex-1 flex-col space-y-3 p-6">
+          <div className="flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <Badge
+                key={tag}
+                variant="secondary"
+                className="bg-red-50 text-xs font-semibold text-red-600 transition-colors hover:bg-red-100"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
+          <h3 className="line-clamp-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-red-600">
+            {post.title}
+          </h3>
+          <p className="line-clamp-3 flex-1 text-sm text-gray-600">
+            {cleanExcerpt || 'Clique para ler mais...'}
+          </p>
+          <div className="flex items-center justify-between pt-2 text-xs text-gray-500">
+            <span>Por {post.author}</span>
+            {post.publishedAt && (
+              <span>
+                {new Date(post.publishedAt).toLocaleDateString('pt-BR')}
+              </span>
+            )}
+          </div>
         </div>
-      </div>
-    </article>
-  </Link>
-)
+      </article>
+    </Link>
+  )
+}
 
 // Função para filtrar posts por categoria
 const filterPostsByCategory = (posts: BlogPost[], category: string) => {

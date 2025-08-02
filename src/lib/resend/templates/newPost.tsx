@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import { stripHtmlAndMarkdown } from '@/lib/utils'
+
 export interface NewPostEmailProps {
   post: {
     title: string
@@ -15,6 +17,9 @@ export interface NewPostEmailProps {
 }
 
 export function NewPostEmail({ post, subscriber }: NewPostEmailProps) {
+  // Limpar o excerpt de formatação HTML/markdown
+  const cleanExcerpt = stripHtmlAndMarkdown(post.excerpt || '')
+
   return (
     <div
       style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '0 auto' }}
@@ -46,11 +51,11 @@ export function NewPostEmail({ post, subscriber }: NewPostEmailProps) {
             {post.title}
           </h2>
 
-          {post.excerpt && (
+          {cleanExcerpt && (
             <p
               style={{ color: '#666', lineHeight: '1.6', marginBottom: '15px' }}
             >
-              {post.excerpt}
+              {cleanExcerpt}
             </p>
           )}
 

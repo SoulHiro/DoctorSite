@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
+import { stripHtmlAndMarkdown } from '@/lib/utils'
 import type { BlogPost } from '@/types/blog-types'
 
 interface PostCardProps {
@@ -29,6 +30,9 @@ export function PostCard({
       year: 'numeric',
     }
   )
+
+  // Limpar o excerpt de formatação HTML/markdown
+  const cleanExcerpt = stripHtmlAndMarkdown(post.excerpt || '')
 
   // Função para definir cores baseadas na categoria
   const getCategoryColors = (category: string) => {
@@ -104,7 +108,7 @@ export function PostCard({
             isFeatured ? 'mb-6 text-lg' : 'mb-4'
           }`}
         >
-          {post.excerpt}
+          {cleanExcerpt}
         </p>
 
         {/* Footer */}

@@ -7,6 +7,7 @@ import { getPosts } from '@/actions/blog'
 import { HeroSection } from '@/components/shared/hero-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { stripHtmlAndMarkdown } from '@/lib/utils'
 import type { BlogPost } from '@/types/blog-types'
 
 import { FeaturedPosts, LatestPosts } from './_components'
@@ -36,11 +37,14 @@ export default function BlogPage() {
   // Filtrar posts baseado na busca e tag selecionada
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
+      // Limpar o excerpt para busca
+      const cleanExcerpt = stripHtmlAndMarkdown(post.excerpt || '')
+
       // Filtro por busca (título, conteúdo, autor)
       const matchesSearch =
         searchTerm === '' ||
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        cleanExcerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.author.toLowerCase().includes(searchTerm.toLowerCase())
 
       // Filtro por tag

@@ -132,5 +132,3 @@ export function getAuthErrorMessage(code: string, lang: Lang = 'pt'): string {
   }
   return 'Erro desconhecido'
 }
-
-// Retirado de: https://github.com/better-auth/better-auth/blob/main/packages/better-auth/src/error/codes.ts

@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronsUpDown, LogOut, User } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -20,8 +21,23 @@ import { authClient } from '@/lib/auth-client'
 import { cn } from '@/lib/utils'
 
 export function NavUser() {
+  const router = useRouter()
   const { isMobile } = useSidebar()
   const { data: session } = authClient.useSession()
+
+  const handleLogout = async () => {
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push('/auth')
+          },
+        },
+      })
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error)
+    }
+  }
 
   return (
     <SidebarMenu>
@@ -92,6 +108,7 @@ export function NavUser() {
               </DropdownMenuItem>
 
               <DropdownMenuItem
+                onClick={handleLogout}
                 className={cn(
                   'rounded-lg transition-all duration-200',
                   'hover:bg-gradient-to-r hover:from-red-100 hover:to-orange-100',

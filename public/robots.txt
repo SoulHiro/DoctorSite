@@ -1,0 +1,24 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://doutorespalhacos.com
+
+# Sitemaps
+Sitemap: https://doutorespalhacos.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /auth/
+
+# Allow important pages
+Allow: /
+Allow: /blog/
+Allow: /gallery/
+Allow: /contato/
+
+# Crawl delay
+Crawl-delay: 1

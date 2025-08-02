@@ -1,0 +1,33 @@
+{
+  "name": "SOS Bom Humor Doutores Palhaços",
+  "short_name": "Doutores Palhaços",
+  "description": "ONG brasileira que leva alegria, carinho e esperança para crianças hospitalizadas através do trabalho voluntário dos Doutores Palhaços.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6b6b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/icon-site.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/images/icon-site.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": [
+    "health",
+    "lifestyle",
+    "social"
+  ],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

@@ -3,8 +3,13 @@
 import { Calendar, ImageIcon, MapPin } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { getAvailablePeriods, getMunicipalities } from '@/actions/gallery'
+import {
+  getAvailablePeriods,
+  getImagesByFilters,
+  getMunicipalities,
+} from '@/actions/gallery'
 import { HeroSection } from '@/components/shared/hero-section'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
@@ -23,12 +28,24 @@ interface FilteredData {
   selectedMonth: number | null
 }
 
+interface GalleryImage {
+  id: string
+  url: string
+  filename: string
+  municipality: string
+  takenAt: string
+  author: string
+  authorId: string
+  createdAt: string
+}
+
 const GalleryPage = () => {
   const [municipalities, setMunicipalities] = useState<string[]>([])
   const [availablePeriods, setAvailablePeriods] = useState<{
     years: number[]
     monthsByYear: Record<number, number[]>
   }>({ years: [], monthsByYear: {} })
+  const [filteredImages, setFilteredImages] = useState<GalleryImage[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [filters, setFilters] = useState<FilteredData>({
     selectedMunicipality: 'todos',
@@ -55,6 +72,64 @@ const GalleryPage = () => {
     fetchData()
   }, [])
 
+  // Verificar se há filtros ativos
+  const hasActiveFilters =
+    filters.selectedMunicipality !== 'todos' ||
+    filters.selectedYear !== null ||
+    filters.selectedMonth !== null
+
+  // Buscar imagens filtradas quando os filtros mudam
+  useEffect(() => {
+    const fetchFilteredImages = async () => {
+      if (!hasActiveFilters) {
+        setFilteredImages([])
+        return
+      }
+
+      try {
+        // Construir filtros para a API
+        const apiFilters: {
+          municipality?: string
+          startDate?: string
+          endDate?: string
+        } = {}
+
+        if (filters.selectedMunicipality !== 'todos') {
+          apiFilters.municipality = filters.selectedMunicipality
+        }
+
+        if (filters.selectedYear) {
+          const startDate = `${filters.selectedYear}-01-01`
+          let endDate = `${filters.selectedYear}-12-31`
+
+          if (filters.selectedMonth) {
+            // Calcular o último dia do mês
+            const lastDay = new Date(
+              filters.selectedYear,
+              filters.selectedMonth,
+              0
+            ).getDate()
+            endDate = `${filters.selectedYear}-${filters.selectedMonth.toString().padStart(2, '0')}-${lastDay}`
+          }
+
+          apiFilters.startDate = startDate
+          apiFilters.endDate = endDate
+        }
+
+        console.log('Filtros aplicados:', apiFilters)
+        const images = await getImagesByFilters(apiFilters)
+        console.log('Imagens encontradas:', images.length)
+        console.log('Primeira imagem:', images[0])
+        setFilteredImages(images)
+      } catch (error) {
+        console.error('Erro ao buscar imagens filtradas:', error)
+        setFilteredImages([])
+      }
+    }
+
+    fetchFilteredImages()
+  }, [filters, hasActiveFilters])
+
   // Atualizar filtros
   const updateFilter = (
     key: keyof FilteredData,
@@ -69,12 +144,6 @@ const GalleryPage = () => {
 
     setFilters(newFilters)
   }
-
-  // Verificar se há filtros ativos
-  const hasActiveFilters =
-    filters.selectedMunicipality !== 'todos' ||
-    filters.selectedYear !== null ||
-    filters.selectedMonth !== null
 
   // Obter meses disponíveis para o ano selecionado
   const availableMonths = filters.selectedYear
@@ -97,6 +166,11 @@ const GalleryPage = () => {
     'Novembro',
     'Dezembro',
   ]
+
+  // Gerar URL para a página do município
+  const getMunicipalityUrl = (municipality: string) => {
+    return `/gallery/${encodeURIComponent(municipality)}`
+  }
 
   if (isLoading) {
     return (
@@ -248,13 +322,33 @@ const GalleryPage = () => {
         )}
 
         {/* Componentes da galeria */}
-        <GalleryFeaturedImages />
+        <GalleryFeaturedImages filteredImages={filteredImages} />
 
-        <div className="-mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-12 2xl:-mx-16">
-          <GalleryImpactSection />
-        </div>
+        {/* Botão "Ver mais" quando há filtros ativos */}
+        {hasActiveFilters && filters.selectedMunicipality !== 'todos' && (
+          <div className="mx-auto max-w-4xl px-4 text-center">
+            <Button
+              onClick={() => {
+                window.location.href = getMunicipalityUrl(
+                  filters.selectedMunicipality
+                )
+              }}
+              className="rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-8 py-3 text-white transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
+            >
+              Ver galeria completa de {filters.selectedMunicipality}
+            </Button>
+          </div>
+        )}
 
-        <GalleryMunicipalities />
+        {/* Outras seções apenas quando não há filtros ativos */}
+        {!hasActiveFilters && (
+          <>
+            <div className="-mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-12 2xl:-mx-16">
+              <GalleryImpactSection />
+            </div>
+            <GalleryMunicipalities />
+          </>
+        )}
       </div>
     </div>
   )

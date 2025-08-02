@@ -1,6 +1,6 @@
 'use server'
 
-import { and, asc, desc, eq, ilike, sql } from 'drizzle-orm'
+import { and, asc, desc, eq, sql } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { z } from 'zod'
 
@@ -271,7 +271,7 @@ export async function getImagesByFilters(filters: {
     ]
 
     if (municipality) {
-      whereConditions.push(ilike(mediaTable.municipality, `%${municipality}%`))
+      whereConditions.push(eq(mediaTable.municipality, municipality))
     }
 
     if (startDate) {

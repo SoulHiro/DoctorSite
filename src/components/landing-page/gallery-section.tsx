@@ -39,17 +39,50 @@ const GallerySection = () => {
           ]
           const realColumns: ColumnItem[][] = [[], [], [], []]
 
-          // Distribuir as primeiras 8 imagens nas 4 colunas (2 por coluna)
-          images.slice(0, 8).forEach((image, index) => {
-            const columnIndex = Math.floor(index / 2)
+          // Agrupar imagens por município para garantir diversidade
+          const imagesByMunicipality = images.reduce(
+            (acc, image) => {
+              if (!acc[image.municipality]) {
+                acc[image.municipality] = []
+              }
+              acc[image.municipality].push(image)
+              return acc
+            },
+            {} as Record<string, typeof images>
+          )
+
+          // Pegar um município por vez para garantir diversidade
+          const municipalities = Object.keys(imagesByMunicipality)
+          let imageIndex = 0
+          let municipalityIndex = 0
+
+          // Distribuir 8 imagens (2 por coluna) garantindo diversidade
+          for (let i = 0; i < 8; i++) {
+            const columnIndex = Math.floor(i / 2)
+
+            // Pegar próximo município disponível
+            const currentMunicipality =
+              municipalities[municipalityIndex % municipalities.length]
+            const municipalityImages = imagesByMunicipality[currentMunicipality]
+
+            // Pegar próxima imagem do município atual
+            const image =
+              municipalityImages[imageIndex % municipalityImages.length]
+
             realColumns[columnIndex].push({
               id: image.id,
               src: image.url,
               alt: `${image.municipality} - ${image.filename}`,
               municipality: image.municipality,
-              className: heights[index],
+              className: heights[i],
             })
-          })
+
+            // Avançar para próximo município a cada 2 imagens
+            if ((i + 1) % 2 === 0) {
+              municipalityIndex++
+            }
+            imageIndex++
+          }
 
           setColumnsData(realColumns)
         }

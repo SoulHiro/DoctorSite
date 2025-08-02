@@ -19,17 +19,32 @@ interface GalleryImage {
   createdAt: string
 }
 
-const GalleryFeaturedImages = () => {
+interface GalleryFeaturedImagesProps {
+  filteredImages?: GalleryImage[]
+}
+
+const GalleryFeaturedImages = ({
+  filteredImages,
+}: GalleryFeaturedImagesProps) => {
   const [featuredImages, setFeaturedImages] = useState<GalleryImage[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchFeaturedImages = async () => {
       try {
+        // Se temos imagens filtradas, usar elas
+        if (filteredImages && filteredImages.length > 0) {
+          setFeaturedImages(filteredImages.slice(0, 8))
+          setIsLoading(false)
+          return
+        }
+
+        // Caso contrário, buscar todas as imagens
         const images = await getImages()
-        // Pegar as 8 imagens mais recentes para um layout magazine
-        const featured = images.slice(0, 8)
-        setFeaturedImages(featured)
+
+        // Garantir diversidade de municípios
+        const diverseImages = getDiverseImages(images, 8)
+        setFeaturedImages(diverseImages)
       } catch (error) {
         console.error('Erro ao buscar imagens em destaque:', error)
       } finally {
@@ -37,7 +52,47 @@ const GalleryFeaturedImages = () => {
       }
     }
     fetchFeaturedImages()
-  }, [])
+  }, [filteredImages])
+
+  // Função para obter imagens diversificadas por município
+  const getDiverseImages = (images: GalleryImage[], count: number) => {
+    if (images.length === 0) return []
+
+    // Agrupar imagens por município
+    const imagesByMunicipality = images.reduce(
+      (acc, image) => {
+        if (!acc[image.municipality]) {
+          acc[image.municipality] = []
+        }
+        acc[image.municipality].push(image)
+        return acc
+      },
+      {} as Record<string, GalleryImage[]>
+    )
+
+    const municipalities = Object.keys(imagesByMunicipality)
+    const diverseImages: GalleryImage[] = []
+    let municipalityIndex = 0
+    let imageIndex = 0
+
+    // Pegar imagens de municípios diferentes
+    for (let i = 0; i < count && diverseImages.length < count; i++) {
+      const currentMunicipality =
+        municipalities[municipalityIndex % municipalities.length]
+      const municipalityImages = imagesByMunicipality[currentMunicipality]
+
+      if (municipalityImages && municipalityImages.length > 0) {
+        const image = municipalityImages[imageIndex % municipalityImages.length]
+        diverseImages.push(image)
+
+        // Avançar para próximo município a cada imagem
+        municipalityIndex++
+        imageIndex++
+      }
+    }
+
+    return diverseImages
+  }
 
   if (isLoading) {
     return (

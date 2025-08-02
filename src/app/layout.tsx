@@ -115,21 +115,21 @@ export default function RootLayout({
       <head>
         <StructuredData type="organization" />
         <StructuredData type="website" />
-        <link rel="icon" href="/images/icon-site.png" sizes="any" />
+        <link rel="icon" href="/favicon-for-app/favicon.ico" sizes="any" />
         <link
           rel="icon"
-          href="/images/icon-site.png"
+          href="/favicon-for-app/icon1.png"
           type="image/png"
           sizes="32x32"
         />
         <link
           rel="icon"
-          href="/images/icon-site.png"
+          href="/favicon-for-app/icon1.png"
           type="image/png"
           sizes="16x16"
         />
-        <link rel="apple-touch-icon" href="/images/icon-site.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/favicon-for-app/apple-icon.png" />
+        <link rel="manifest" href="/favicon-for-app/manifest.json" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -3,18 +3,18 @@ import { generateMetadata as generateSEOMetadata } from '@/lib/seo-utils'
 export const metadata = generateSEOMetadata({
   title: 'Galeria',
   description:
-    'Conheça a galeria de fotos do SOS Bom Humor Doutores Palhaços. Veja momentos especiais de alegria, carinho e esperança que nossos voluntários levam para hospitais em todo o Brasil.',
+    'Veja o impacto visual do projeto "Rir é o Melhor Remédio" em ação. Fotos autênticas de nossas visitas a hospitais do RS, capturando momentos de alegria, acolhimento e humanização da saúde.',
   keywords: [
-    'galeria doutores palhaços',
-    'fotos hospital',
-    'voluntários hospitais',
-    'crianças hospitalizadas fotos',
-    'palhaços hospital',
-    'humanização hospitalar imagens',
-    'alegria hospital',
-    'trabalho voluntário fotos',
-    'momentos especiais hospital',
-    'sorrisos hospital',
+    'galeria SOS Bom Humor',
+    'fotos Rir é o Melhor Remédio',
+    'palhaçaria hospitalar RS',
+    'imagens humanização hospitalar',
+    'voluntários hospitais Rio Grande Sul',
+    'registros visuais impacto social',
+    'momentos de alegria hospitais',
+    'arte transformadora saúde',
+    'fotos autênticas voluntariado',
+    'trabalho social visual',
   ],
   url: '/gallery',
   image: '/images/doctors/doutores1.jpg',
@@ -25,5 +25,10 @@ export default function GalleryLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      {/* Galeria visual do impacto da SOS Bom Humor */}
+      {children}
+    </>
+  )
 }

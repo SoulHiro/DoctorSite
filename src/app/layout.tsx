@@ -2,6 +2,7 @@ import './globals.css'
 
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Inter } from 'next/font/google'
+import { Suspense } from 'react'
 import { Toaster } from 'sonner'
 
 import { GoogleAnalytics } from '@/components/seo/google-analytics'
@@ -35,66 +36,35 @@ const baseUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'SOS Bom Humor Doutores Palhaços | Levando Alegria aos Hospitais',
-    template: '%s | SOS Bom Humor Doutores Palhaços',
+    default: 'SOS Bom Humor Doutores Palhaços',
+    template: '%s | SOS Bom Humor Doutores Palhaços',
   },
+  applicationName: 'SOS Bom Humor Doutores Palhaços',
   description:
-    'ONG brasileira que leva alegria, carinho e esperança para crianças hospitalizadas através do trabalho voluntário dos Doutores Palhaços. Conheça nossa missão de humanizar o ambiente hospitalar.',
+    'ONG voluntária do norte do RS que há 3 anos leva alegria e humanização a 20+ hospitais com o projeto “Rir é o Melhor Remédio” — mais de 60 000 pacientes impactados.',
   keywords: [
-    'doutores palhaços',
-    'ONG',
-    'voluntariado',
-    'crianças hospitalizadas',
-    'humanização hospitalar',
-    'alegria',
-    'palhaços',
-    'hospital',
-    'saúde infantil',
-    'trabalho social',
     'SOS Bom Humor',
+    'doutores palhaços',
+    'palhaçaria hospitalar',
+    'voluntariado hospitalar RS',
+    'humanização hospitalar',
+    'arte como cuidado',
+    'Rir é o Melhor Remédio',
   ],
-  authors: [{ name: 'SOS Bom Humor Doutores Palhaços' }],
-  creator: 'SOS Bom Humor Doutores Palhaços',
-  publisher: 'SOS Bom Humor Doutores Palhaços',
+  authors: [{ name: 'SOS Bom Humor Doutores Palhaços', url: baseUrl }],
+  creator: 'SOS Bom Humor Doutores Palhaços',
+  publisher: 'SOS Bom Humor Doutores Palhaços',
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
+      'max-video-preview': 0,
     },
   },
-  openGraph: {
-    type: 'website',
-    locale: 'pt_BR',
-    url: baseUrl,
-    siteName: 'SOS Bom Humor Doutores Palhaços',
-    title: 'SOS Bom Humor Doutores Palhaços | Levando Alegria aos Hospitais',
-    description:
-      'ONG brasileira que leva alegria, carinho e esperança para crianças hospitalizadas através do trabalho voluntário dos Doutores Palhaços.',
-    images: [
-      {
-        url: '/images/hero-section.webp',
-        width: 1200,
-        height: 630,
-        alt: 'Doutores Palhaços levando alegria para crianças em hospitais',
-        type: 'image/webp',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'SOS Bom Humor Doutores Palhaços | Levando Alegria aos Hospitais',
-    description:
-      'ONG brasileira que leva alegria, carinho e esperança para crianças hospitalizadas através do trabalho voluntário dos Doutores Palhaços.',
-    images: ['/images/hero-section.webp'],
-    creator: '@doutorespalhacos',
-    site: '@doutorespalhacos',
-  },
-
   alternates: {
     canonical: baseUrl,
     languages: {
@@ -102,7 +72,44 @@ export const metadata: Metadata = {
       'x-default': baseUrl,
     },
   },
-  category: 'Non-profit Organization',
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION ?? '',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    url: baseUrl,
+    siteName: 'SOS Bom Humor Doutores Palhaços',
+    title: 'SOS Bom Humor | Leve Alegria com o Rir é o Melhor Remédio',
+    description:
+      'Há mais de 60 000 pacientes, famílias e equipes impactados em 20+ hospitais do RS com nossas visitas palhaças humanizadoras.',
+    images: [
+      {
+        url: '/images/doctors/doutores1.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Palhaços hospitalares levando alegria em hospitais do RS',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SOS Bom Humor Doutores Palhaços',
+    description:
+      'Doutores Palhaços transformando hospitais com humor e acolhimento no RS.',
+    images: ['/images/doctors/doutores1.jpg'],
+    site: '@doutorespalhacos', // confirme se existir
+  },
+  icons: {
+    icon: ['/favicon-for-app/icon1.png', '/favicon-for-app/favicon.ico'],
+    apple: '/favicon-for-app/apple-icon.png',
+    other: [{ rel: 'manifest', url: '/favicon-for-app/manifest.json' }],
+  },
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
+  category: 'NonprofitOrganization',
 }
 
 export default function RootLayout({
@@ -144,7 +151,9 @@ export default function RootLayout({
       <body
         className={`${InterFont.className} ${BebasFont.variable} antialiased`}
       >
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
         {children}
         <Toaster position="bottom-right" richColors />
       </body>

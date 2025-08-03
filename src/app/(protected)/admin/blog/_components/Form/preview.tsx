@@ -3,7 +3,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 
 import { Separator } from '@/components/ui/separator'
 import { tagsEnum } from '@/db/schema/tables'
-import { authClient } from '@/lib/auth-client'
+import { useAuthSession } from '@/hooks/use-auth-session'
 
 const BlogPreview = () => {
   const { control } = useFormContext()
@@ -14,7 +14,7 @@ const BlogPreview = () => {
     return tagsEnum.enumValues.find((tag) => tag === tagValue) || tagValue
   }
 
-  const { data: session } = authClient.useSession()
+  const { user } = useAuthSession()
 
   return (
     <div className="flex h-full w-full flex-col space-y-4 rounded-md border bg-white p-6 shadow-sm">
@@ -68,8 +68,7 @@ const BlogPreview = () => {
             {formData.title || 'Título do seu post aqui'}
           </h1>
           <div className="text-sm text-gray-500">
-            📅 {new Date().toLocaleDateString('pt-BR')} • ✍️{' '}
-            {session?.user?.name}
+            📅 {new Date().toLocaleDateString('pt-BR')} • ✍️ {user?.name}
           </div>
         </div>
 

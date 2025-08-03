@@ -17,13 +17,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { useAuthSession } from '@/hooks/use-auth-session'
 import { authClient } from '@/lib/auth-client'
 import { cn } from '@/lib/utils'
 
 export function NavUser() {
   const router = useRouter()
   const { isMobile } = useSidebar()
-  const { data: session } = authClient.useSession()
+  const { user } = useAuthSession()
 
   const handleLogout = async () => {
     try {
@@ -56,13 +57,12 @@ export function NavUser() {
                 <div className="relative">
                   <Avatar className="h-10 w-10 rounded-xl border-2 border-red-200/50 shadow-sm">
                     <AvatarImage
-                      src={session?.user?.image ?? '/icons/user-profile.webp'}
-                      alt={session?.user?.name}
+                      src={user?.image ?? '/icons/user-profile.webp'}
+                      alt={user?.name}
                       className="rounded-xl"
                     />
                     <AvatarFallback className="rounded-xl bg-gradient-to-br from-red-100 to-orange-100 font-semibold text-red-700">
-                      {session?.user?.name?.substring(0, 2)?.toUpperCase() ??
-                        'AD'}
+                      {user?.name?.substring(0, 2)?.toUpperCase() ?? 'AD'}
                     </AvatarFallback>
                   </Avatar>
                   {/* Indicador online */}
@@ -71,10 +71,10 @@ export function NavUser() {
 
                 <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold text-gray-900 transition-colors group-hover:text-red-700">
-                    {session?.user?.name ?? 'Administrador'}
+                    {user?.name ?? 'Administrador'}
                   </span>
                   <span className="truncate text-xs text-gray-600 transition-colors group-hover:text-red-600">
-                    {session?.user?.email ?? 'admin@sosbomhumor.org'}
+                    {user?.email ?? 'admin@sosbomhumor.org'}
                   </span>
                 </div>
 

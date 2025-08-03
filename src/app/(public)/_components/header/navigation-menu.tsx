@@ -96,7 +96,7 @@ export function HeaderNavigationMenu() {
                     Hospitais Visitados
                   </span>
                   <span className="mt-1 text-lg font-bold text-green-700 drop-shadow">
-                    12
+                    19
                   </span>
                 </div>
                 <div className="flex flex-col items-center">

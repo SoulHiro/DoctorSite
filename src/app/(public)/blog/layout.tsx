@@ -3,21 +3,21 @@ import { generateMetadata as generateSEOMetadata } from '@/lib/seo-utils'
 export const metadata = generateSEOMetadata({
   title: 'Blog',
   description:
-    'Acompanhe o blog do SOS Bom Humor Doutores Palhaços. Histórias inspiradoras, dicas de voluntariado, novidades sobre nosso trabalho nos hospitais e muito mais sobre humanização da saúde.',
+    'Histórias reais do projeto "Rir é o Melhor Remédio". Acompanhe relatos emocionantes de nossas visitas a 20+ hospitais do RS, dicas de voluntariado e o impacto da arte na humanização hospitalar.',
   keywords: [
-    'blog doutores palhaços',
-    'histórias hospital',
-    'voluntariado hospitalar',
-    'humanização saúde',
-    'crianças hospitalizadas',
-    'palhaçoterapia',
-    'arte terapia hospital',
-    'cuidado humanizado',
-    'alegria hospital',
-    'trabalho social saúde',
+    'blog SOS Bom Humor',
+    'Rir é o Melhor Remédio',
+    'histórias hospitais RS',
+    'relatos palhaçaria hospitalar',
+    'voluntariado no Rio Grande do Sul',
+    'humanização da saúde',
+    'arte como terapia',
+    'impacto social hospitais',
+    'experiências voluntários',
+    'transformação social ONG',
   ],
   url: '/blog',
-  image: '/images/hero-section.webp',
+  image: '/images/og-hero.webp',
 })
 
 export default function BlogLayout({
@@ -25,5 +25,10 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      {/* Structured Data específico para blog */}
+      {children}
+    </>
+  )
 }

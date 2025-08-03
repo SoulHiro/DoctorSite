@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || 'https://doutorespalhacos.com'
-const defaultImage = '/images/hero-section.webp'
+const defaultImage = '/images/doctors/doutores1.jpg'
 
 interface SEOConfig {
   title: string
@@ -44,11 +44,13 @@ export function generateMetadata({
 
   const allKeywords = [
     ...keywords,
+    'SOS Bom Humor',
     'doutores palhaços',
-    'ONG',
-    'voluntariado',
-    'crianças hospitalizadas',
+    'palhaçaria hospitalar',
+    'voluntariado hospitalar RS',
     'humanização hospitalar',
+    'arte como cuidado',
+    'Rir é o Melhor Remédio',
   ]
 
   return {
@@ -63,9 +65,9 @@ export function generateMetadata({
           googleBot: {
             index: true,
             follow: true,
-            'max-video-preview': -1,
             'max-image-preview': 'large',
             'max-snippet': -1,
+            'max-video-preview': 0,
           },
         },
     openGraph: {
@@ -79,7 +81,6 @@ export function generateMetadata({
           width: 1200,
           height: 630,
           alt: title,
-          type: 'image/webp',
         },
       ],
       locale: 'pt_BR',
@@ -95,7 +96,6 @@ export function generateMetadata({
       title: fullTitle,
       description,
       images: [imageUrl],
-      creator: '@doutorespalhacos',
       site: '@doutorespalhacos',
     },
     alternates: {
@@ -105,17 +105,16 @@ export function generateMetadata({
 }
 
 export const defaultSEOKeywords = [
-  'doutores palhaços',
-  'ONG',
-  'voluntariado',
-  'crianças hospitalizadas',
-  'humanização hospitalar',
-  'alegria',
-  'palhaços',
-  'hospital',
-  'saúde infantil',
-  'trabalho social',
   'SOS Bom Humor',
+  'doutores palhaços',
+  'palhaçaria hospitalar',
+  'voluntariado hospitalar RS',
+  'humanização hospitalar',
+  'arte como cuidado',
+  'Rir é o Melhor Remédio',
+  'hospital Rio Grande do Sul',
+  'voluntários da saúde',
+  'alegria no hospital',
 ]
 
 export const generatePageURL = (path: string) => {

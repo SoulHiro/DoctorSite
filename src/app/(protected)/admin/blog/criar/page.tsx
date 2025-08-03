@@ -12,7 +12,7 @@ import { z } from 'zod'
 import { createPost } from '@/actions/blog'
 import { Button } from '@/components/ui/button'
 import { tagsEnum } from '@/db/schema/tables'
-import { authClient } from '@/lib/auth-client'
+import { useAuthSession } from '@/hooks/use-auth-session'
 import { uploadImage } from '@/lib/cloudinary'
 
 import BlogForm from './_components/blog-form'
@@ -42,7 +42,7 @@ const BlogCriar = () => {
     },
   })
 
-  const { data: session } = authClient.useSession()
+  const { user } = useAuthSession()
   const formData = useWatch({ control: form.control })
 
   const onSubmit = async () => {
@@ -298,7 +298,7 @@ const BlogCriar = () => {
                 <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/90 md:text-base">
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    <span>{session?.user?.name || 'Autor'}</span>
+                    <span>{user?.name || 'Autor'}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />

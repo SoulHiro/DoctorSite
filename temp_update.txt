@@ -1,0 +1,19 @@
+// Mudanças para src/app/(protected)/admin/blog/criar/page.tsx
+
+1. Na linha 15, substituir:
+   import { authClient } from '@/lib/auth-client'
+   
+   por:
+   import { useAuthSession } from '@/hooks/use-auth-session'
+
+2. Na linha 45, substituir:
+   const { data: session } = authClient.useSession()
+   
+   por:
+   const { user } = useAuthSession()
+
+3. Na linha 301, substituir:
+   <span>{session?.user?.name || 'Autor'}</span>
+   
+   por:
+   <span>{user?.name || 'Autor'}</span>

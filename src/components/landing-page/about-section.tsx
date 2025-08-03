@@ -28,7 +28,7 @@ const AboutSection = () => {
             {/* Imagem 1 */}
             <div className="group relative top-12 h-3/5 w-full overflow-hidden rounded-xl bg-gray-300">
               <Image
-                src="/images/hero-section.webp"
+                src="/images/doctors/doutores2.jpg"
                 alt="Sobre Nós miniatura 1"
                 fill
                 quality={100}
@@ -39,7 +39,7 @@ const AboutSection = () => {
             {/* Imagem 2 */}
             <div className="group relative top-20 left-24 h-2/5 w-48 overflow-hidden rounded-xl bg-gray-400">
               <Image
-                src="/images/hero-section.webp"
+                src="/images/doctors/doutores3.jpg"
                 alt="Sobre Nós miniatura 2"
                 fill
                 quality={100}

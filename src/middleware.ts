@@ -4,7 +4,7 @@ import { corsHeaders } from './lib/cors'
 import { shouldShowMobileConstruction } from './lib/device-detection'
 
 const allowedOrigins = [
-  'http://localhost:3001',
+  'http://localhost:3000',
   'https://doutorespalhacos.com',
   'https://doctor-site-9pmaeiv8n-soulhiros-projects.vercel.app',
 ]
@@ -45,7 +45,9 @@ export async function middleware(request: NextRequest) {
 
   // Redireciona para o dashboard se já logado e tentando acessar /auth
   const cookieName = 'better-auth.session_token'
-  const hasCookie = request.cookies.has(cookieName)
+  const cookieNameProduction = '__Secure-better-auth.session_token'
+  const hasCookie =
+    request.cookies.has(cookieName) || request.cookies.has(cookieNameProduction)
   if (hasCookie && request.nextUrl.pathname.startsWith('/auth')) {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }

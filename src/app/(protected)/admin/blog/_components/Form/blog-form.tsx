@@ -1,7 +1,6 @@
 'use client'
 import { Loader2 } from 'lucide-react'
 import { UseFormReturn } from 'react-hook-form'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -18,19 +17,29 @@ import { ChooseFile } from './form/choose-file'
 import { TagsSelector } from './form/tag-selector'
 import ToggleOptions from './form/toggle-options'
 
-const BlogForm = ({
-  formSchema,
-  form,
-  onSubmit,
-  status,
-  setStatus,
-}: {
-  formSchema: z.ZodSchema
-  form: UseFormReturn<z.infer<typeof formSchema>>
-  onSubmit: (data: z.infer<typeof formSchema>) => void
+interface BlogFormData {
+  title: string
+  content: string
+  tags: (
+    | 'noticia'
+    | 'evento'
+    | 'artigo'
+    | 'entrevista'
+    | 'hospital'
+    | 'blog'
+    | 'outro'
+  )[]
+  image?: File
+}
+
+interface BlogFormProps {
+  form: UseFormReturn<BlogFormData>
+  onSubmit: (data: BlogFormData) => void
   status: 'draft' | 'published'
   setStatus: (status: 'draft' | 'published') => void
-}) => {
+}
+
+const BlogForm = ({ form, onSubmit, status, setStatus }: BlogFormProps) => {
   return (
     <div className="bg-card text-card-foreground flex h-full flex-col space-y-4 rounded-lg border p-6 shadow-sm">
       <div className="flex items-center justify-between">

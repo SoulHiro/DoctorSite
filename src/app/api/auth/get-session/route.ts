@@ -8,10 +8,6 @@ export async function GET(request: NextRequest) {
       headers: request.headers,
     })
 
-    if (!session) {
-      return NextResponse.json({ session: null }, { status: 401 })
-    }
-
     return NextResponse.json({ session })
   } catch (error) {
     console.error('Erro ao obter sessão:', error)

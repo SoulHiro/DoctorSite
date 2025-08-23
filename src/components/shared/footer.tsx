@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { PageContainer } from '@/components/ui/page-container'
 import { cn } from '@/lib/utils'
 
 const footerLinks = [
@@ -32,7 +33,7 @@ const footerLinks = [
     title: 'Conteúdo',
     links: [
       { label: 'Blog', href: '/blog', active: true, isBlank: false },
-      { label: 'Galeria', href: '/gallery', active: true, isBlank: false },
+      { label: 'Galeria', href: '/galeria', active: true, isBlank: false },
       {
         label: 'Depoimentos',
         href: '/depoimentos',
@@ -88,7 +89,7 @@ const footerLinks = [
 const Footer = () => {
   return (
     <footer className="border-ty-8 w-full py-8 text-gray-700">
-      <div className="mx-auto max-w-6xl space-y-8">
+      <PageContainer className="space-y-8 px-4">
         {/* Bloco de destaque para doação */}
         <div className="flex flex-col items-center justify-between gap-8 rounded-3xl border border-gray-300 bg-white p-8 shadow-sm md:flex-row">
           <div className="flex flex-1 flex-col gap-2 md:pr-8">
@@ -101,10 +102,7 @@ const Footer = () => {
             </p>
           </div>
           <Link href="/doar">
-            <Button
-              size="default"
-              className="w-fit rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
-            >
+            <Button size="default" variant="default">
               Doe agora e Transforme Vidas
             </Button>
           </Link>
@@ -117,9 +115,7 @@ const Footer = () => {
             <div className="grid w-full grid-cols-2 gap-8 md:w-2/3 md:grid-cols-4">
               {footerLinks.map((col) => (
                 <div key={col.title}>
-                  <h3 className="mb-3 font-semibold text-gray-900">
-                    {col.title}
-                  </h3>
+                  <h3 className="mb-3 text-xl text-gray-900">{col.title}</h3>
                   <ul className="space-y-2">
                     {col.links.map((link) => (
                       <li key={link.href}>
@@ -153,7 +149,7 @@ const Footer = () => {
             </div>
             {/* Newsletter */}
             <div className="flex w-full flex-col gap-3 md:w-1/3 md:pl-8">
-              <h3 className="mb-1 font-semibold text-gray-900">Newsletter</h3>
+              <h3 className="mb-1 text-xl text-gray-900">Newsletter</h3>
               <p className="text-sm text-gray-600">
                 Receba as últimas notícias e atualizações do projeto.
               </p>
@@ -163,10 +159,7 @@ const Footer = () => {
                   placeholder="Digite seu email"
                   className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:outline-none"
                 />
-                <Button
-                  size="default"
-                  className="w-full rounded-full bg-red-500 font-semibold text-white shadow transition duration-300 hover:scale-105 hover:bg-red-600"
-                >
+                <Button size="default" variant="default" className="w-full">
                   Inscrever
                 </Button>
               </div>
@@ -198,7 +191,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </footer>
   )
 }

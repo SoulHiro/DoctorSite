@@ -276,7 +276,7 @@ const UploadGalleryPage = () => {
                 disabled={isUploading}
               >
                 <SelectTrigger
-                  className={!municipality ? 'border-red-200' : ''}
+                  className={`w-full ${!municipality ? 'border-red-200' : ''}`}
                 >
                   <SelectValue placeholder="Selecione o município" />
                 </SelectTrigger>

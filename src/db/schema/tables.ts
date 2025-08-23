@@ -22,14 +22,22 @@ export const notificationTypeEnum = pgEnum('notificationType', [
   'aviso',
   'erro',
 ])
-export const rolesEnum = pgEnum('roles', ['admin', 'user'])
+export const rolesEnum = pgEnum('roles', ['admin', 'user', 'superadmin'])
 export const statusBlogEnum = pgEnum('statusBlog', ['rascunho', 'publicado'])
 export const statusPaymentEnum = pgEnum('statusPayment', [
   'pendente',
   'pago',
   'cancelado',
 ])
-export const tagsEnum = pgEnum('tags', ['noticia', 'evento', 'artigo', 'outro'])
+export const tagsEnum = pgEnum('tags', [
+  'noticia',
+  'evento',
+  'artigo',
+  'entrevista',
+  'hospital',
+  'blog',
+  'outro',
+])
 export const newsletterStatusEnum = pgEnum('newsletterStatus', [
   'ativo',
   'inativo',
@@ -135,14 +143,9 @@ export const blogPostsTable = pgTable('blog_posts', {
   imageUrl: text('image_url'),
   publishedAt: timestamp('published_at', {
     mode: 'string',
-    withTimezone: true,
   }),
-  createdAt: timestamp('created_at', { mode: 'string', withTimezone: true })
-    .defaultNow()
-    .notNull(),
-  updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true })
-    .defaultNow()
-    .notNull(),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
 })
 
 export const newsletterSubscribersTable = pgTable('newsletter_subscribers', {
@@ -168,18 +171,13 @@ export const mediaTable = pgTable('medias', {
   municipality: varchar('municipality', { length: 255 }).notNull(), // novo campo
   takenAt: timestamp('taken_at', {
     mode: 'string',
-    withTimezone: true,
-  }).notNull(), // novo campo com timezone
+  }).notNull(), // novo campo
   isPublic: boolean('is_public').default(true),
   userId: text('user_id')
     .notNull()
     .references(() => usersTable.id, { onDelete: 'cascade' }),
-  createdAt: timestamp('created_at', { mode: 'string', withTimezone: true })
-    .defaultNow()
-    .notNull(),
-  updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true })
-    .defaultNow()
-    .notNull(),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull(),
 })
 
 export const paymentsTable = pgTable('payments', {

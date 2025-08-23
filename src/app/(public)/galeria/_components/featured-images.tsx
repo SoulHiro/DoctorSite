@@ -5,8 +5,6 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import { getImages } from '@/actions/gallery'
-// Removido Card e CardContent para tirar fundo branco/rounded
-import { brandDesign } from '@/lib/brand-design'
 
 interface GalleryImage {
   id: string
@@ -100,27 +98,15 @@ const GalleryFeaturedImages = ({
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-6xl">
             <div className="mb-8 text-center">
-              <h2 className="mb-2 bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-4xl font-bold text-transparent">
+              <h2 className="bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 bg-clip-text text-xl text-transparent md:text-2xl lg:text-3xl">
                 Momentos em Destaque
               </h2>
             </div>
             <div className="flex items-center justify-center py-24">
               <div className="flex items-center space-x-3">
-                <motion.div
-                  className="h-4 w-4 rounded-full bg-orange-500"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                />
-                <motion.div
-                  className="h-4 w-4 rounded-full bg-pink-500"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0.3 }}
-                />
-                <motion.div
-                  className="h-4 w-4 rounded-full bg-yellow-500"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0.6 }}
-                />
+                <div className="h-4 w-4 rounded-full bg-orange-500" />
+                <div className="h-4 w-4 rounded-full bg-pink-500" />
+                <div className="h-4 w-4 rounded-full bg-yellow-500" />
                 <span className="ml-3 text-slate-600">
                   Carregando momentos especiais...
                 </span>
@@ -138,7 +124,7 @@ const GalleryFeaturedImages = ({
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-6xl">
             <div className="mb-8 text-center">
-              <h2 className="mb-2 bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-4xl font-bold text-transparent">
+              <h2 className="bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 bg-clip-text text-xl text-transparent md:text-2xl lg:text-3xl">
                 Momentos em Destaque
               </h2>
             </div>
@@ -159,47 +145,25 @@ const GalleryFeaturedImages = ({
   const secondaryImages = featuredImages.slice(1, 5)
   const gridImages = featuredImages.slice(5, 8)
 
+  const fadeUpAnimation = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 },
+  }
+
   return (
     <section className="relative overflow-hidden">
-      {/* Elementos decorativos */}
-      <div className="pointer-events-none absolute inset-0">
-        <motion.div
-          className="absolute right-10 bottom-20 h-40 w-40 rounded-full bg-pink-200/30 blur-2xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 h-24 w-24 rounded-full bg-orange-200/20 blur-xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [-20, 20, -20],
-          }}
-          transition={{ duration: 6, repeat: Infinity }}
-        />
-      </div>
-
       <div className="relative container mx-auto px-4">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl space-y-8">
           {/* Header da seção */}
-          <motion.div
-            className="mb-16 text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              ease: brandDesign.animations.easing.smooth,
-            }}
-            viewport={{ once: true }}
-          >
+          <motion.div className="space-y-4 text-center" {...fadeUpAnimation}>
             <div className="mb-4 flex items-center justify-center">
               <div className="rounded-full bg-gradient-to-r from-orange-500 to-pink-500 p-3">
                 <Star className="h-8 w-8 text-white" />
               </div>
             </div>
-            <h2 className="mb-2 bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 bg-clip-text text-4xl font-bold text-transparent">
+            <h2 className="bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 bg-clip-text text-xl text-transparent md:text-2xl lg:text-3xl">
               Momentos em Destaque
             </h2>
             <p className="text-md mx-auto max-w-4xl leading-relaxed text-slate-600">
@@ -214,16 +178,7 @@ const GalleryFeaturedImages = ({
             {/* Primeira linha - Imagem principal + Grid secundário */}
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {/* Imagem principal */}
-              <motion.div
-                className="group relative"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.8,
-                  ease: brandDesign.animations.easing.smooth,
-                }}
-                viewport={{ once: true }}
-              >
+              <motion.div className="group relative" {...fadeUpAnimation}>
                 <div className="relative aspect-[4/3] h-full w-full overflow-hidden rounded-lg">
                   <Image
                     src={mainImage.url}
@@ -249,28 +204,13 @@ const GalleryFeaturedImages = ({
               </motion.div>
 
               {/* Grid de imagens secundárias */}
-              <motion.div
-                className="grid grid-cols-2 gap-4"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.8,
-                  ease: brandDesign.animations.easing.smooth,
-                }}
-                viewport={{ once: true }}
-              >
+              <div className="grid grid-cols-2 gap-4">
                 {secondaryImages.map((image, index) => (
                   <motion.div
                     key={image.id}
                     className="group relative"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.6,
-                      delay: index * 0.1,
-                      ease: brandDesign.animations.easing.smooth,
-                    }}
-                    viewport={{ once: true }}
+                    {...fadeUpAnimation}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
                   >
                     <div className="overflow-hidden rounded-lg border-0 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                       <div className="w-ful relative aspect-square h-full">
@@ -299,30 +239,19 @@ const GalleryFeaturedImages = ({
                     </div>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </div>
 
-            {/* Segunda linha - Grid horizontal */}
+            {/* Segunda linha - Grid horizontal - Only show on desktop */}
             {gridImages.length > 0 && (
-              <motion.div
-                className="grid grid-cols-1 gap-6 md:grid-cols-3"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.2,
-                  ease: brandDesign.animations.easing.smooth,
-                }}
-                viewport={{ once: true }}
-              >
-                {gridImages.map((image) => (
+              <div className="hidden grid-cols-1 gap-6 md:grid md:grid-cols-3">
+                {gridImages.map((image, index) => (
                   <motion.div
                     key={image.id}
                     className="group relative"
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.3 }}
+                    {...fadeUpAnimation}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
                   >
-                    {/* Removido Card e CardContent */}
                     <div className="overflow-hidden rounded-lg border-0 shadow-lg transition-all duration-300 hover:shadow-xl">
                       <div className="relative aspect-[3/2] overflow-hidden">
                         <Image
@@ -349,7 +278,7 @@ const GalleryFeaturedImages = ({
                     </div>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             )}
           </div>
         </div>

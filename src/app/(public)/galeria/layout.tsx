@@ -16,7 +16,7 @@ export const metadata = generateSEOMetadata({
     'fotos autênticas voluntariado',
     'trabalho social visual',
   ],
-  url: '/gallery',
+  url: '/galeria',
   image: '/images/doctors/doutores1.jpg',
 })
 

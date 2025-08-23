@@ -3,18 +3,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
-h1 {
-  font-family: var(--font-bebas-neue);
-  font-weight: 400;
-  letter-spacing: 0.1rem;
-}
-
-h2,
-h3,
-h4 {
-  font-family: var(--font-bebas-neue);
-  font-weight: 400;
-  letter-spacing: 0.05rem;
+@layer base {
+  h1 {
+    @apply font-bebas-neue text-3xl font-extrabold tracking-tight md:text-4xl;
+  }
+  h2 {
+    @apply font-bebas-neue text-2xl font-medium tracking-wider md:text-4xl;
+  }
+  h3 {
+    @apply font-bebas-neue text-xl font-medium tracking-wider md:text-2xl;
+  }
+  h4 {
+    @apply font-bebas-neue text-lg font-medium tracking-tight md:text-xl;
+  }
+  h5 {
+    @apply font-bebas-neue text-base font-medium tracking-normal md:text-lg;
+  }
+  h6 {
+    @apply font-bebas-neue text-base font-normal tracking-normal;
+  }
 }
 
 body {

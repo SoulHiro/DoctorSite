@@ -21,7 +21,17 @@ const formSchema = z.object({
   title: z.string().min(1, { message: 'Título é obrigatório' }),
   content: z.string().min(1, { message: 'Conteúdo é obrigatório' }),
   tags: z
-    .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
+    .array(
+      z.enum([
+        'noticia',
+        'evento',
+        'artigo',
+        'entrevista',
+        'hospital',
+        'blog',
+        'outro',
+      ])
+    )
     .min(1, { message: 'Selecione pelo menos uma tag' }),
   imageUrl: z.string().optional(),
   image: z.any().optional(),
@@ -314,7 +324,6 @@ const BlogCriar = () => {
         <section className="container mx-auto max-w-6xl px-4 py-12">
           <div className="flex flex-col gap-8">
             <BlogForm
-              formSchema={formSchema}
               form={form}
               onSubmit={onSubmit}
               status={status}

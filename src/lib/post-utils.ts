@@ -109,7 +109,17 @@ export const postSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório'),
   content: z.string().min(1, 'Conteúdo é obrigatório'),
   tags: z
-    .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
+    .array(
+      z.enum([
+        'noticia',
+        'evento',
+        'artigo',
+        'entrevista',
+        'hospital',
+        'blog',
+        'outro',
+      ])
+    )
     .min(1, 'Selecione pelo menos uma tag'),
   imageUrl: z.string().url('URL da imagem deve ser válida').optional(),
 })

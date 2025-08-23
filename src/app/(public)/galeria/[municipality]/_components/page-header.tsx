@@ -16,7 +16,7 @@ export function PageHeader({ municipality, imageCount }: PageHeaderProps) {
         {/* Navigation */}
         <div className="mb-8 flex items-center justify-between">
           <Link
-            href="/gallery"
+            href="/galeria"
             className="group inline-flex items-center gap-2 rounded-lg px-3 py-2 font-medium text-gray-600 transition-all duration-200 hover:bg-white hover:text-gray-900 hover:shadow-sm"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />

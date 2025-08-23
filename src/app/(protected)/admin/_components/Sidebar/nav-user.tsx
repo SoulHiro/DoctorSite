@@ -40,6 +40,8 @@ export function NavUser() {
     }
   }
 
+  console.log(`user`, user)
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

@@ -1,7 +1,14 @@
+import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
+import { Button } from '@/components/ui/button'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,8 +18,248 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
+import { cn } from '@/lib/utils'
 
-export function HeaderNavigationMenu() {
+interface HeaderNavigationMenuProps {
+  mobile?: boolean
+  onItemClick?: () => void
+}
+
+export function HeaderNavigationMenu({
+  mobile = false,
+  onItemClick,
+}: HeaderNavigationMenuProps = {}) {
+  const [openSections, setOpenSections] = React.useState<string[]>([])
+
+  const toggleSection = (section: string) => {
+    setOpenSections((prev) =>
+      prev.includes(section)
+        ? prev.filter((s) => s !== section)
+        : [...prev, section]
+    )
+  }
+
+  const handleLinkClick = () => {
+    if (onItemClick) {
+      onItemClick()
+    }
+  }
+
+  if (mobile) {
+    return (
+      <div className="flex flex-col space-y-2">
+        {/* Home */}
+        <Link
+          href="/"
+          onClick={handleLinkClick}
+          className="hover:bg-accent hover:text-accent-foreground flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+        >
+          🏠 Home
+        </Link>
+
+        {/* Quem Somos */}
+        <Collapsible
+          open={openSections.includes('quem-somos')}
+          onOpenChange={() => toggleSection('quem-somos')}
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium"
+            >
+              👥 Quem Somos
+              <ChevronRight
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  openSections.includes('quem-somos') && 'rotate-90'
+                )}
+              />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2 ml-4 space-y-2">
+            <Link
+              href="/historia"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              📜 Nossa História
+            </Link>
+            <Link
+              href="/missao"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🌟 Missão, Visão e Valores
+            </Link>
+            <Link
+              href="/equipe"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              👩‍⚕️ Nossa Equipe
+            </Link>
+            <Link
+              href="/atuacao"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🏥 Onde Atuamos
+            </Link>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Impacto */}
+        <Collapsible
+          open={openSections.includes('impacto')}
+          onOpenChange={() => toggleSection('impacto')}
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium"
+            >
+              📊 Impacto
+              <ChevronRight
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  openSections.includes('impacto') && 'rotate-90'
+                )}
+              />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2 ml-4 space-y-2">
+            <Link
+              href="/reconhecimentos"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🏅 Reconhecimentos
+            </Link>
+            <Link
+              href="/impacto-cientifico"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🔬 Impacto Científico
+            </Link>
+            <Link
+              href="/midia"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              📺 Na Mídia
+            </Link>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Faça Parte */}
+        <Collapsible
+          open={openSections.includes('faca-parte')}
+          onOpenChange={() => toggleSection('faca-parte')}
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium"
+            >
+              🤝 Faça Parte
+              <ChevronRight
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  openSections.includes('faca-parte') && 'rotate-90'
+                )}
+              />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2 ml-4 space-y-2">
+            <Link
+              href="/doacao"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              💸 Doe Agora
+            </Link>
+            <Link
+              href="/parceiros"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🤝 Seja Parceiro
+            </Link>
+            <Link
+              href="/contribuidores"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🌟 Contribuidores
+            </Link>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Diário da Alegria */}
+        <Collapsible
+          open={openSections.includes('diario')}
+          onOpenChange={() => toggleSection('diario')}
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium"
+            >
+              📖 Diário da Alegria
+              <ChevronRight
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  openSections.includes('diario') && 'rotate-90'
+                )}
+              />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2 ml-4 space-y-2">
+            <Link
+              href="/blog"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground block rounded-lg px-3 py-2 text-sm transition-colors"
+            >
+              📝 Blog
+            </Link>
+            <Link
+              href="/galeria"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground block rounded-lg px-3 py-2 text-sm transition-colors"
+            >
+              📸 Galeria de Fotos
+            </Link>
+            <Link
+              href="/agenda"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              📅 Agenda & Próximas Visitas
+            </Link>
+            <Link
+              href="/videos"
+              onClick={handleLinkClick}
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground pointer-events-none block rounded-lg px-3 py-2 text-sm opacity-50 transition-colors"
+            >
+              🎬 Vídeos & Bastidores
+            </Link>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Contato */}
+        <Link
+          href="/contato"
+          onClick={handleLinkClick}
+          className="hover:bg-accent hover:text-accent-foreground flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+        >
+          📞 Contato
+        </Link>
+      </div>
+    )
+  }
+
+  // Desktop version (original)
   return (
     <NavigationMenu viewport={true}>
       <NavigationMenuList>
@@ -143,28 +390,31 @@ export function HeaderNavigationMenu() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Faça Parte</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[300px] gap-4">
-              <li>
-                <div className="space-y-4">
-                  <div className="cursor-not-allowed rounded-md p-3 opacity-50">
-                    <div className="font-medium text-gray-400">Doe Agora</div>
-                    <div className="text-sm text-gray-400">
-                      Página com botão de doação e explicação clara de como o
-                      dinheiro é usado. (Em breve)
-                    </div>
-                  </div>
-                  <div className="cursor-not-allowed rounded-md p-3 opacity-50">
-                    <div className="font-medium text-gray-400">
-                      Seja um Parceiro
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      Espaço para entender como pode-se apoiar financeiramente
-                      ou com serviços. (Em breve)
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
+            <div className="grid gap-2 md:w-[600px] lg:w-[700px] lg:grid-rows-[1fr_auto]">
+              {/* Segunda parte: destaques */}
+              <ul className="flex flex-row gap-2">
+                <ListItem href="/doacao" title="💸 Doe Agora" disabled={true}>
+                  Contribua para transformar sorrisos em realidade e vidas em
+                  esperança.
+                </ListItem>
+                <ListItem
+                  href="/parceiros"
+                  title="🤝 Seja Parceiro"
+                  disabled={true}
+                >
+                  Junte-se a nós como parceiro e fortaleça essa corrente de boas
+                  ações.
+                </ListItem>
+                <ListItem
+                  href="/contribuidores"
+                  title="🌟 Contribuidores"
+                  disabled={true}
+                >
+                  Conheça quem ajuda a tornar nossa causa possível todos os
+                  dias.
+                </ListItem>
+              </ul>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -192,7 +442,7 @@ export function HeaderNavigationMenu() {
                 {/* Coluna 2 */}
                 <ul className="flex flex-col gap-4">
                   <ListItem
-                    href="/gallery"
+                    href="/galeria"
                     title="📸 Galeria de Fotos"
                     className="border-muted border-b pb-3"
                   >

@@ -189,11 +189,11 @@ const GalleryPage = () => {
 
   // Componente de filtros
   const FiltersSection = (
-    <div className="mx-auto max-w-xl">
+    <div className="mx-auto flex w-full max-w-xl justify-center px-4 sm:px-6">
       {/* Filtros em linha */}
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {/* Filtro de Município */}
-        <div className="flex flex-col space-y-1">
+        <div className="flex w-full flex-col items-start space-y-1">
           <label className="mb-1 flex items-center gap-2 text-sm font-medium text-white/90">
             <MapPin className="h-4 w-4" />
             Cidade
@@ -204,7 +204,7 @@ const GalleryPage = () => {
               updateFilter('selectedMunicipality', value)
             }
           >
-            <SelectTrigger className="h-10 rounded-full bg-white shadow-md">
+            <SelectTrigger className="h-10 w-full rounded-full bg-white shadow-md sm:w-auto">
               <SelectValue placeholder="Todas as cidades" />
             </SelectTrigger>
             <SelectContent>
@@ -219,7 +219,7 @@ const GalleryPage = () => {
         </div>
 
         {/* Filtro de Ano */}
-        <div className="flex flex-col space-y-1">
+        <div className="flex w-full flex-col items-start space-y-1">
           <label className="flex items-center gap-2 text-sm font-medium text-white/90">
             <Calendar className="h-4 w-4" />
             Ano
@@ -233,7 +233,7 @@ const GalleryPage = () => {
               )
             }
           >
-            <SelectTrigger className="h-10 rounded-full bg-white shadow-md">
+            <SelectTrigger className="h-10 w-full rounded-full bg-white shadow-md sm:w-auto">
               <SelectValue placeholder="Todos os anos" />
             </SelectTrigger>
             <SelectContent>
@@ -248,7 +248,7 @@ const GalleryPage = () => {
         </div>
 
         {/* Filtro de Mês */}
-        <div className="flex flex-col space-y-1">
+        <div className="flex w-full flex-col items-start space-y-1">
           <label className="flex items-center gap-2 text-sm font-medium text-white/90">
             <Calendar className="h-4 w-4" />
             Mês
@@ -263,7 +263,7 @@ const GalleryPage = () => {
             }
             disabled={!filters.selectedYear}
           >
-            <SelectTrigger className="h-10 rounded-full bg-white shadow-md">
+            <SelectTrigger className="h-10 w-full rounded-full bg-white shadow-md sm:w-auto">
               <SelectValue
                 placeholder={
                   filters.selectedYear
@@ -332,7 +332,8 @@ const GalleryPage = () => {
                   filters.selectedMunicipality
                 )
               }}
-              className="rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-8 py-3 text-white transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
+              variant="default"
+              size="default"
             >
               Ver galeria completa de {filters.selectedMunicipality}
             </Button>
@@ -342,9 +343,7 @@ const GalleryPage = () => {
         {/* Outras seções apenas quando não há filtros ativos */}
         {!hasActiveFilters && (
           <>
-            <div className="-mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-12 2xl:-mx-16">
-              <GalleryImpactSection />
-            </div>
+            <GalleryImpactSection />
             <GalleryMunicipalities />
           </>
         )}

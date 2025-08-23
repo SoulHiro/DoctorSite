@@ -95,7 +95,7 @@ export const brandDesign = {
 
   // Containers e layouts
   layout: {
-    container: 'container mx-auto max-w-6xl px-4',
+    container: 'container mx-auto max-w-6xl',
     spacing: 'space-y-16',
     heroSection: 'relative overflow-hidden',
     pageWrapper: 'min-h-screen space-y-16',

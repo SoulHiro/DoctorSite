@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { corsHeaders } from './lib/cors'
-import { shouldShowMobileConstruction } from './lib/device-detection'
 
 const allowedOrigins = [
   'http://localhost:3000',
@@ -11,21 +10,7 @@ const allowedOrigins = [
 
 export async function middleware(request: NextRequest) {
   const origin = request.headers.get('origin') ?? ''
-  const userAgent = request.headers.get('user-agent') ?? ''
-  const isMobile = shouldShowMobileConstruction(userAgent)
-  const isOnMobilePage = request.nextUrl.pathname.startsWith(
-    '/mobile-em-construcao'
-  )
-
-  // Se é MOBILE e NÃO está na página mobile -> redireciona para página mobile
-  if (isMobile && !isOnMobilePage) {
-    return NextResponse.redirect(new URL('/mobile-em-construcao', request.url))
-  }
-
-  // Se NÃO é mobile e está tentando acessar página mobile -> bloqueia
-  if (!isMobile && isOnMobilePage) {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
+  // const userAgent = request.headers.get('user-agent') ?? ''
 
   if (origin && !allowedOrigins.includes(origin)) {
     return new NextResponse('Origin not allowed', { status: 403 })

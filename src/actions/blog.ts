@@ -27,7 +27,17 @@ const createPostSchema = z.object({
   title: z.string().min(1, { message: 'Título é obrigatório' }),
   content: z.string().min(1, { message: 'Conteúdo é obrigatório' }),
   tags: z
-    .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
+    .array(
+      z.enum([
+        'noticia',
+        'evento',
+        'artigo',
+        'entrevista',
+        'hospital',
+        'blog',
+        'outro',
+      ])
+    )
     .min(1, { message: 'Selecione pelo menos uma tag' }),
   imageUrl: z.string().optional(),
   status: z.enum(['rascunho', 'publicado']),
@@ -61,7 +71,7 @@ export async function createPost(
 
   if (!validatedData.success) {
     return {
-      error: validatedData.error.errors.map((e) => e.message).join(', '),
+      error: validatedData.error.issues.map((e) => e.message).join(', '),
     }
   }
 

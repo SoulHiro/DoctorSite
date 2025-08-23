@@ -14,6 +14,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { PageContainer } from '@/components/ui/page-container'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 
 interface Testimonial {
@@ -65,18 +67,49 @@ const TestimonialCard = memo(
       )}
     >
       <div className="flex flex-col items-center text-center">
-        <FaQuoteLeft className="mb-4 text-3xl text-red-400" />
-        <p className="mb-6 text-justify text-base text-gray-600">
+        <FaQuoteLeft
+          className={cn(
+            'mb-4 text-3xl',
+            isActive ? 'text-red-400' : 'text-red-600'
+          )}
+        />
+        <p
+          className={cn(
+            'mb-6 text-justify text-base',
+            isActive ? 'text-gray-800' : 'text-gray-900'
+          )}
+        >
           &ldquo;{text}&rdquo;
         </p>
       </div>
       <div className="flex items-center justify-center gap-4 border-t pt-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-red-400 to-red-600 font-bold text-white">
+        <div
+          className={cn(
+            'flex h-12 w-12 items-center justify-center rounded-full font-bold text-white',
+            isActive
+              ? 'bg-gradient-to-br from-red-400 to-red-600'
+              : 'bg-gradient-to-br from-red-600 to-red-800'
+          )}
+        >
           {name.charAt(0)}
         </div>
         <div>
-          <h4 className="font-semibold text-gray-800">{name}</h4>
-          <p className="text-sm text-gray-500">{role}</p>
+          <p
+            className={cn(
+              'font-semibold',
+              isActive ? 'text-gray-900' : 'text-black'
+            )}
+          >
+            {name}
+          </p>
+          <p
+            className={cn(
+              'text-sm',
+              isActive ? 'text-gray-700' : 'text-gray-900'
+            )}
+          >
+            {role}
+          </p>
         </div>
       </div>
     </article>
@@ -88,6 +121,7 @@ export default function TestimonialsSection() {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (!api) return
@@ -106,18 +140,12 @@ export default function TestimonialsSection() {
     }
   }, [api])
 
-  const scrollTo = (index: number) => {
-    api?.scrollTo(index)
-  }
-
   return (
-    <section className="w-full bg-gray-50 py-20">
-      <div className="container mx-auto max-w-6xl space-y-12 px-4">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold text-gray-900">
-            Vozes que Nos Inspiram
-          </h2>
-          <p className="text-md mx-auto mt-4 max-w-2xl text-gray-600">
+    <section className="w-full bg-gray-50">
+      <PageContainer className="space-y-6 px-4 py-8 sm:space-y-12">
+        <div className="flex flex-col items-center space-y-4 text-center">
+          <h2 className="text-gray-900">Vozes que Nos Inspiram</h2>
+          <p className="mx-auto max-w-2xl text-gray-700">
             Conheça os depoimentos de quem vivenciou de perto o poder da
             palhaçaria terapêutica.
           </p>
@@ -135,11 +163,11 @@ export default function TestimonialsSection() {
           ]}
           className="relative"
         >
-          <CarouselContent className="-ml-8">
+          <CarouselContent className="-ml-4 sm:-ml-8">
             {testimonials.map((testimonial, index) => (
               <CarouselItem
                 key={testimonial.id}
-                className="pl-8 md:basis-1/2 lg:basis-1/3"
+                className="pl-4 sm:pl-8 md:basis-1/2 lg:basis-1/3"
               >
                 <div className="p-1">
                   <TestimonialCard
@@ -150,20 +178,36 @@ export default function TestimonialsSection() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="absolute top-1/2 left-[-50px] -translate-y-1/2" />
-          <CarouselNext className="absolute top-1/2 right-[-50px] -translate-y-1/2" />
+          {!isMobile && (
+            <>
+              <CarouselPrevious className="absolute top-1/2 left-[-10px] -translate-y-1/2 sm:left-[-50px]" />
+              <CarouselNext className="absolute top-1/2 right-[-10px] -translate-y-1/2 sm:right-[-50px]" />
+            </>
+          )}
         </Carousel>
 
-        <div className="flex justify-center space-x-2">
+        {/* Indicadores de posição */}
+        <div
+          className={cn(
+            'mt-6 flex items-center justify-center gap-2',
+            isMobile ? 'space-x-0' : 'space-x-3'
+          )}
+          aria-hidden="true"
+        >
           {Array.from({ length: count }).map((_, index) => (
-            <button
+            <div
               key={index}
-              onClick={() => scrollTo(index)}
               className={cn(
-                'h-2 w-2 rounded-full transition-all duration-300',
-                current === index ? 'w-4 bg-red-500' : 'bg-gray-300'
+                'rounded-full transition-all duration-300',
+                isMobile ? 'h-2 w-2' : 'h-3',
+                current === index
+                  ? isMobile
+                    ? 'w-4 bg-red-500'
+                    : 'w-8 bg-red-500'
+                  : isMobile
+                    ? 'w-2 bg-gray-300'
+                    : 'w-3 bg-gray-300'
               )}
-              aria-label={`Ir para depoimento ${index + 1}`}
             />
           ))}
         </div>
@@ -173,15 +217,12 @@ export default function TestimonialsSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button
-              size="lg"
-              className="rounded-full bg-red-500 px-8 py-3 font-semibold text-white shadow-md transition-transform hover:scale-105 hover:bg-red-600"
-            >
+            <Button size="default" variant="default">
               Envie seu Depoimento
             </Button>
           </Link>
         </div>
-      </div>
+      </PageContainer>
     </section>
   )
 }

@@ -34,14 +34,7 @@ const galleryFiltersSchema = z.object({
   offset: z.number().min(0).default(0),
 })
 
-// Função para formatar data sem horário (apenas dia/mês/ano)
-const formatDateForDB = (dateString: string) => {
-  const date = new Date(dateString)
-  // Garantir que seja armazenado como início do dia (00:00:00) em UTC
-  return new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  ).toISOString()
-}
+// Com as colunas sem timezone no banco, basta enviar 'YYYY-MM-DD'
 
 /**
  * Obter períodos disponíveis (anos e meses) onde existem fotos
@@ -158,9 +151,9 @@ export async function createImages(formData: FormData) {
     })
 
     if (!validatedData.success) {
-      console.error('Erro de validação:', validatedData.error.errors)
+      console.error('Erro de validação:', validatedData.error.issues)
       return {
-        error: validatedData.error.errors.map((e) => e.message).join(', '),
+        error: validatedData.error.issues.map((e) => e.message).join(', '),
       }
     }
 
@@ -170,7 +163,7 @@ export async function createImages(formData: FormData) {
       filename: image.filename,
       type: 'image' as const,
       municipality: validatedData.data.municipality,
-      takenAt: formatDateForDB(validatedData.data.takenAt),
+      takenAt: validatedData.data.takenAt, // YYYY-MM-DD
       isPublic: true,
       userId: userId,
     }))
@@ -270,15 +263,11 @@ export async function getImagesByFilters(filters: {
     }
 
     if (startDate) {
-      whereConditions.push(
-        sql`${mediaTable.takenAt} >= ${formatDateForDB(startDate)}`
-      )
+      whereConditions.push(sql`${mediaTable.takenAt} >= ${startDate}`)
     }
 
     if (endDate) {
-      whereConditions.push(
-        sql`${mediaTable.takenAt} <= ${formatDateForDB(endDate)}`
-      )
+      whereConditions.push(sql`${mediaTable.takenAt} <= ${endDate}`)
     }
 
     // Definir ordenação
@@ -480,7 +469,7 @@ export async function postGallery(formData: FormData) {
     filename: formData.get('filename') as string,
     type: formData.get('type') as 'image' | 'video',
     municipality: formData.get('municipality') as string,
-    takenAt: formatDateForDB(formData.get('takenAt') as string),
+    takenAt: formData.get('takenAt') as string,
     isPublic: true,
     userId: userId,
   })

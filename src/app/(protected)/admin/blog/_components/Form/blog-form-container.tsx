@@ -16,7 +16,17 @@ const formSchema = z.object({
   title: z.string().min(1, { message: 'Título é obrigatório' }),
   content: z.string().min(1, { message: 'Conteúdo é obrigatório' }),
   tags: z
-    .array(z.enum(['noticia', 'evento', 'artigo', 'outro']))
+    .array(
+      z.enum([
+        'noticia',
+        'evento',
+        'artigo',
+        'entrevista',
+        'hospital',
+        'blog',
+        'outro',
+      ])
+    )
     .min(1, { message: 'Selecione pelo menos uma tag' }),
   image: z.instanceof(File).optional(),
 })
@@ -112,7 +122,6 @@ const BlogFormContainer = ({}: BlogFormContainerProps) => {
     <div className="grid h-screen w-full grid-cols-2 gap-4 p-8">
       <FormProvider {...form}>
         <BlogForm
-          formSchema={formSchema}
           form={form}
           onSubmit={onSubmit}
           status={status}

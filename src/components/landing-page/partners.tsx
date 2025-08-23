@@ -1,66 +1,50 @@
 'use client'
-
-import 'keen-slider/keen-slider.min.css'
-
-import { useKeenSlider } from 'keen-slider/react'
-
-const animation = { duration: 50000, easing: (t: number) => t }
+import { motion } from 'framer-motion'
 
 const partners = [
-  {
-    name: 'Sicredi Ibirubá',
-  },
-  {
-    name: 'Supermercado Casa do chimarrão ',
-  },
-  {
-    name: 'Hospital da comunidade Annes Dias',
-  },
-  {
-    name: 'Indutar tecno Metal',
-  },
-  {
-    name: 'Theo transportes',
-  },
+  'Sicredi Ibirubá',
+  'Supermercado Casa do chimarrão',
+  'Hospital da comunidade Annes Dias',
+  'Indutar tecno Metal',
+  'Theo transportes',
 ]
 
-export const Partners = () => {
-  const [sliderRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    renderMode: 'performance',
-    drag: false,
-    slides: { perView: 3, spacing: 32 },
-    created(s) {
-      s.moveToIdx(5, true, animation)
-    },
-    updated(s) {
-      s.moveToIdx(s.track.details.abs + 5, true, animation)
-    },
-    animationEnded(s) {
-      s.moveToIdx(s.track.details.abs + 5, true, animation)
-    },
-  })
+export default function Partners() {
+  const duplicatedPartners = [...partners, ...partners, ...partners]
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center">
-      {/* Gradiente lateral esquerda */}
-      <div className="from-background via-background/80 pointer-events-none absolute top-0 left-0 z-10 h-full w-24 bg-gradient-to-r to-transparent" />
-      {/* Gradiente lateral direita */}
-      <div className="from-background via-background/80 pointer-events-none absolute top-0 right-0 z-10 h-full w-24 bg-gradient-to-l to-transparent" />
+    <div className="flex w-full justify-center">
+      <div className="relative w-full max-w-6xl overflow-hidden">
+        {/* Gradientes laterais */}
+        <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-16 bg-gradient-to-r from-white to-transparent" />
+        <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-16 bg-gradient-to-l from-white to-transparent" />
 
-      <div ref={sliderRef} className="keen-slider w-full max-w-6xl px-4">
-        {partners.map((partner, index) => (
-          <div
-            key={index}
-            className="keen-slider__slide number-slide1 flex items-center justify-center"
+        {/* Container com animação */}
+        <div className="flex py-4">
+          <motion.div
+            className="flex gap-32 whitespace-nowrap"
+            animate={{
+              x: [0, -33.33 + '%'],
+            }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: 'loop',
+                duration: 20,
+                ease: 'linear',
+              },
+            }}
           >
-            <div className="flex min-w-[220px] flex-col items-center gap-2 bg-white px-8 py-6">
-              <h1 className="text-md font-bold text-gray-700">
-                {partner.name}
-              </h1>
-            </div>
-          </div>
-        ))}
+            {duplicatedPartners.map((partner, index) => (
+              <h3
+                key={`${partner}-${index}`}
+                className="flex-shrink-0 text-lg text-gray-700"
+              >
+                {partner}
+              </h3>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </div>
   )

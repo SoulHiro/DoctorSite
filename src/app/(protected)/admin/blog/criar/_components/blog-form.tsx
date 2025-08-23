@@ -1,6 +1,5 @@
 'use client'
 import { UseFormReturn } from 'react-hook-form'
-import { z } from 'zod'
 
 import {
   Form,
@@ -14,17 +13,30 @@ import Tiptap from '@/components/ui/Tiptap'
 
 import { ChooseFile } from './form/choose-file'
 
-const BlogForm = ({
-  formSchema,
-  form,
-  onSubmit,
-}: {
-  formSchema: z.ZodSchema
-  form: UseFormReturn<z.infer<typeof formSchema>>
-  onSubmit: (data: z.infer<typeof formSchema>) => void
+interface BlogFormData {
+  title: string
+  content: string
+  tags: (
+    | 'noticia'
+    | 'evento'
+    | 'artigo'
+    | 'entrevista'
+    | 'hospital'
+    | 'blog'
+    | 'outro'
+  )[]
+  imageUrl?: string
+  image?: File
+}
+
+interface BlogFormProps {
+  form: UseFormReturn<BlogFormData>
+  onSubmit: (data: BlogFormData) => void
   status: 'draft' | 'published'
   setStatus: (status: 'draft' | 'published') => void
-}) => {
+}
+
+const BlogForm = ({ form, onSubmit }: BlogFormProps) => {
   return (
     <div className="mx-auto w-full max-w-6xl">
       <div className="rounded-2xl border bg-white p-8 shadow-lg">

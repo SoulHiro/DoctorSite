@@ -42,5 +42,7 @@ export function useAuthSession() {
     error,
     user,
     isLoggedIn: !!user,
+    // Adiciona um estado mais específico para evitar chamadas desnecessárias
+    isLoading: isPending,
   }
 }

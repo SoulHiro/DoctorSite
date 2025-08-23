@@ -17,7 +17,7 @@ Disallow: /auth/
 # Allow important pages
 Allow: /
 Allow: /blog/
-Allow: /gallery/
+Allow: /galeria/
 Allow: /contato/
 
 # Crawl delay

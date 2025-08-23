@@ -3,9 +3,12 @@ import Link from 'next/link'
 
 import { getPosts } from '@/actions/blog'
 import { Badge } from '@/components/ui/badge'
+import { PageContainer } from '@/components/ui/page-container'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { stripHtmlAndMarkdown } from '@/lib/utils'
 import type { BlogPost } from '@/types/blog-types'
+
+import { Button } from '../ui/button'
 
 // Componente reutilizável para card de post
 const PostCard = ({ post }: { post: BlogPost }) => {
@@ -29,7 +32,7 @@ const PostCard = ({ post }: { post: BlogPost }) => {
               <Badge
                 key={tag}
                 variant="secondary"
-                className="bg-red-50 text-xs font-semibold text-red-600 transition-colors hover:bg-red-100"
+                className="bg-red-100 text-xs font-semibold text-red-800 transition-colors hover:bg-red-200"
               >
                 {tag}
               </Badge>
@@ -38,7 +41,7 @@ const PostCard = ({ post }: { post: BlogPost }) => {
           <h3 className="line-clamp-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-red-600">
             {post.title}
           </h3>
-          <p className="line-clamp-3 flex-1 text-sm text-gray-600">
+          <p className="line-clamp-3 flex-1 text-sm text-gray-700">
             {cleanExcerpt || 'Clique para ler mais...'}
           </p>
           <div className="flex items-center justify-between pt-2 text-xs text-gray-500">
@@ -69,11 +72,11 @@ const BlogSection = async () => {
   const categories = ['todos', 'noticia', 'evento', 'artigo', 'outro'] as const
 
   return (
-    <section className="w-full py-16">
-      <div className="mx-auto flex max-w-6xl flex-col items-center space-y-8 px-4">
+    <section className="w-full">
+      <PageContainer className="flex flex-col items-center space-y-6 px-4">
         <div className="flex flex-col items-center space-y-4 text-center">
-          <h2 className="text-4xl font-bold text-gray-900">Nosso Blog</h2>
-          <p className="max-w-2xl text-lg leading-relaxed text-gray-600">
+          <h2 className="text-gray-900">Nosso Blog</h2>
+          <p className="mx-auto max-w-2xl text-gray-700">
             Fique por dentro de novidades sobre humanização hospitalar, técnicas
             de palhaçaria terapêutica e histórias inspiradoras do nosso
             trabalho.
@@ -94,31 +97,31 @@ const BlogSection = async () => {
             <TabsList className="mx-auto grid w-fit grid-cols-5 bg-white">
               <TabsTrigger
                 value="todos"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
+                className="rounded-full data-[state=active]:bg-red-600 data-[state=active]:text-white"
               >
                 Todos
               </TabsTrigger>
               <TabsTrigger
                 value="noticia"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
+                className="rounded-full data-[state=active]:bg-red-600 data-[state=active]:text-white"
               >
                 Notícias
               </TabsTrigger>
               <TabsTrigger
                 value="evento"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
+                className="rounded-full data-[state=active]:bg-red-600 data-[state=active]:text-white"
               >
                 Eventos
               </TabsTrigger>
               <TabsTrigger
                 value="artigo"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
+                className="rounded-full data-[state=active]:bg-red-600 data-[state=active]:text-white"
               >
                 Artigos
               </TabsTrigger>
               <TabsTrigger
                 value="outro"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
+                className="rounded-full data-[state=active]:bg-red-600 data-[state=active]:text-white"
               >
                 Outros
               </TabsTrigger>
@@ -150,15 +153,12 @@ const BlogSection = async () => {
 
         {posts.length > 0 && (
           <div className="pt-8">
-            <Link
-              href="/blog"
-              className="focus-visible:ring-ring inline-flex items-center justify-center rounded-md bg-red-600 px-8 py-3 text-sm font-medium text-white shadow transition-colors hover:bg-red-700 focus-visible:ring-1 focus-visible:outline-none"
-            >
-              Ver todos os posts
+            <Link href="/blog">
+              <Button variant="default">Ver todos os posts</Button>
             </Link>
           </div>
         )}
-      </div>
+      </PageContainer>
     </section>
   )
 }

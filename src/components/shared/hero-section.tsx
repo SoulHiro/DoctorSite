@@ -5,6 +5,8 @@ import { LucideIcon } from 'lucide-react'
 import Image from 'next/image'
 import { ReactNode } from 'react'
 
+import { PageContainer } from '@/components/ui/page-container'
+
 interface HeroSectionProps {
   title: string
   subtitle: string
@@ -67,10 +69,10 @@ export function HeroSection({
         transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
       />
 
-      <div className="relative z-30 container mx-auto max-w-6xl px-4 py-24 md:py-32">
+      <PageContainer className="relative z-30 py-24 md:py-32">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
-            className="animate-fade-in-up"
+            className="animate-fade-in-up space-y-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -78,7 +80,7 @@ export function HeroSection({
             {/* Ícone opcional */}
             {(Icon || iconElement) && (
               <motion.div
-                className="mb-6 flex justify-center"
+                className="flex justify-center"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
@@ -96,7 +98,7 @@ export function HeroSection({
 
             {/* Título */}
             <motion.h1
-              className="mb-6 text-5xl font-bold tracking-tight text-white drop-shadow-lg md:text-6xl lg:text-7xl"
+              className="text-4xl font-light text-white drop-shadow-lg md:text-5xl 2xl:text-7xl"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -110,7 +112,7 @@ export function HeroSection({
 
             {/* Subtítulo */}
             <motion.p
-              className="mx-auto mb-12 max-w-3xl text-lg leading-relaxed text-white/90 drop-shadow-md md:text-xl"
+              className="text-md md:text-md max-w-4xl p-4 text-center text-white drop-shadow-md sm:p-0 2xl:text-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -138,7 +140,7 @@ export function HeroSection({
             )}
           </motion.div>
         </div>
-      </div>
+      </PageContainer>
     </section>
   )
 }

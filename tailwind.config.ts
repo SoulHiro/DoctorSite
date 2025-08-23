@@ -21,6 +21,20 @@ export default {
         sans: ['var(--font-inter)', 'sans-serif'],
         bebas: ['var(--font-bebas)', 'sans-serif'],
       },
+      animation: {
+        scroll:
+          'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite',
+      },
+      keyframes: {
+        scroll: {
+          '0%': {
+            transform: 'translate3d(0, 0, 0)',
+          },
+          '100%': {
+            transform: 'translate3d(calc(-25% - 0.5rem), 0, 0)',
+          },
+        },
+      },
     },
   },
 } satisfies Config

@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-08T00:00:00Z",
+  "title": "Design System: SOS Bom Humor Doutores Palhaços",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Coral / Terracota", "canonical": "#c1502b", "tonalRamp": ["#3a1509", "#5c2211", "#973d1f", "#c1502b", "#d9663d", "#e88a68", "#f5e1d8", "#fbf1ec"] },
+      "secondary": { "role": "secondary", "displayName": "Azul-água", "canonical": "#2f8f82", "tonalRamp": ["#0f2b27", "#18453e", "#226059", "#2f8f82", "#3fa69a", "#7cc4bb", "#dceeec", "#f0f8f7"] },
+      "neutral-bg": { "role": "neutral", "displayName": "Background Quebrado", "canonical": "#f0ece2", "tonalRamp": ["#2b2a28", "#4a4844", "#6b6a63", "#a8a498", "#dad6c9", "#e5e1d4", "#f0ece2", "#faf8f3"] },
+      "neutral-ink": { "role": "neutral", "displayName": "Tinta Principal", "canonical": "#2b2a28", "tonalRamp": ["#0d0d0c", "#1b1a19", "#2b2a28", "#6b6a63", "#a8a498", "#dad6c9", "#f0ece2", "#faf8f3"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Fraunces", "purpose": "Hero principal, uma vez por página." },
+      "accent": { "displayName": "Permanent Marker", "purpose": "Palavra isolada de destaque dentro de um título — nunca título inteiro nem corpo." }
+    },
+    "shadows": [
+      { "name": "sm", "value": "0 1px 2px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.08)", "purpose": "Único nível de sombra do sistema — dropdown, modal, popover." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Curva padrão de saída para hover, foco e reveals." },
+      { "name": "duration-fast", "value": "150ms", "purpose": "Hover, focus." },
+      { "name": "duration-base", "value": "250ms", "purpose": "Reveals de elemento." },
+      { "name": "duration-slow", "value": "400ms", "purpose": "Parallax do hero, transição de página." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "CTA principal — doar, se voluntariar.",
+      "html": "<button class=\"ds-btn-primary\">Fazer parte</button>",
+      "css": ".ds-btn-primary { background: #c1502b; color: #ffffff; padding: 0 0.625rem; height: 2rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; border: none; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: #d9663d; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgb(193 80 43 / 0.5); } .ds-btn-primary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ação secundária, associada a seções informativas.",
+      "html": "<button class=\"ds-btn-secondary\">Saiba mais</button>",
+      "css": ".ds-btn-secondary { background: #2f8f82; color: #ffffff; padding: 0 0.625rem; height: 2rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; border: none; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: #3fa69a; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Ação terciária sobre fundo neutro.",
+      "html": "<button class=\"ds-btn-outline\">Contato</button>",
+      "css": ".ds-btn-outline { background: #f0ece2; color: #2b2a28; padding: 0 0.625rem; height: 2rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; border: 1px solid #dad6c9; transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-outline:hover { background: #e5e1d4; }"
+    },
+    {
+      "name": "Surface Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Bloco elevado sobre o background — nunca leva sombra.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">19 hospitais</h3><p class=\"ds-card-body\">Visitados regularmente no Rio Grande do Sul.</p></div>",
+      "css": ".ds-card { background: #faf8f3; border: 1px solid #dad6c9; border-radius: 0.375rem; padding: 1.5rem; } .ds-card-title { font-family: Fraunces, serif; font-weight: 600; font-size: 1.563rem; color: #2b2a28; margin: 0 0 0.5rem; } .ds-card-body { font-family: Inter, system-ui, sans-serif; font-size: 1rem; line-height: 1.6; color: #6b6a63; margin: 0; }"
+    },
+    {
+      "name": "Accent Word",
+      "kind": "custom",
+      "refersTo": "typography.accent",
+      "description": "Palavra isolada de destaque dentro de um título, em Permanent Marker.",
+      "html": "<h1 class=\"ds-hero-title\">Um <span class=\"ds-accent-word\">sorriso</span> que cura</h1>",
+      "css": ".ds-hero-title { font-family: Fraunces, serif; font-weight: 700; font-size: 3.052rem; line-height: 1.15; color: #2b2a28; margin: 0; } .ds-accent-word { font-family: 'Permanent Marker', cursive; color: #c1502b; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Jaleco",
+    "overview": "O jaleco colorido que a equipe veste em cada visita hospitalar é a metáfora central do sistema: uma peça séria (o símbolo médico) usada de um jeito lúdico (as cores, os remendos, o bordado torto). Nenhuma das duas metades vence a outra. O sistema é construído sobre neutros quebrados, com coral/terracota e azul-água carregando o peso emocional. A tipografia mistura uma serifada institucional (Fraunces) com um sans utilitário (Inter) e, só em palavras isoladas de destaque, um script manual (Permanent Marker).",
+    "keyCharacteristics": [
+      "Neutros quebrados como base, nunca branco/creme puro",
+      "Um par de cores de marca (coral + azul-água), nunca mais de dois protagonistas",
+      "Serifada + sans + um acento manual usado com extrema moderação",
+      "Flat by default; sombra só existe para dizer 'isto flutua sobre o conteúdo' (overlay real)",
+      "Raio de canto pequeno e consistente — nunca 'card flutuante' arredondado demais"
+    ],
+    "rules": [
+      { "name": "The Two-Protagonist Rule", "body": "Só coral e azul-água carregam peso de marca. Qualquer outra cor em tela é neutra ou semântica — nunca decorativa.", "section": "colors" },
+      { "name": "The No-Alarm Rule", "body": "Vermelho puro de emergência está banido. O erro semântico fica deliberadamente afastado do coral de marca.", "section": "colors" },
+      { "name": "The One-Word Marker Rule", "body": "Permanent Marker nunca aplica a um título inteiro nem a um parágrafo — só a uma palavra-chave isolada dentro de um título.", "section": "typography" },
+      { "name": "The Overlay-Only Rule", "body": "Se o elemento não flutua fisicamente sobre outro conteúdo, ele não leva sombra. Um card com sombra decorativa é sempre um erro neste sistema.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar coral (#c1502b) e azul-água (#2f8f82) como os únicos dois protagonistas cromáticos da marca.",
+      "Do manter o background quebrado (#f0ece2), nunca branco ou creme puro.",
+      "Do restringir Permanent Marker a palavras isoladas de destaque, nunca títulos inteiros ou parágrafos.",
+      "Do reservar sombra exclusivamente para overlays reais (dropdown, modal, popover).",
+      "Do atingir WCAG 2.1 AA em todo componente — contraste mínimo 4.5:1 texto normal, 3:1 texto grande.",
+      "Do usar fotografia real da equipe em ação, nunca banco de imagens."
+    ],
+    "donts": [
+      "Don't usar vermelho puro de alerta/emergência (#DC2626 e vizinhos).",
+      "Don't aplicar sombra decorativa em card ou seção estática.",
+      "Don't infantilizar com paletas de parque de diversões ou ilustrações cartunescas genéricas.",
+      "Don't usar fotografia stock genérica, poses forçadas, ou imagens que exponham pacientes sem consentimento.",
+      "Don't transmitir status só por cor — erro semântico sempre acompanhado de ícone + texto.",
+      "Don't usar outline: none sem um substituto de foco visível."
+    ]
+  }
+}

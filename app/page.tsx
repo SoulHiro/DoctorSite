@@ -1,7 +1,8 @@
 import { TopBar } from "@/components/site/topbar";
 import { Header } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
-import { Impact } from "@/components/site/impact";
+import { MissionVideo } from "@/components/site/mission-video";
+import { TrustCards } from "@/components/site/trust-cards";
 import { AboutTeaser } from "@/components/site/about-teaser";
 import { CausesGrid } from "@/components/site/causes-grid";
 import { Team } from "@/components/site/team";
@@ -18,17 +19,22 @@ export default function Home() {
       >
         Pular para o conteúdo
       </a>
-      <TopBar />
-      <Header />
-      <main id="main">
-        <Hero />
-        {/* <Impact /> */}
-        <AboutTeaser />
-        <CausesGrid />
-        <Team />
-        <VolunteerCta />
-        <Partners />
-      </main>
+      <div className="relative">
+        <div className="absolute inset-x-0 top-0 z-20 bg-gradient-to-b from-white/80 via-white/35 to-transparent pb-8">
+          <TopBar />
+          <Header />
+        </div>
+        <main id="main">
+          <Hero />
+          <TrustCards />
+          <AboutTeaser />
+          <MissionVideo />
+          <CausesGrid />
+          <Team />
+          <VolunteerCta />
+          <Partners />
+        </main>
+      </div>
       <ContactFooter />
     </>
   );

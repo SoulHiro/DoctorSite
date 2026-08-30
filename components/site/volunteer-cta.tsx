@@ -1,9 +1,10 @@
 import { Reveal } from "@/components/site/reveal"
+import { SectionContainer } from "@/components/site/section-container"
 
 export function VolunteerCta() {
   return (
     <section id="voluntariado" className="bg-secondary-active text-white">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <SectionContainer className="py-16 sm:py-20 lg:py-24">
         <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-end lg:justify-between">
           <Reveal className="max-w-xl">
             <h2 className="text-balance font-heading text-3xl font-semibold leading-[1.2] sm:text-4xl">
@@ -26,7 +27,7 @@ export function VolunteerCta() {
             </a>
           </Reveal>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   )
 }

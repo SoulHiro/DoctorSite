@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/site/reveal"
+import { SectionContainer } from "@/components/site/section-container"
 
 const PARTNERS = [
   "Sicredi Ibirubá",
@@ -11,7 +12,7 @@ const PARTNERS = [
 export function Partners() {
   return (
     <section id="parceiros" className="bg-background">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <SectionContainer className="py-16 sm:py-20 lg:py-24">
         <Reveal>
           <p className="text-sm font-medium tracking-[0.04em] text-foreground/70">
             Quem já apoia essas visitas
@@ -31,7 +32,7 @@ export function Partners() {
             </span>
           ))}
         </Reveal>
-      </div>
+      </SectionContainer>
     </section>
   )
 }

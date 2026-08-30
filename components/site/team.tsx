@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/site/reveal"
+import { SectionContainer } from "@/components/site/section-container"
 
 const TEAM = [
   {
@@ -24,7 +25,7 @@ const TEAM = [
 export function Team() {
   return (
     <section id="equipe" className="bg-surface">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
+      <SectionContainer className="py-16 sm:py-20 lg:py-28">
         <Reveal className="max-w-xl">
           <h2 className="text-balance font-heading text-3xl font-semibold text-foreground sm:text-4xl">
             Os personagens que abrem a porta do quarto
@@ -76,7 +77,7 @@ export function Team() {
             </Reveal>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   )
 }

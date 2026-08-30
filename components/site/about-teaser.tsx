@@ -1,104 +1,60 @@
-"use client"
-
-import { Tabs } from "@base-ui/react/tabs"
-import { Check } from "lucide-react"
-
-import { Reveal } from "@/components/site/reveal"
-import { ImagePlaceholder } from "@/components/site/image-placeholder"
-
-const TABS = [
-  {
-    value: "missao",
-    label: "Nossa missão",
-    text: "Levar alegria e acolhimento a quem está passando por um momento difícil de saúde, através da arte da palhaçaria hospitalar.",
-  },
-  {
-    value: "visao",
-    label: "Nossa visão",
-    text: "Ser presença constante em cada hospital, posto de saúde e asilo da região. Não uma visita ocasional, uma rotina que se pode contar.",
-  },
-  {
-    value: "como",
-    label: "Como ajudamos",
-    text: "Música, mágica, teatro e, principalmente, escuta. Cada visita é pensada a partir do paciente que está na nossa frente, não de um roteiro fixo.",
-  },
-] as const
-
-const CHECKLIST = [
-  "19 hospitais e postos de saúde visitados no RS",
-  "Treinamento antes de qualquer voluntário entrar sozinho em um quarto",
-  "Parceria direta com a equipe médica de cada unidade",
-]
+import { SectionContainer } from "@/components/site/section-container";
+import { Reveal } from "@/components/site/reveal";
 
 export function AboutTeaser() {
   return (
-    <section id="quem-somos" className="bg-background">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+    <section id="quem-somos" className="mt-12 bg-background sm:mt-16 lg:mt-24">
+      <SectionContainer className="py-16 sm:py-20 lg:py-28">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
           <Reveal className="relative">
-            <ImagePlaceholder
-              label="Voluntário(a) em visita, ajoelhado(a) ao lado do leito"
-              tone="secondary"
-              className="aspect-[4/5] w-full"
+            <div
+              role="img"
+              aria-label="Voluntário(a) em visita, ajoelhado(a) ao lado do leito"
+              className="aspect-[4/5] w-full rounded-lg bg-secondary-subtle"
             />
-            <div className="absolute -bottom-5 left-5 flex items-center gap-3 rounded-lg bg-surface px-4 py-3 shadow-sm">
-              <span className="font-heading text-2xl font-bold text-secondary">
-                3 anos
-              </span>
-              <span className="max-w-[16ch] text-xs leading-snug text-foreground/70">
-                de visitas regulares no Rio Grande do Sul
-              </span>
-            </div>
+            <div
+              role="img"
+              aria-label="Detalhe de um jaleco colorido de doutor(a) palhaço(a)"
+              className="absolute -bottom-8 -left-6 aspect-square w-2/5 rounded-lg bg-primary-subtle sm:-left-10 sm:w-1/3"
+            />
           </Reveal>
 
-          <Reveal delayMs={100} className="flex flex-col gap-6 pt-6 lg:pt-0">
-            <h2 className="max-w-lg text-balance font-heading text-3xl font-semibold leading-[1.2] text-foreground sm:text-4xl">
+          <Reveal delayMs={100} className="flex flex-col gap-6 pt-10 lg:pt-0">
+            <span className="text-xs font-semibold tracking-[0.08em] text-secondary-active uppercase">
+              Quem somos
+            </span>
+
+            <h2 className="max-w-md text-balance font-heading text-2xl font-semibold leading-[1.25] text-foreground sm:text-3xl">
               Um jaleco colorido pode mudar o clima de um corredor inteiro.
             </h2>
 
-            <Tabs.Root defaultValue="missao" className="flex flex-col gap-4">
-              <Tabs.List className="relative flex flex-wrap gap-2 border-b border-border">
-                {TABS.map((tab) => (
-                  <Tabs.Tab
-                    key={tab.value}
-                    value={tab.value}
-                    className="rounded-t-lg px-3 py-2 text-sm font-medium text-foreground/70 outline-none transition-colors data-[selected]:text-secondary hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {tab.label}
-                  </Tabs.Tab>
-                ))}
-                <Tabs.Indicator className="absolute bottom-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) bg-primary transition-all duration-base ease-out" />
-              </Tabs.List>
-              {TABS.map((tab) => (
-                <Tabs.Panel key={tab.value} value={tab.value}>
-                  <p className="max-w-[60ch] text-base leading-relaxed text-foreground/80">
-                    {tab.text}
-                  </p>
-                </Tabs.Panel>
-              ))}
-            </Tabs.Root>
+            <p className="max-w-[60ch] text-base leading-relaxed text-foreground/80">
+              Levamos música, mágica, teatro e, principalmente, escuta a quem
+              está passando por um momento difícil de saúde. Há 3 anos, uma
+              equipe voluntária virou presença regular em hospitais, postos
+              de saúde e asilos do Rio Grande do Sul.
+            </p>
 
-            <ul className="flex flex-col gap-2.5">
-              {CHECKLIST.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                  <Check
-                    className="mt-0.5 size-4 shrink-0 text-secondary-active"
-                    aria-hidden="true"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center gap-4">
+              <div
+                role="img"
+                aria-label="Voluntário(a) conversando com a equipe médica antes de uma visita"
+                className="size-16 shrink-0 rounded-lg bg-secondary-subtle"
+              />
+              <p className="text-sm leading-relaxed text-foreground/80">
+                Cada visita começa com uma conversa: o que esse quarto, esse
+                corredor, essa pessoa precisam hoje.
+              </p>
+            </div>
 
-            <a
-              href="#equipe"
-              className="inline-flex h-10 w-fit items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-            >
-              Conheça a equipe
-            </a>
+            <p className="max-w-[60ch] text-base leading-relaxed text-foreground/80">
+              Treinamos antes de qualquer voluntário entrar sozinho em um
+              quarto, e mantemos parceria direta com a equipe médica de cada
+              unidade. A seriedade do hospital nunca fica de fora.
+            </p>
           </Reveal>
         </div>
-      </div>
+      </SectionContainer>
     </section>
-  )
+  );
 }

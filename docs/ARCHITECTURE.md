@@ -209,6 +209,19 @@ Mídia: `next/image` sempre com `sizes`; no Next 16 usar `preload` (não
 YouTube com facade (carrega o iframe no clique). Vídeo de fundo curto,
 comprimido, `muted playsInline preload="none"` com `poster`.
 
+## Páginas de estado
+
+| Página | Arquivo | Observação |
+|---|---|---|
+| 404 | `app/not-found.tsx` | Fora do grupo `(site)`; atende também URLs inexistentes |
+| Tela de abertura | `components/shared/splash-screen.tsx` | No layout `(site)`; mínimo de `MIN_VISIBLE_MS` |
+| Loading de navegação | `app/(site)/loading.tsx` | Tela cheia, mesmo visual da abertura |
+| Manutenção | `app/manutencao/page.tsx` | Sempre acessível em `/manutencao`, com `noindex` |
+
+**Modo manutenção:** com `MAINTENANCE_MODE=true`, o `proxy.ts` reescreve
+todas as páginas para `/manutencao`, mantendo a URL. Assets e arquivos com
+extensão não passam pelo proxy. Na Vercel, mudar a variável exige um novo deploy.
+
 ## Fluxo de trabalho
 
 - Uma branch, um escopo: `feat/<escopo>-<assunto>`, `fix/…`, `refactor/…`, `chore/…`, `docs/…`.

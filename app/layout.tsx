@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Permanent_Marker } from "next/font/google";
+import { Figtree, Fraunces } from "next/font/google";
 import "./globals.css";
 
+// Fraunces variável: opsz ajusta o desenho ao tamanho, SOFT arredonda as
+// serifas e WONK entorta letras no itálico da palavra de destaque.
 const fraunces = Fraunces({
   variable: "--font-display",
-  weight: ["500", "600", "700"],
+  axes: ["opsz", "SOFT", "WONK"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
-const inter = Inter({
+const figtree = Figtree({
   variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const permanentMarker = Permanent_Marker({
-  variable: "--font-accent",
-  weight: "400",
   subsets: ["latin"],
 });
 
@@ -94,7 +91,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${fraunces.variable} ${inter.variable} ${permanentMarker.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${figtree.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

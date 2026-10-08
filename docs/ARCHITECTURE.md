@@ -186,6 +186,9 @@ a consulta no mesmo request.
 - Tokens só em `app/globals.css` (`@theme`). Nenhum hex em componentes.
 - Variantes com `cva`, composição de classes com `cn`.
 - Espaçamento só pela escala do Tailwind; nada de valores arbitrários.
+- Ilustrações SVG (`components/illustrations/`) usam CSS próprio com prefixo
+  por ilustração (`.nf404`, `.ld`…), referenciando as variáveis de `:root`
+  (`--primary`, `--secondary-active`, `--mascot-*`…). Nunca hex solto.
 
 ## Animação e mídia
 
@@ -237,3 +240,7 @@ comprimido, `muted playsInline preload="none"` com `poster`.
 - `app/(site)/(home)/_components/impact.tsx` não é usado pela Home e repete os
   números do `TrustCards`. Decidir em `feat/home`.
 - `hero.tsx` usa `priority`, descontinuado no Next 16; trocar por `preload`.
+- `bg-surface` é usado na Home e em `Section tone="surface"`, mas não existe
+  `--color-surface` no `@theme`, então essas seções ficam sem fundo. Criar o
+  token (`--color-surface: var(--neutral-surface)`) em `feat/home`, conferindo
+  o visual.

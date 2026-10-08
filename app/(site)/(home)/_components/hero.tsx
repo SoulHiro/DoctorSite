@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import { PageContainer } from "@/components/site/page-container";
-import { DonateButton } from "@/components/site/donate-button";
+import { Container } from "@/components/layout/container";
+import { DonateButton } from "@/components/shared/donate-button";
 
 export function Hero() {
   return (
@@ -26,7 +26,7 @@ export function Hero() {
         className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/25 to-transparent"
       />
 
-      <PageContainer className="relative z-10 pb-16 sm:pb-20 lg:pb-24">
+      <Container className="relative z-10 pb-16 sm:pb-20 lg:pb-24">
         <div className="flex max-w-xl flex-col items-start gap-6">
           <h1 className="text-balance font-heading text-[clamp(2.5rem,5.5vw,3.815rem)] leading-[1.1] font-bold text-foreground">
             Um <span className="font-accent font-normal">sorriso</span> que cura
@@ -39,7 +39,7 @@ export function Hero() {
 
           <DonateButton iconPosition="right" className="h-11 px-6" />
         </div>
-      </PageContainer>
+      </Container>
     </section>
   );
 }

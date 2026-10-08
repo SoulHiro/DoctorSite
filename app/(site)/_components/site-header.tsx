@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { PageContainer } from "@/components/site/page-container";
-import { DonateButton } from "@/components/site/donate-button";
+import { Container } from "@/components/layout/container";
+import { DonateButton } from "@/components/shared/donate-button";
 
 const NAV_LINKS = [
   { href: "#quem-somos", label: "Quem Somos" },
@@ -15,12 +15,12 @@ const NAV_LINKS = [
   { href: "#contato", label: "Contato" },
 ] as const;
 
-export function Header() {
+export function SiteHeader() {
   const [navVisible, setNavVisible] = useState(true);
 
   return (
     <header>
-      <PageContainer className="flex items-center justify-between py-6">
+      <Container className="flex items-center justify-between py-6">
         <a
           href="#inicio"
           className="font-heading text-lg font-semibold text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 rounded-sm"
@@ -79,7 +79,7 @@ export function Header() {
             <Menu className="size-5" aria-hidden="true" />
           </button>
         </div>
-      </PageContainer>
+      </Container>
     </header>
   );
 }

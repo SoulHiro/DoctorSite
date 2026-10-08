@@ -1,4 +1,4 @@
-import { Reveal } from "@/components/site/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 const STATS = [
   { value: "19", label: "hospitais visitados no Rio Grande do Sul" },

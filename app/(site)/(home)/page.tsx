@@ -6,6 +6,7 @@ import { CausesGrid } from "./_components/causes-grid";
 import { Team } from "./_components/team";
 import { VolunteerCta } from "./_components/volunteer-cta";
 import { Partners } from "./_components/partners";
+import { ContactSection } from "./_components/contact-section";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
       <Team />
       <VolunteerCta />
       <Partners />
+      <ContactSection />
     </>
   );
 }

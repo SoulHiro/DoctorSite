@@ -1,80 +1,68 @@
 "use client";
 
-import { useState } from "react";
-import { Menu } from "lucide-react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { DonateButton } from "@/components/shared/donate-button";
+import { Wordmark } from "@/components/shared/wordmark";
 
-const NAV_LINKS = [
-  { href: "#quem-somos", label: "Quem Somos" },
-  { href: "#impacto", label: "Impacto" },
-  { href: "#lei-rouanet", label: "Lei Rouanet" },
-  { href: "#faca-parte", label: "Faça Parte" },
-  { href: "#contato", label: "Contato" },
-] as const;
+import { SiteMenu } from "./site-menu";
+import { SiteNav } from "./site-nav";
 
+// Header fixo no topo (sticky). Na Home ele fica transparente sobre o hero
+// até a página rolar; nas demais páginas é sempre sólido.
 export function SiteHeader() {
-  const [navVisible, setNavVisible] = useState(true);
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const overHero = pathname === "/" && !scrolled;
 
   return (
-    <header>
-      <Container className="flex items-center justify-between py-6">
-        <a
-          href="#inicio"
-          className="font-heading text-lg font-semibold text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 rounded-sm"
-        >
-          Doutores Palhaços
-        </a>
+    <header
+      className={cn(
+        "sticky top-0 z-40 transition-[background-color,box-shadow] duration-base ease-out",
+        // Sobre o hero: totalmente transparente. Depois: fundo e uma linha
+        // de 1px (box-shadow, para não mudar a altura do header).
+        overHero
+          ? "bg-transparent"
+          : "bg-background/95 shadow-[0_1px_0_var(--color-border)] backdrop-blur-sm"
+      )}
+    >
+      <Container>
+        {/* Wrapper sem padding: referência para posicionar o menu (left em %). */}
+        <div className="relative flex h-20 items-center justify-between gap-6">
+          <Wordmark />
 
-        <div className="flex items-center gap-3">
-          <div
+          {/* Sobre o hero da Home, o menu encosta à direita e o CTA some (o
+              hero tem o seu). Ao rolar, o menu desliza para o centro e o CTA
+              aparece no lugar. Anima left + translate, que transicionam suave. */}
+          <SiteNav
             className={cn(
-              "grid transition-[grid-template-columns] duration-base ease-out motion-reduce:transition-none",
-              navVisible ? "grid-cols-[1fr]" : "grid-cols-[0fr]",
+              // w-max: posicionado com left em %, o menu encolheria até quebrar
+              // os nomes; a largura fica sempre a do conteúdo.
+              "absolute top-1/2 hidden w-max -translate-y-1/2 transition-[left,translate] duration-slow ease-out lg:block motion-reduce:transition-none",
+              overHero ? "left-full -translate-x-full" : "left-1/2 -translate-x-1/2"
             )}
-          >
-            <div
+          />
+
+          <div className="flex items-center gap-3">
+            <DonateButton
               className={cn(
-                "flex min-w-0 items-center gap-3 overflow-hidden transition-opacity duration-base ease-out motion-reduce:transition-none",
-                navVisible ? "opacity-100" : "opacity-0",
+                "hidden transition-[opacity,visibility,translate] duration-slow ease-out sm:inline-flex motion-reduce:transition-none",
+                overHero && "invisible translate-x-2 opacity-0"
               )}
-              inert={!navVisible}
-            >
-              <nav
-                className="hidden items-center gap-1 whitespace-nowrap md:flex"
-                aria-label="Navegação principal"
-              >
-                {NAV_LINKS.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
-
-              <DonateButton className="hidden md:inline-flex" />
-            </div>
+            />
+            <SiteMenu className="lg:hidden" />
           </div>
-
-          <button
-            type="button"
-            onClick={() => setNavVisible((v) => !v)}
-            aria-expanded={navVisible}
-            aria-label={
-              navVisible ? "Recolher navegação" : "Expandir navegação"
-            }
-            className={cn(
-              "flex size-10 shrink-0 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-              "bg-secondary-active text-white hover:bg-secondary",
-            )}
-          >
-            <Menu className="size-5" aria-hidden="true" />
-          </button>
         </div>
       </Container>
     </header>

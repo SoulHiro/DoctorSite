@@ -8,7 +8,9 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex h-screen w-full items-end overflow-hidden"
+      // -mt-20 = altura do header: o hero começa por baixo dele, que fica
+      // transparente enquanto a página não rola.
+      className="relative -mt-20 flex h-svh w-full items-end overflow-hidden"
     >
       <Image
         src="/hero-doctors.png"

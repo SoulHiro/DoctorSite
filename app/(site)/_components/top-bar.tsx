@@ -1,42 +1,55 @@
-import { Globe, Mail, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
+import { site } from "@/content/site";
 import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
+import { InstagramIcon, YoutubeIcon } from "@/components/shared/social-icons";
 
+const linkClass =
+  "inline-flex items-center gap-1.5 rounded-sm transition-colors duration-fast ease-out hover:text-primary-subtle";
+
+// Faixa institucional acima do header. Rola junto com a página; só o header
+// fica fixo. Escondida no celular, onde o menu já traz os contatos e cada
+// pixel acima da dobra conta. Ícones de 16px porque acompanham texto body-sm.
 export function TopBar() {
   return (
-    <Container className="pt-6">
-      <div className="flex h-9 items-center justify-between rounded-full bg-secondary-active px-4 text-xs text-white">
-        <span className="inline-flex items-center gap-1.5">
-          <MapPin className="size-3.5" aria-hidden="true" />
-          Ibirubá, RS
-        </span>
+    <div className="hidden bg-secondary-active text-body-sm text-primary-foreground sm:block">
+      <Container className="flex h-10 items-center justify-between gap-4">
+        <p className="inline-flex items-center gap-1.5">
+          <MapPin className="size-4 shrink-0" aria-hidden="true" />
+          {site.location}
+        </p>
 
-        <div className="flex items-center gap-1">
-          <a
-            href="mailto:doutorespalhacos@gmail.com"
-            className="mr-3 inline-flex items-center gap-1.5 transition-colors hover:text-primary-subtle focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-white/50 rounded-sm"
-          >
-            <Mail className="size-3.5" aria-hidden="true" />
-            doutorespalhacos@gmail.com
-          </a>
-          <Button
-            variant="ghost"
-            size="xs"
-            className="text-white hover:bg-white/10 hover:text-white"
-          >
-            Login
-          </Button>
-          <Button
-            variant="ghost"
-            size="xs"
-            className="text-white hover:bg-white/10 hover:text-white"
-          >
-            <Globe className="size-3.5" aria-hidden="true" />
-            PT
-          </Button>
-        </div>
-      </div>
-    </Container>
+        <ul className="flex items-center gap-4">
+          <li>
+            <a href={`mailto:${site.email}`} className={linkClass}>
+              <Mail className="size-4 shrink-0" aria-hidden="true" />
+              {site.email}
+            </a>
+          </li>
+          <li>
+            <a
+              href={site.social.instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram ${site.social.instagram.label}`}
+              className={linkClass}
+            >
+              <InstagramIcon className="size-4 shrink-0" aria-hidden="true" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={site.social.youtube.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`YouTube ${site.social.youtube.label}`}
+              className={linkClass}
+            >
+              <YoutubeIcon className="size-4 shrink-0" aria-hidden="true" />
+            </a>
+          </li>
+        </ul>
+      </Container>
+    </div>
   );
 }

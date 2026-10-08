@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Container } from "@/components/layout/container";
+import { AccentWord } from "@/components/shared/accent-word";
 import { DonateButton } from "@/components/shared/donate-button";
 
 export function Hero() {
@@ -29,7 +30,7 @@ export function Hero() {
       <Container className="relative z-10 pb-16 sm:pb-20 lg:pb-24">
         <div className="flex max-w-xl flex-col items-start gap-6">
           <h1 className="text-balance font-heading text-[clamp(2.5rem,5.5vw,3.815rem)] leading-[1.1] font-bold text-foreground">
-            Um <span className="font-accent font-normal">sorriso</span> que cura
+            Um <AccentWord>sorriso</AccentWord> que cura
           </h1>
 
           <p className="text-pretty text-lg leading-relaxed text-foreground/80">
@@ -37,7 +38,7 @@ export function Hero() {
             do Sul, há 3 anos.
           </p>
 
-          <DonateButton iconPosition="right" className="h-11 px-6" />
+          <DonateButton />
         </div>
       </Container>
     </section>

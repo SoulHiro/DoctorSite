@@ -31,7 +31,6 @@ const spacingVariants = cva("", {
 type SectionProps = React.ComponentProps<"section"> &
   VariantProps<typeof sectionVariants> &
   VariantProps<typeof spacingVariants> & {
-    gutter?: React.ComponentProps<typeof Container>["gutter"]
     containerClassName?: string
     /** Camada decorativa (vetores, confetes) atrás do conteúdo. */
     decoration?: React.ReactNode
@@ -44,7 +43,6 @@ type SectionProps = React.ComponentProps<"section"> &
 export function Section({
   tone,
   spacing,
-  gutter = "wide",
   className,
   containerClassName,
   decoration,
@@ -62,7 +60,6 @@ export function Section({
         </div>
       )}
       <Container
-        gutter={gutter}
         className={cn(spacingVariants({ spacing }), containerClassName)}
       >
         {children}

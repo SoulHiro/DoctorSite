@@ -13,10 +13,7 @@ const CATEGORIES = [
 export function CategoryStrip() {
   return (
     <div className="bg-primary py-4">
-      <Container
-        gutter="wide"
-        className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2"
-      >
+      <Container className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
         {CATEGORIES.map((category) => (
           <span
             key={category}

@@ -63,7 +63,8 @@ server/                   # (futuro) infraestrutura só de servidor
   auth/                   # config do Better Auth, session.ts, permissions.ts
 
 lib/                      # utilitários puros (cn, env, action-result…)
-content/                  # (futuro) JSON do MVP
+content/                  # dados do site em TS/JSON: site.ts (contato, redes,
+                          #   navegação) e, depois, os mocks e conteúdos das páginas
 docs/                     # documentação técnica
 ```
 
@@ -210,6 +211,37 @@ Mídia: `next/image` sempre com `sizes`; no Next 16 usar `preload` (não
 YouTube com facade (carrega o iframe no clique). Vídeo de fundo curto,
 comprimido, `muted playsInline preload="none"` com `poster`.
 
+## Sitemap e navegação
+
+O sitemap inteiro vive em `content/site.ts` (`mainNav`, `footerNav`). Header,
+menu do celular e footer são gerados a partir dele.
+
+```
+/                              Home
+/quem-somos                    História, missão, como funciona a visita
+  /quem-somos/equipe           Personagens e equipe de gestão
+/nosso-trabalho                Impacto
+  /nosso-trabalho/instituicoes Instituições atendidas por município
+/galeria (/galeria/[municipio]) Fotos das visitas
+/agenda                        Próximas visitas e eventos (Fase 2)
+/projetos/rir-e-o-melhor-remedio
+/doar · /apoie/empresas · /lei-rouanet · /faca-parte
+/parceiros · /parceiros/medicos
+/diario (/diario/[slug])       Blog (Fase 2, Sanity)
+/transparencia · /perguntas-frequentes · /contato
+/politica-de-privacidade · /termos-de-uso
+```
+
+- Cada link tem `available`. Em desenvolvimento e nos previews da Vercel
+  tudo aparece; em produção (`NEXT_PUBLIC_VERCEL_ENV=production`), só as
+  páginas prontas. Ao criar uma página, marque `available: true`.
+- Desktop: `NavigationMenu` do Base UI, com popover por grupo e um card de
+  destaque. Celular: `<dialog>` com os grupos em `<details>`.
+- Na Home, o "Doe agora" do header fica oculto enquanto o hero (que tem o seu
+  próprio) está na tela.
+- Agenda: instituições podem não querer a rotina divulgada; confirmar com a
+  equipe o nível de detalhe (cidade, tipo e data, ou local exato).
+
 ## Páginas de estado
 
 | Página | Arquivo | Observação |
@@ -246,11 +278,10 @@ extensão não passam pelo proxy. Na Vercel, mudar a variável exige um novo dep
 
 ## Pendências conhecidas
 
-- Header (`feat/site-chrome`): no celular o menu não abre; o header fica
-  `absolute` sobre o hero e precisa virar sticky; TopBar tem botões sem
-  função (Login, PT) e um e-mail diferente do oficial; falta o Wordmark.
-- Sombras proibidas pelo DESIGN.md ainda em `team.tsx`, nos chips e na caixa
-  do formulário de contato e no card "Quer doar direto?" do footer.
+- Bloco de marcas da Lei Rouanet no footer é um espaço reservado: entram os
+  arquivos oficiais (gov.br/leirouanet), com leiaute aprovado pelo MinC no
+  Salic antes de publicar (IN MinC 29/2026, art. 21).
+- Sombra proibida pelo DESIGN.md ainda em `team.tsx`.
 - Card amarelo "Próximas visitas" (`trust-cards.tsx`) usa `warning` como cor
   decorativa e datas inventadas: sai em `feat/home`.
 - `SiteFooter` inclui o formulário de contato. Quando existir `/contato`,

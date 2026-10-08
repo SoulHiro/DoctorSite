@@ -363,7 +363,7 @@
 }
 
 /* Page-load entrances only — pure CSS, no JS dependency, gated by motion-safe:.
-   Scroll-triggered reveals are handled by components/site/reveal.tsx instead. */
+   Scroll-triggered reveals are handled by components/motion/reveal.tsx instead. */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -382,4 +382,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Trava o scroll enquanto a tela de abertura (SplashScreen) está visível.
+   Funciona antes da hidratação, porque depende só do HTML do servidor. */
+html:has([data-splash="visible"]) {
+  overflow: hidden;
 }

@@ -1,7 +1,11 @@
 import { JugglingLoader } from "@/components/illustrations/juggling-loader";
 
-// Dentro do grupo (site): o header e o footer continuam visíveis enquanto a
-// página carrega; só o <main> mostra o malabarismo.
+// Aparece enquanto uma rota do grupo (site) carrega na navegação. Cobre a
+// tela inteira, como a SplashScreen do carregamento inicial.
 export default function Loading() {
-  return <JugglingLoader />;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
+      <JugglingLoader />
+    </div>
+  );
 }

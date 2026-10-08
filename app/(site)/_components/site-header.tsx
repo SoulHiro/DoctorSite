@@ -57,10 +57,7 @@ export function SiteHeader() {
                 ))}
               </nav>
 
-              <DonateButton
-                iconPosition="left"
-                className="hidden shrink-0 md:inline-flex"
-              />
+              <DonateButton className="hidden md:inline-flex" />
             </div>
           </div>
 

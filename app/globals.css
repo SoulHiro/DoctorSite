@@ -9,7 +9,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-heading: var(--font-display);
-  --font-accent: var(--font-accent);
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 
   /* Escala tipográfica — Major Third (1.25), root 16px */
@@ -31,6 +30,13 @@
   --text-body-sm--line-height: 1.5;
   --text-caption: 0.75rem;
   --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.08em;
+  --text-caption--font-weight: 500;
+  /* Números de impacto (Stat): Figtree 700, algarismos alinhados */
+  --text-stat: 3.052rem;
+  --text-stat--line-height: 1.1;
+  --text-stat--letter-spacing: -0.02em;
+  --text-stat--font-weight: 700;
 
   /* Elevação — só overlays reais (dropdown, modal, popover) */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.08);
@@ -121,6 +127,7 @@
   --color-secondary-hover: var(--secondary-hover);
   --color-secondary-active: var(--secondary-active);
   --color-secondary-subtle: var(--secondary-subtle);
+  --color-surface: var(--neutral-surface);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-info: var(--info);
@@ -345,7 +352,17 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-primary-active;
+  }
+  /* Foco padrão do sistema: contorno sólido de 2px, legível em qualquer fundo. */
+  :focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 2px;
+  }
+  /* Títulos em Fraunces com as serifas levemente arredondadas. */
+  .font-heading {
+    font-variation-settings: "SOFT" 50;
   }
   body {
     @apply bg-background text-foreground;
@@ -360,6 +377,15 @@
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Palavra de destaque (AccentWord): Fraunces itálica com as letras "tortas"
+   do eixo WONK e serifas arredondadas (SOFT). */
+@utility accent-word {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 600;
+  font-variation-settings: "WONK" 1, "SOFT" 100;
 }
 
 /* Page-load entrances only — pure CSS, no JS dependency, gated by motion-safe:.

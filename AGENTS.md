@@ -4,6 +4,10 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## Architecture
+
+Read `docs/ARCHITECTURE.md` before writing any code. It defines the folder structure, where each new component goes, the dependency direction enforced by ESLint, the data/Server Action pattern, caching strategy, auth/RBAC rules and the one-scope-per-branch workflow. Follow it; if a task needs to break one of its rules, say so instead of working around it.
+
 ## Design Context
 
 Read `PRODUCT.md` (register, users, brand personality, anti-references) and `DESIGN.md` (design system "Jaleco": colors, typography, elevation, components) before any UI work. Both are kept in sync with the Notion Design System doc — treat DESIGN.md's tokens as normative for code, not a fresh source of truth to re-derive.

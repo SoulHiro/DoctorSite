@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -57,7 +58,7 @@ export function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="flex flex-col gap-5 rounded-lg bg-background p-6 shadow-sm sm:p-8"
+      className="flex flex-col gap-5 rounded-lg border border-border bg-surface p-6 sm:p-8"
     >
       <fieldset className="flex flex-col gap-2">
         <legend className="text-sm font-medium text-foreground">
@@ -67,7 +68,7 @@ export function ContactForm() {
           {REASON_OPTIONS.map((option) => (
             <label
               key={option.value}
-              className="has-checked:bg-primary has-checked:text-primary-foreground relative cursor-pointer rounded-lg bg-surface px-3.5 py-2 text-sm font-medium text-foreground/70 shadow-sm transition-colors has-focus-visible:ring-3 has-focus-visible:ring-ring/50"
+              className="relative cursor-pointer rounded-lg border border-border bg-background px-3.5 py-2 text-body-sm font-medium text-foreground transition-colors duration-fast ease-out has-checked:border-primary has-checked:bg-primary has-checked:text-primary-foreground has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-active"
             >
               <input
                 type="radio"
@@ -138,7 +139,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50"
+        className={buttonVariants()}
       >
         {pending ? "Enviando..." : "Enviar mensagem"}
       </button>

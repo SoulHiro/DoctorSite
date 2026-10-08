@@ -17,7 +17,12 @@ const css = `
   --nf-green: var(--mascot-green);
   --nf-green-light: var(--mascot-green-light);
 }
-.nf404 svg { width: 100%; max-width: 980px; height: auto; display: block; margin-inline: auto; overflow: visible; }
+/* Limitado pela largura e pela altura da tela (viewBox 900x520 ≈ 1.73:1),
+   para o título e o botão abaixo caberem sem scroll. */
+.nf404 svg {
+  width: min(100%, 720px, calc(50dvh * 1.73));
+  height: auto; display: block; margin-inline: auto; overflow: visible;
+}
 
 /* preenchimentos */
 .nf404 .f-ink { fill: var(--nf-ink); }

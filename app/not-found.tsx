@@ -10,14 +10,9 @@ export default function NotFound() {
     <main className="flex min-h-dvh flex-col items-center justify-center gap-6 bg-background px-4 py-6 text-foreground">
       <NotFoundIllustration />
 
-      <div className="flex flex-col items-center gap-3 text-center">
-        <p className="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
-          Página não encontrada
-        </p>
-        <h1 className="text-balance font-heading text-2xl font-semibold sm:text-3xl">
-          Essa página saiu pra fazer uma visita.
-        </h1>
-      </div>
+      <h1 className="text-center text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+        Página não encontrada
+      </h1>
 
       <Link
         href="/"

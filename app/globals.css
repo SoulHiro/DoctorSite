@@ -255,6 +255,11 @@
   --error-900: oklch(0.191 0.0364 26.67);
   --error-950: oklch(0.1474 0.0228 26.57);
 
+  /* Mascotes — tons sem equivalente na paleta (pintinho e sapo das ilustrações) */
+  --mascot-yellow: #edbe3c;
+  --mascot-green: #4fa364;
+  --mascot-green-light: #cfe5c0;
+
   /* ===== Semânticas — mapeadas a partir das primitivas acima ===== */
 
   --background: var(--neutral-background);
@@ -358,7 +363,7 @@
 }
 
 /* Page-load entrances only — pure CSS, no JS dependency, gated by motion-safe:.
-   Scroll-triggered reveals are handled by components/site/reveal.tsx instead. */
+   Scroll-triggered reveals are handled by components/motion/reveal.tsx instead. */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -377,4 +382,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Trava o scroll enquanto a tela de abertura (SplashScreen) está visível.
+   Funciona antes da hidratação, porque depende só do HTML do servidor. */
+html:has([data-splash="visible"]) {
+  overflow: hidden;
 }

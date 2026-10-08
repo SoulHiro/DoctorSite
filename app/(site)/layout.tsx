@@ -1,3 +1,5 @@
+import { SplashScreen } from "@/components/shared/splash-screen";
+
 import { TopBar } from "./_components/top-bar";
 import { SiteHeader } from "./_components/site-header";
 import { SiteFooter } from "./_components/site-footer";
@@ -12,6 +14,7 @@ export default function SiteLayout({
 }>) {
   return (
     <>
+      <SplashScreen />
       <a
         href="#main"
         className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-lg focus-visible:bg-primary focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-medium focus-visible:text-primary-foreground"

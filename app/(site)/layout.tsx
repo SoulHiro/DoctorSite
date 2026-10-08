@@ -4,9 +4,8 @@ import { TopBar } from "./_components/top-bar";
 import { SiteHeader } from "./_components/site-header";
 import { SiteFooter } from "./_components/site-footer";
 
-// Moldura das páginas públicas. Hoje o header fica sobreposto ao topo da
-// página porque a Home abre com um hero de tela cheia; páginas sem hero vão
-// precisar de outra estratégia (ver docs/ARCHITECTURE.md).
+// Moldura das páginas públicas: TopBar (rola com a página), header fixo no
+// topo e footer. Na Home o hero sobe por baixo do header (ver hero.tsx).
 export default function SiteLayout({
   children,
 }: Readonly<{
@@ -21,13 +20,9 @@ export default function SiteLayout({
       >
         Pular para o conteúdo
       </a>
-      <div className="relative">
-        <div className="absolute inset-x-0 top-0 z-20 bg-gradient-to-b from-white/80 via-white/35 to-transparent pb-8">
-          <TopBar />
-          <SiteHeader />
-        </div>
-        <main id="main">{children}</main>
-      </div>
+      <TopBar />
+      <SiteHeader />
+      <main id="main">{children}</main>
       <SiteFooter />
     </>
   );

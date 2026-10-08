@@ -412,6 +412,7 @@
 
 /* Trava o scroll enquanto a tela de abertura (SplashScreen) está visível.
    Funciona antes da hidratação, porque depende só do HTML do servidor. */
-html:has([data-splash="visible"]) {
+html:has([data-splash="visible"]),
+html:has(dialog.site-menu[open]) {
   overflow: hidden;
 }

@@ -1,6 +1,6 @@
 "use server"
 
-import { contactSchema } from "@/lib/schemas/contact"
+import { contactSchema } from "@/features/contact/schemas"
 
 export type ContactState = {
   status: "idle" | "success" | "error"

@@ -1,8 +1,8 @@
 import { Building2, Heart, Stethoscope, Users } from "lucide-react"
 
-import { Reveal } from "@/components/site/reveal"
-import { SectionContainer } from "@/components/site/section-container"
-import { CategoryStrip } from "@/components/site/category-strip"
+import { Reveal } from "@/components/motion/reveal"
+import { Section } from "@/components/layout/section"
+import { CategoryStrip } from "./category-strip"
 
 const CAUSES = [
   {
@@ -38,8 +38,8 @@ const TONE_CLASSES = {
 
 export function CausesGrid() {
   return (
-    <section className="bg-surface">
-      <SectionContainer className="py-16 sm:py-20 lg:py-28">
+    <>
+      <Section tone="surface" spacing="lg">
         <Reveal className="mx-auto max-w-xl text-center">
           <h2 className="text-balance font-heading text-3xl font-semibold text-foreground sm:text-4xl">
             Onde a equipe entra em cena
@@ -81,9 +81,9 @@ export function CausesGrid() {
             Saiba como ajudar
           </a>
         </div>
-      </SectionContainer>
+      </Section>
 
       <CategoryStrip />
-    </section>
+    </>
   )
 }

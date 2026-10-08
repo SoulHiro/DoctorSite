@@ -1,6 +1,6 @@
 import { Heart } from "lucide-react"
 
-import { SectionContainer } from "@/components/site/section-container"
+import { Container } from "@/components/layout/container"
 
 const CATEGORIES = [
   "Voluntariado",
@@ -13,7 +13,10 @@ const CATEGORIES = [
 export function CategoryStrip() {
   return (
     <div className="bg-primary py-4">
-      <SectionContainer className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+      <Container
+        gutter="wide"
+        className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2"
+      >
         {CATEGORIES.map((category) => (
           <span
             key={category}
@@ -23,7 +26,7 @@ export function CategoryStrip() {
             {category}
           </span>
         ))}
-      </SectionContainer>
+      </Container>
     </div>
   )
 }

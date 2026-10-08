@@ -1,11 +1,11 @@
 import { Globe, Mail, MapPin } from "lucide-react";
 
-import { PageContainer } from "@/components/site/page-container";
+import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 
 export function TopBar() {
   return (
-    <PageContainer className="pt-6">
+    <Container className="pt-6">
       <div className="flex h-9 items-center justify-between rounded-full bg-secondary-active px-4 text-xs text-white">
         <span className="inline-flex items-center gap-1.5">
           <MapPin className="size-3.5" aria-hidden="true" />
@@ -37,6 +37,6 @@ export function TopBar() {
           </Button>
         </div>
       </div>
-    </PageContainer>
+    </Container>
   );
 }

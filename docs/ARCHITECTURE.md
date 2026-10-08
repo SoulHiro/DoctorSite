@@ -46,10 +46,11 @@ app/
 components/               # UI sem conhecimento de domínio
   ui/                     # primitivos shadcn (átomos)
   layout/                 # Container, Section
-  shared/                 # moléculas reutilizáveis: DonateButton, SocialIcons…
+  shared/                 # moléculas: Eyebrow, SectionHeading, AccentWord, Stat,
+                          #   Wordmark, DonateButton, SocialIcons, SplashScreen…
   motion/                 # Reveal e futuras primitivas de animação (client)
   media/                  # (futuro) SmartImage, VideoPlayer, LottiePlayer
-  illustrations/          # (futuro) mascotes SVG, 404, manutenção
+  illustrations/          # mascotes SVG: 404, manutenção, loading
 
 features/<domínio>/       # lógica de um domínio, compartilhada entre rotas
   schemas.ts              # Zod, usado no cliente e no servidor
@@ -233,27 +234,29 @@ extensão não passam pelo proxy. Na Vercel, mudar a variável exige um novo dep
 
 ### Roteiro
 
-1. `refactor/structure`: pastas, route groups, Container/Section, regras de import.
-2. `chore/cache-components`: `cacheComponents`, `lib/env.ts`, `lib/action-result.ts`.
-3. `feat/motion-primitives`, `feat/media-primitives`.
-4. `feat/home`, `feat/doar`, `feat/doctors` (com JSON).
-5. Demais páginas do MVP e lançamento.
-6. `feat/db` → `feat/auth` → `feat/admin-<domínio>` (um por domínio).
+1. `refactor/structure`: pastas, route groups, Container/Section, regras de import. ✓
+2. `feat/status-pages`, `feat/maintenance`. ✓
+3. `feat/ui-foundation`: tokens, fontes, Button/inputs, primitivos e container do design system Jaleco.
+4. `feat/site-chrome`: header sticky com menu mobile, TopBar, footer em 4 colunas.
+5. `chore/cache-components`: `cacheComponents`, `lib/env.ts`, `lib/action-result.ts`.
+6. `feat/motion-primitives`, `feat/media-primitives`.
+7. `feat/home` (lorem ipsum e mocks; copy depois), `feat/doar`, `feat/doctors`.
+8. Copywriting das páginas, demais páginas do MVP e lançamento.
+9. `feat/db` → `feat/auth` → `feat/admin-<domínio>` (um por domínio).
 
 ## Pendências conhecidas
 
-- Gutter: `Container` tem `tight` (`px-4`, header/hero) e `wide` (`px-12`,
-  seções), herdados do código anterior. O conteúdo não alinha entre header e
-  seções. Unificar no gutter do DESIGN.md em `feat/home`.
-- Header sobreposto: o layout `(site)` posiciona o header em `absolute` sobre
-  o hero da Home. Páginas sem hero vão precisar de header fixo/sticky ou
-  espaçamento no topo.
+- Header (`feat/site-chrome`): no celular o menu não abre; o header fica
+  `absolute` sobre o hero e precisa virar sticky; TopBar tem botões sem
+  função (Login, PT) e um e-mail diferente do oficial; falta o Wordmark.
+- Sombras proibidas pelo DESIGN.md ainda em `team.tsx`, nos chips e na caixa
+  do formulário de contato e no card "Quer doar direto?" do footer.
+- Card amarelo "Próximas visitas" (`trust-cards.tsx`) usa `warning` como cor
+  decorativa e datas inventadas: sai em `feat/home`.
 - `SiteFooter` inclui o formulário de contato. Quando existir `/contato`,
   separar footer institucional (4 colunas, conforme o sitemap) da seção de contato.
 - `app/(site)/(home)/_components/impact.tsx` não é usado pela Home e repete os
   números do `TrustCards`. Decidir em `feat/home`.
 - `hero.tsx` usa `priority`, descontinuado no Next 16; trocar por `preload`.
-- `bg-surface` é usado na Home e em `Section tone="surface"`, mas não existe
-  `--color-surface` no `@theme`, então essas seções ficam sem fundo. Criar o
-  token (`--color-surface: var(--neutral-surface)`) em `feat/home`, conferindo
-  o visual.
+- Seções da Home ainda escrevem título, eyebrow e CTA com classes à mão: migrar
+  para `SectionHeading`, `Eyebrow`, `Stat` e `Button` em `feat/home`.
